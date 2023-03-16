@@ -16,9 +16,6 @@ let package = Package(
         .product(name: "TelegramBotSDK", package: "telegram-bot-swift"),
         "OpenCombine",
         .product(name: "OpenCombineFoundation", package: "OpenCombine"),
-      ]),
-    .testTarget(
-      name: "LandinhoBotTests",
-      dependencies: ["LandinhoBot"]),
+      ])
   ]
 )
