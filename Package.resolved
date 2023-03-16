@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "opencombine",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/OpenCombine/OpenCombine.git",
+      "state" : {
+        "revision" : "9cf67e363738dbab61b47fb5eaed78d3db31e5ee",
+        "version" : "0.13.0"
+      }
+    },
+    {
+      "identity" : "telegram-bot-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/zmeyc/telegram-bot-swift.git",
+      "state" : {
+        "revision" : "c03186fdbde69be648be33c57793a2d83c5a8256",
+        "version" : "2.1.2"
+      }
+    }
+  ],
+  "version" : 2
+}
