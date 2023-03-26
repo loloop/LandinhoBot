@@ -6,7 +6,7 @@
 //
 
 import Foundation
-#if os(Linux) 
+#if os(Linux)
 import FoundationNetworking
 #endif
 import TelegramBotSDK
@@ -54,24 +54,7 @@ final class F1Bot {
       .decode(type: [F1CalendarEvent].self, decoder: JSONDecoder())
       .sink { _ in }
       receiveValue: { [weak self] events in
-        self?.events = events.filter {
-          guard
-            $0.eventType == nil,
-            let dateString = $0.times.first?.startTime,
-            let raceDate = Self.formatter.date(from: dateString)
-          else {
-            return false
-          }
-
-          let dateComparison = Calendar
-            .autoupdatingCurrent
-            .compare(
-              Date(),
-              to: raceDate,
-              toGranularity: .day)
-
-          return dateComparison == .orderedAscending
-        }
+        self?.events = Self.filterEvents(events)
       }
       .store(in: &cancellables)
   }
@@ -86,7 +69,7 @@ final class F1Bot {
         continue
       }
 
-      guard let nextEvent = events.first else {
+      guard let nextEvent = Self.filterEvents(events).first else {
         telegram.reply(update, text: "Couldn't find next race")
         return
       }
@@ -140,5 +123,26 @@ Practice 2 \(times[2])
 Sprint \(times[3])
 Race \(times[4])
 """
+  }
+
+  static func filterEvents(_ events: [F1CalendarEvent]) -> [F1CalendarEvent] {
+    events.filter {
+      guard
+        $0.eventType == nil,
+        let dateString = $0.times.first?.startTime,
+        let raceDate = Self.formatter.date(from: dateString)
+      else {
+        return false
+      }
+
+      let dateComparison = Calendar
+        .autoupdatingCurrent
+        .compare(
+          Date(),
+          to: raceDate,
+          toGranularity: .day)
+
+      return dateComparison == .orderedAscending
+    }
   }
 }
