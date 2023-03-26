@@ -6,6 +6,9 @@
 //
 
 import Foundation
+#if os(Linux) 
+import FoundationNetworking
+#endif
 import TelegramBotSDK
 import OpenCombine
 import OpenCombineFoundation
