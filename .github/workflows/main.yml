@@ -1,0 +1,26 @@
+on:
+  push:
+    branches:
+    - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: configure-ssh
+      run: |
+          mkdir -p ~/.ssh/
+          echo "$key" > ~/.ssh/server.key
+          chmod 400 ~/.ssh/server.key
+          cat >>~/.ssh/config <<END
+          Host server
+            HostName $host
+            User $username
+            IdentityFile ~/.ssh/server.key
+            StrictHostKeyChecking no
+          END
+    - name: run-deploy-script
+      run: ssh server 'cd LandinhoBot; pwd; ls; sh deploy.sh'
+    env:
+      host: ${{secrets.SSH_HOST}}
+      username: ${{secrets.SSH_USERNAME}}
+      key: ${{secrets.SSH_KEY}}

@@ -62,6 +62,7 @@ final class F1Bot {
   func update() {
     while let update = telegram.nextUpdateSync() {
       dump(update)
+      
       guard
         let message = update.message,
         message.text?.lowercased() == nextRaceCommand.command.lowercased()
