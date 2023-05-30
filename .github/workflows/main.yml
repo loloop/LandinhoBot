@@ -19,7 +19,7 @@ jobs:
             StrictHostKeyChecking no
           END
     - name: run-deploy-script
-      run: ssh server 'cd LandinhoBot; pwd; ls; sh deploy.sh'
+      run: ssh server 'cd LandinhoBot; sh deploy.sh'
     env:
       host: ${{secrets.SSH_HOST}}
       username: ${{secrets.SSH_USERNAME}}
