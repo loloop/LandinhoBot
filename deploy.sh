@@ -9,5 +9,5 @@ git pull origin main
 )
 (
   cd backend
-  docker compose up -d 
+  docker compose up -d --build
 )
