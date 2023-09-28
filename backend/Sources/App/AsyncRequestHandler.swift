@@ -20,6 +20,7 @@ public protocol AsyncRequestHandler {
 
 extension AsyncRequestHandler {
   public func register(in app: Application) {
+    app.logger.info("registering \(path.pathComponents) as \(method.string)")
     app
       .on(method, path.pathComponents) { [handle] req async throws in
         return try await handle(req)
