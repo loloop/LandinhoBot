@@ -7,7 +7,13 @@
 
 import Vapor
 import Foundation
-import Ginny
+
+public protocol AsyncRequestHandler {
+  init()
+  associatedtype Response: AsyncResponseEncodable
+  var method: HTTPMethod { get }
+  func handle(req: Request) async throws -> Response
+}
 
 struct UploadRaceHandler: AsyncRequestHandler {
   var method: HTTPMethod { .POST }

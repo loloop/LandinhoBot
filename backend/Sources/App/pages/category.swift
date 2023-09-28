@@ -7,7 +7,6 @@
 
 import Vapor
 import Foundation
-import Ginny
 
 struct UploadCategoryHandler: AsyncRequestHandler {
   var method: HTTPMethod { .POST }

@@ -7,11 +7,11 @@
 
 import Foundation
 import Vapor
-import Ginny
 
 struct NextRaceHandler: AsyncRequestHandler {
   var method: HTTPMethod { .GET }
 
+  @Sendable
   func handle(req: Request) async throws -> some AsyncResponseEncodable {
     let args = try req.query.decode(NextRaceRequest.self)
     let currentDate = Date()
