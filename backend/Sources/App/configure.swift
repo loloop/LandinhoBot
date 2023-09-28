@@ -19,8 +19,11 @@ public func configure(_ app: Application) async throws {
 
   app.migrations.add(v0_1Migration())
 
-  let nr = NextRaceHandler()
-  app.routes.get("next-race", use: nr.handle(req:))
+  [
+    UploadCategoryHandler(),
+    NextRaceHandler(),
+    UploadRaceHandler()
+  ].register(in: app)
 
    try await app.autoMigrate()
 }

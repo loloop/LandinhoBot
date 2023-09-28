@@ -10,7 +10,8 @@ import Vapor
 
 struct NextRaceHandler: AsyncRequestHandler {
   var method: HTTPMethod { .GET }
-
+  var path: String { "next-race" }
+  
   @Sendable
   func handle(req: Request) async throws -> some AsyncResponseEncodable {
     let args = try req.query.decode(NextRaceRequest.self)

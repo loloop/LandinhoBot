@@ -10,6 +10,7 @@ import Foundation
 
 struct UploadCategoryHandler: AsyncRequestHandler {
   var method: HTTPMethod { .POST }
+  var path: String { "category" }
 
   func handle(req: Request) async throws -> some AsyncResponseEncodable {
     let request = try req.content.decode(UploadCategoryRequest.self)
