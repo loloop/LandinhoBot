@@ -158,20 +158,28 @@ final class DefaultVroomBot: SwiftyBot {
   }
 
   func handleNextRace(update: Update, args: [String]) async throws {
-    var categoryTag = args.dropFirst().first ?? ""
+    let categoryTag = args.dropFirst().first ?? ""
 
     guard
       let url = self.buildURL(path: "next-race", args: ["argument": categoryTag])
     else {
+      bot.reply(update, text: "Internal error")
       return
     }
 
     let data = try await URLSession.shared.data(url: url)
     let decoder = JSONDecoder()
     decoder.dateDecodingStrategy = .iso8601
-    let response = try decoder.decode(NextRaceResponse.self, from: data)
-    guard let formattedRace = formatRace(response: response) else { return }
-    bot.reply(update, text: formattedRace)
+    do {
+      let response = try decoder.decode(NextRaceResponse.self, from: data)
+      guard let formattedRace = formatRace(response: response) else {
+        bot.reply(update, text: "Couldn't find next race")
+        return
+      }
+      bot.reply(update, text: formattedRace)
+    } catch (let error) {
+      bot.reply(update, text: "\(error)")
+    }
   }
 
   func buildURL(path: String, args: [String: String]) -> URL? {
@@ -215,7 +223,7 @@ extension URLSession {
   func data(url: URL) async throws -> Data {
     try await withCheckedThrowingContinuation { continuation in
       let request = URLRequest(url: url)
-      self.dataTask(with: request) { data, _, error in
+      let task = dataTask(with: request) { data, _, error in
         guard let data else {
           if let error {
             continuation.resume(throwing: error)
@@ -224,7 +232,8 @@ extension URLSession {
         }
 
         continuation.resume(returning: data)
-      }.resume()
+      }
+      task.resume()
     }
   }
 }
