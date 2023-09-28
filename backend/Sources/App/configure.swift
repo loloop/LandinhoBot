@@ -19,5 +19,11 @@ public func configure(_ app: Application) async throws {
 
   app.migrations.add(v0_1Migration())
 
+  [
+    UploadCategoryHandler(),
+    NextRaceHandler(),
+    UploadRaceHandler()
+  ].register(in: app)
+
    try await app.autoMigrate()
 }

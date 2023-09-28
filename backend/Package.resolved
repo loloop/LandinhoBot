@@ -55,15 +55,6 @@
       }
     },
     {
-      "identity" : "ginny",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/gonzalonunez/ginny.git",
-      "state" : {
-        "revision" : "4ab1e7d43d3ef4d161cccdad6145fe90f11c666c",
-        "version" : "0.1.1"
-      }
-    },
-    {
       "identity" : "multipart-kit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/multipart-kit.git",
@@ -115,15 +106,6 @@
       "state" : {
         "revision" : "b14b7f4c528c942f121c8b860b9410b2bf57825e",
         "version" : "1.0.0"
-      }
-    },
-    {
-      "identity" : "swift-argument-parser",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-argument-parser.git",
-      "state" : {
-        "revision" : "8f4d2753f0e4778c76d5f05ad16c74f707390531",
-        "version" : "1.2.3"
       }
     },
     {
@@ -223,15 +205,6 @@
       "state" : {
         "revision" : "0a5bc04095a675662cf24757cc0640aa2204253b",
         "version" : "1.0.2"
-      }
-    },
-    {
-      "identity" : "swift-syntax",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-syntax.git",
-      "state" : {
-        "revision" : "edd2d0cdb988ac45e2515e0dd0624e4a6de54a94",
-        "version" : "0.50800.0-SNAPSHOT-2022-12-29-a"
       }
     },
     {

@@ -1,4 +1,7 @@
 import Foundation
+#if os(Linux)
+import FoundationNetworking
+#endif
 import TelegramBotSDK
 
 open class SwiftyBot {
@@ -150,25 +153,33 @@ final class DefaultVroomBot: SwiftyBot {
           Task {
             try await self.handleNextRace(update: update, args: args)
           }
-      })
+        })
     ]
   }
 
   func handleNextRace(update: Update, args: [String]) async throws {
-    var categoryTag = args.dropFirst().first ?? ""
+    let categoryTag = args.dropFirst().first ?? ""
 
     guard
       let url = self.buildURL(path: "next-race", args: ["argument": categoryTag])
     else {
+      bot.reply(update, text: "Internal error")
       return
     }
 
-    let data = try await URLSession.shared.data(from: url)
+    let data = try await URLSession.shared.data(url: url)
     let decoder = JSONDecoder()
     decoder.dateDecodingStrategy = .iso8601
-    let response = try decoder.decode(NextRaceResponse.self, from: data.0)
-    guard let formattedRace = formatRace(response: response) else { return }
-    bot.reply(update, text: formattedRace)
+    do {
+      let response = try decoder.decode(NextRaceResponse.self, from: data)
+      guard let formattedRace = formatRace(response: response) else {
+        bot.reply(update, text: "Couldn't find next race")
+        return
+      }
+      bot.reply(update, text: formattedRace)
+    } catch (let error) {
+      bot.reply(update, text: "\(error)")
+    }
   }
 
   func buildURL(path: String, args: [String: String]) -> URL? {
@@ -199,6 +210,31 @@ final class DefaultVroomBot: SwiftyBot {
   }
 
   func formatEvent(_ event: RaceEvent) -> String {
-    "\(event.date.formatted()) \(event.title)"
+    "\(Self.formatter.string(from: event.date)) - \(event.title)"
+  }
+
+  static let formatter = {
+    let f = DateFormatter()
+    f.dateFormat = "MM/dd/yy HH:mm"
+    return f
+  }()
+}
+
+extension URLSession {
+  func data(url: URL) async throws -> Data {
+    try await withCheckedThrowingContinuation { continuation in
+      let request = URLRequest(url: url)
+      let task = dataTask(with: request) { data, _, error in
+        guard let data else {
+          if let error {
+            continuation.resume(throwing: error)
+          }
+          return
+        }
+
+        continuation.resume(returning: data)
+      }
+      task.resume()
+    }
   }
 }

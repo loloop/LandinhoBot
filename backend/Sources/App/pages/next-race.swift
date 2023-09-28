@@ -7,13 +7,20 @@
 
 import Foundation
 import Vapor
-import Ginny
 
 struct NextRaceHandler: AsyncRequestHandler {
   var method: HTTPMethod { .GET }
-
+  var path: String { "next-race" }
+  
+  @Sendable
   func handle(req: Request) async throws -> some AsyncResponseEncodable {
-    let args = try req.query.decode(NextRaceRequest.self)
+    var args: String
+    do {
+      args = try req.query.decode(NextRaceRequest.self).argument
+    } catch {
+      args = ""
+    }
+
     let currentDate = Date()
 
     let query = Race
@@ -24,8 +31,8 @@ struct NextRaceHandler: AsyncRequestHandler {
       .with(\.$events)
       .with(\.$category)
 
-    if !args.argument.isEmpty {
-      query.filter(Category.self, \.$tag, .equal, args.argument)
+    if !args.isEmpty {
+      query.filter(Category.self, \.$tag, .equal, args)
     }
 
     let nextRace = try await query.first()

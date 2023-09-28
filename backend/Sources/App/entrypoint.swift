@@ -1,7 +1,6 @@
 import Vapor
 import Dispatch
 import Logging
-import Ginny
 
 /// This extension is temporary and can be removed once Vapor gets this support.
 private extension Vapor.Application {
@@ -29,7 +28,6 @@ enum Entrypoint {
         
         let app = Application(env)
         defer { app.shutdown() }
-        app.registerRoutes()
 
         do {
             try await configure(app)

@@ -39,7 +39,8 @@ final class APIRequester: APIRequesting {
 
   func makeURL(path: String, queryItems: [URLQueryItem]?) throws -> URL? {
     #if DEBUG
-    let host: String = "localhost"
+    // let host: String = "localhost"
+    let host: String = "quake.host"
     #else
     let host: String = "myones-backend.onrender.com"
     #endif
@@ -51,9 +52,10 @@ final class APIRequester: APIRequesting {
     // let host: String = try Configuration.value(for: "BASE_URL", in: .main)
 
     var components = URLComponents()
-    components.scheme = isLocalhost ? "http" : "https"
+    components.scheme = isLocalhost ? "http" : "http"
     components.host = host
-    if isLocalhost { components.port = 8080 }
+//    if isLocalhost { components.port = 8080 }
+    components.port = 8080
     components.path = "/\(path)"
     components.queryItems = queryItems
     return components.url

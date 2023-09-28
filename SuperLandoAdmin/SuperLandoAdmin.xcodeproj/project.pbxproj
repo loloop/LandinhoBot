@@ -19,6 +19,7 @@
 /* Begin PBXFileReference section */
 		B40901912AC1B7B900B6F436 /* Upload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Upload.swift; sourceTree = "<group>"; };
 		B40901932AC1C0E200B6F436 /* TestRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRequest.swift; sourceTree = "<group>"; };
+		B42603E32AC59C43009F9936 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B48609DB2AC126650098866E /* SuperLandoAdmin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperLandoAdmin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B48609DE2AC126650098866E /* SuperLandoAdminApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuperLandoAdminApp.swift; sourceTree = "<group>"; };
 		B48609E02AC126650098866E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -68,6 +69,7 @@
 		B48609DD2AC126650098866E /* SuperLandoAdmin */ = {
 			isa = PBXGroup;
 			children = (
+				B42603E32AC59C43009F9936 /* Info.plist */,
 				B48609EC2AC126860098866E /* SuperLandoAdmin.entitlements */,
 				B48609DE2AC126650098866E /* SuperLandoAdminApp.swift */,
 				B48609E02AC126650098866E /* ContentView.swift */,
@@ -301,6 +303,7 @@
 				DEVELOPMENT_TEAM = 7N9Z7384YN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SuperLandoAdmin/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -334,6 +337,7 @@
 				DEVELOPMENT_TEAM = 7N9Z7384YN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SuperLandoAdmin/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

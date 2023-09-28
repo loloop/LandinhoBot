@@ -1,6 +1,11 @@
 @main
-public struct LandinhoBot {
-    public static func main() {
-      DefaultVroomBot()
-    }
+public class LandinhoBot {
+  init(bot: DefaultVroomBot) {
+    self.bot = bot
+  }
+  let bot: DefaultVroomBot
+
+  public static func main() {
+    _ = LandinhoBot(bot: .init())
+  }
 }

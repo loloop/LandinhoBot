@@ -7,10 +7,10 @@
 
 import Vapor
 import Foundation
-import Ginny
 
 struct UploadRaceHandler: AsyncRequestHandler {
   var method: HTTPMethod { .POST }
+  var path: String { "race" }
 
   func handle(req: Request) async throws -> some AsyncResponseEncodable {
     let request = try req.content.decode(UploadRaceRequest.self)
