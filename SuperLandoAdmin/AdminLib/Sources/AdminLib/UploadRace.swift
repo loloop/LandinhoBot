@@ -24,6 +24,39 @@ public struct UploadRaceEvent: Codable, Equatable, Identifiable {
   var date: Date
 }
 
+public enum UploadRaceEventBundle: Equatable {
+  case F1Sprint
+  case F1Regular
+
+  var tag: String {
+    switch self {
+    case .F1Sprint, .F1Regular:
+      "f1"
+    }
+  }
+
+  var events: [UploadRaceEvent] {
+    switch self {
+    case .F1Sprint:
+      [
+        .init(title: "Practice 1", date: Date()),
+        .init(title: "Qualifying", date: Date()),
+        .init(title: "Practice 2", date: Date()),
+        .init(title: "Sprint", date: Date()),
+        .init(title: "Race", date: Date()),
+      ]
+    case .F1Regular:
+      [
+        .init(title: "Practice 1", date: Date()),
+        .init(title: "Practice 2", date: Date()),
+        .init(title: "Practice 3", date: Date()),
+        .init(title: "Qualifying", date: Date()),
+        .init(title: "Race", date: Date()),
+      ]
+    }
+  }
+}
+
 public struct UploadRace: Reducer {
   public init() {}
 
@@ -40,6 +73,7 @@ public struct UploadRace: Reducer {
     case uploadRace(APIClient<UploadRaceRequest>.Action)
     case submitRace
     case addEvent
+    case addBundle(UploadRaceEventBundle)
     case updateEventTitle(UploadRaceEvent, String)
     case updateEventDate(UploadRaceEvent, Date)
     case binding(BindingAction<State>)
@@ -51,7 +85,16 @@ public struct UploadRace: Reducer {
     Reduce { state, action in
       switch action {
       case .addEvent:
-        state.events.append(.init(title: "", date: Date()))
+        if let ev = state.events.first {
+          state.events.append(.init(title: "", date: ev.date))
+        } else {
+          state.events.append(.init(title: "", date: Date()))
+        }
+        return .none
+
+      case .addBundle(let bundle):
+        state.raceTag = bundle.tag
+        state.events = bundle.events
         return .none
 
       case .updateEventTitle(let event, let title):
@@ -82,7 +125,7 @@ public struct UploadRace: Reducer {
           try await send(.uploadRace(.request(.post(request))))
         }
 
-      case .uploadRace(.response(.finished)):
+      case .uploadRace(.response(.finished(.success))):
         state.raceTitle = ""
         state.raceTag = ""
         state.events = []
@@ -144,6 +187,16 @@ public struct UploadRaceView: View {
 
         Button("add event") {
           viewStore.send(.addEvent)
+        }
+
+        Menu("add bundle") {
+          Button("F1 Sprint") {
+            viewStore.send(.addBundle(.F1Sprint))
+          }
+
+          Button("F1 Regular") {
+            viewStore.send(.addBundle(.F1Regular))
+          }
         }
 
       } header: {

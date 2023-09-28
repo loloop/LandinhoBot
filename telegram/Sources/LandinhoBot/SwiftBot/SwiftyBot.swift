@@ -210,11 +210,12 @@ final class DefaultVroomBot: SwiftyBot {
   }
 
   func formatEvent(_ event: RaceEvent) -> String {
-    "\(Self.formatter.string(from: event.date)) \(event.title)"
+    "\(Self.formatter.string(from: event.date)) - \(event.title)"
   }
 
   static let formatter = {
     let f = DateFormatter()
+    f.dateFormat = "MM/dd/yy HH:mm"
     return f
   }()
 }
