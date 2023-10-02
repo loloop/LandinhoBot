@@ -93,11 +93,23 @@ final class APIRequester: APIRequesting {
       let decoded = try decoder.decode(T.self, from: response.0)
       return decoded
     } catch(let error) {
-      throw URLError(.cannotParseResponse)
+      throw APIError(
+        jsonString: String(data: response.0, encoding: .utf8),
+        innerError: error)
     }
   }
 
   func setPersistentHeaders(_ headers: [String : String]) {
      persistentHeaders = persistentHeaders.merging(headers, uniquingKeysWith: { $1 })
   }
+}
+
+// TODO: Expose this error in APIClient, not here
+public struct APIError: Equatable, Error {
+  public static func == (lhs: APIError, rhs: APIError) -> Bool {
+    lhs.jsonString == rhs.jsonString
+  }
+  
+  public let jsonString: String?
+  public let innerError: Error
 }

@@ -20,6 +20,13 @@ public extension APIRequestState {
   var isLoading: Bool {
     self == .loading
   }
+
+  var value: T? {
+    if case .finished(.success(let value)) = self {
+      return value
+    }
+    return nil
+  }
 }
 
 public struct APIClient<T: Equatable & Decodable>: Reducer {

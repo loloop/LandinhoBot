@@ -8,7 +8,7 @@
 import Fluent
 import Vapor
 
-final class Category: Model {
+final class Category: Model, Content {
   static var schema: String = "category"
 
   init() {}

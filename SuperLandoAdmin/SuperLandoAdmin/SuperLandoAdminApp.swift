@@ -26,22 +26,23 @@ struct SuperLandoAdminApp: App {
 
 struct Root: Reducer {
   struct State: Equatable {
-    var upload = Upload.State()
+    var categories = Categories.State()
     var testRequest = TestRequest.State()
   }
 
   enum Action: Equatable {
-    case upload(Upload.Action)
+    case categories(Categories.Action)
     case testRequest(TestRequest.Action)
   }
 
   var body: some ReducerOf<Root> {
-    Scope(state: \.upload, action: /Action.upload) {
-      Upload()
+    Scope(state: \.categories, action: /Action.categories) {
+      Categories()
     }
     Scope(state: \.testRequest, action: /Action.testRequest) {
       TestRequest()
     }
   }
 }
+
 

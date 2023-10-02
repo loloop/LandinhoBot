@@ -20,9 +20,25 @@ public func configure(_ app: Application) async throws {
   app.migrations.add(v0_1Migration())
 
   [
+    // category
     UploadCategoryHandler(),
+    CategoryListHandler(),
+    UpdateCategoryHandler(),
+
+    // next-race
     NextRaceHandler(),
-    UploadRaceHandler()
+
+    // race
+    RaceListHandler(),
+    UpdateRaceHandler(),
+    UploadRaceHandler(),
+
+    // prune-race
+    PruneRaceHandler(),
+
+    // events
+    EventListHandler(),
+    UpdateEventsHandler()
   ].register(in: app)
 
    try await app.autoMigrate()

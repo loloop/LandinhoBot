@@ -5,6 +5,7 @@
 //  Created by Mauricio Cardozo on 25/09/23.
 //
 
+import AdminLib
 import APIClient
 import Foundation
 import ComposableArchitecture
@@ -75,23 +76,26 @@ struct TestRequestView: View {
           }
         }
       }
+      .padding()
+      .frame(maxWidth: 250, maxHeight: 250, alignment: .top)
+      .background(
+        RoundedRectangle(cornerRadius: 25.0, style: .continuous)
+          .fill(.white.shadow(.drop(radius: 10)))
+      )
     }
   }
+}
+
+#Preview {
+  TestRequestView(store: .init(initialState: .init(), reducer: {
+    TestRequest()
+  }))
 }
 
 struct NextRaceResponse: Codable, Equatable {
   let nextRace: Race?
 }
 
-struct Race: Codable, Equatable {
-  let id: UUID
-  let title: String
-  let events: [RaceEvent]
-}
 
-struct RaceEvent: Codable, Equatable, Identifiable {
-  let id: UUID
-  let title: String
-  let date: Date
-}
+
 

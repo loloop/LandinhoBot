@@ -21,21 +21,25 @@ struct UploadRaceHandler: AsyncRequestHandler {
       throw Abort(.notFound, reason: "Category tag not found")
     }
 
-    let events = request.events.map {
+    let events = request.events?.compactMap {
       RaceEvent(title: $0.title, date: $0.date)
+    } ?? []
+
+    if events.isEmpty && request.earliestEventDate == nil {
+      throw Abort(.badRequest, reason: "A race must have a date")
     }
 
-    guard !events.isEmpty else {
-      throw Abort(.badRequest, reason: "A race must have events")
-    }
+    var earliestDate: Date
 
-    guard
-      let earliestDate = events.sorted(
-        by: { $0.date ?? Date() > $1.date ?? Date() })
-        .first?
-        .date
-    else {
-      throw Abort(.badRequest)
+    if let date = request.earliestEventDate {
+      earliestDate = date
+    } else if let date = events.sorted(
+      by: { $0.date ?? Date() > $1.date ?? Date() })
+      .first?
+      .date {
+      earliestDate = date
+    } else {
+      throw Abort(.badRequest, reason: "A race must have a date")
     }
 
     let race = Race(
@@ -47,13 +51,14 @@ struct UploadRaceHandler: AsyncRequestHandler {
       try await race.$events.create(events, on: db)
     }
 
-    return request
+    return race
   }
 
   struct UploadRaceRequest: Content {
     let title: String
     let categoryTag: String
-    let events: [UploadRaceEvent]
+    let events: [UploadRaceEvent]?
+    let earliestEventDate: Date?
 
     struct UploadRaceEvent: Content {
       let title: String
@@ -62,3 +67,47 @@ struct UploadRaceHandler: AsyncRequestHandler {
   }
 }
 
+struct RaceListHandler: AsyncRequestHandler {
+  var method: HTTPMethod { .GET }
+  var path: String { "race" }
+
+  func handle(req: Request) async throws -> some AsyncResponseEncodable {
+    let arg = try req.query.decode(RaceListQuery.self)
+
+    return try await Race
+      .query(on: req.db)
+      .join(parent: \.$category)
+      .filter(Category.self, \.$tag, .equal, arg.tag)
+      .sort(\.$earliestEventDate, .ascending)
+      .all()
+  }
+
+  struct RaceListQuery: Content {
+    let tag: String
+  }
+}
+
+struct UpdateRaceHandler: AsyncRequestHandler {
+  var method: HTTPMethod { .PATCH }
+  var path: String { "race" }
+
+  func handle(req: Request) async throws -> some AsyncResponseEncodable {
+    let request = try req.content.decode(UpdateRaceRequest.self)
+
+    guard let id = UUID(uuidString: request.id) else {
+      throw Abort(.badRequest)
+    }
+
+    try await Race.query(on: req.db)
+      .set(\.$title, to: request.title)
+      .filter(\.$id, .equal, id)
+      .update()
+
+    return request
+  }
+
+  struct UpdateRaceRequest: Content {
+    let id: String
+    let title: String
+  }
+}
