@@ -18,22 +18,25 @@ struct ContentView: View {
   var body: some View {
     NavigationSplitView {
       List {
-        NavigationLink("upload") {
-          UploadView(
-            store: store.scope(
-              state: \.upload,
-              action: Root.Action.upload))
-        }
-
-        NavigationLink("test requests") {
+        NavigationLink("Home") {
           TestRequestView(
             store: store.scope(
               state: \.testRequest,
               action: Root.Action.testRequest))
         }
+        NavigationLink("Categories") {
+          CategoryListView(
+            store: store.scope(
+              state: \.categories,
+              action: Root.Action.categories))
+        }
       }
+      .navigationTitle("Super Lando Admin")
     } detail: {
-      EmptyView()
+      ContentUnavailableView(
+        "Choose a menu item",
+        systemImage: "brain.head.profile",
+        description: Text("sorry the default is unimplemented lmao"))
     }
   }
 }
