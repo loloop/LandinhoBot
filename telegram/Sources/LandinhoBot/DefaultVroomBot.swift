@@ -29,8 +29,8 @@ final class DefaultVroomBot: SwiftyBot {
       .init(
         command: "nextrace",
         description: "Shows when the next race will happen",
-        handler: { update in
-          try await self.handleNextRace(update: update)
+        handler: { [weak self] update in
+          try await self?.handleNextRace(update: update)
         })
     ]
   }
@@ -39,9 +39,9 @@ final class DefaultVroomBot: SwiftyBot {
     let categoryTag = update.arguments.first ?? ""
 
     guard
-      let url = self.buildURL(path: "next-race", args: ["argument": categoryTag])
+      let url = buildURL(path: "next-race", args: ["argument": categoryTag])
     else {
-      try await bot.reply(update, text: "Internal error")
+      debugMessage("Couldn't build `next-race` URL")
       return
     }
 
@@ -103,7 +103,7 @@ final class DefaultVroomBot: SwiftyBot {
     🏎️🏎️🏎️🏎️🏎️🏎️🏎️
 
     \(Self.formatter.string(from: race.earliestEventDate))
-    
+
     🏎️🏎️🏎️🏎️🏎️🏎️🏎️
 
     """
