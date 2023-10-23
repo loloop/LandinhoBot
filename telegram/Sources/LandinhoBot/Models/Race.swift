@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Race.swift
 //  
 //
 //  Created by Mauricio Cardozo on 24/09/23.
@@ -17,6 +17,7 @@ struct Category: Codable {
 struct Race: Codable, Equatable {
   let id: UUID
   let title: String
+  let earliestEventDate: Date
   let events: [RaceEvent]
 }
 
