@@ -36,10 +36,10 @@ struct APIClient<T: Decodable> {
     decoder.dateDecodingStrategy = .iso8601
 
     do {
-      let response = try decoder.decode(T.self, from: data.0)
+      let response = try decoder.decode(T.self, from: data)
       return response
     } catch (let error) {
-      let result = String(data: data.0, encoding: .utf8) ?? "Couldn't decode JSON"
+      let result = String(data: data, encoding: .utf8) ?? "Couldn't decode JSON"
       throw APIClientError(message: """
 
         \(error)

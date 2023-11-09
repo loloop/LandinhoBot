@@ -11,7 +11,7 @@ import FoundationNetworking
 #endif
 
 extension URLSession {
-  func data(url: URL) async throws -> Data {
+  func data(from url: URL) async throws -> Data {
     try await withCheckedThrowingContinuation { continuation in
       let request = URLRequest(url: url)
       let task = dataTask(with: request) { data, _, error in
