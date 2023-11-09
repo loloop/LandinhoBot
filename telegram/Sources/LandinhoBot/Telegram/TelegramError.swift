@@ -7,6 +7,8 @@
 
 import Foundation
 
-struct TelegramError: Error {
+struct TelegramError: LocalizedError {
   let message: String
+
+  var errorDescription: String? { message }
 }

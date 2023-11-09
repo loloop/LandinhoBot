@@ -57,7 +57,7 @@ open class SwiftyBot {
             }
           )
         } catch(let error) {
-          debugMessage("ERROR: \(error)")
+          debugMessage(error.localizedDescription)
         }
       }
     }
@@ -66,7 +66,7 @@ open class SwiftyBot {
   private func firehose(_ update: ChatUpdate) {
     debugMessage(
       """
-      \(update.command) called by \(update.chatID) - \(update.chatName)
+      \(update.command) called by \(update.chatID) – \(update.chatName)
       """,
       currentUpdate: update)
   }

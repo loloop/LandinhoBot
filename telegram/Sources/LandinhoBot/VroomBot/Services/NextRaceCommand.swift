@@ -17,7 +17,7 @@ struct NextRaceCommand: Command {
     let categoryTag = update.arguments.first ?? ""
     let response = try await api.fetch(arguments: ["argument": categoryTag])
     guard let formattedResponse = formatResponse(response) else {
-      try await bot.reply(update, text: "Couldn't find next race")
+      try await bot.reply(update, text: "Não encontrei a próxima corrida")
       return
     }
     try await bot.reply(update, text: formattedResponse)

@@ -10,8 +10,12 @@ import Foundation
 import FoundationNetworking
 #endif
 
-struct APIClientError: Error {
+struct APIClientError: LocalizedError {
   let message: String
+
+  var errorDescription: String? {
+    message
+  }
 }
 
 struct APIClient<T: Decodable> {
@@ -35,7 +39,15 @@ struct APIClient<T: Decodable> {
       let response = try decoder.decode(T.self, from: data.0)
       return response
     } catch (let error) {
-      throw APIClientError(message: "\(error)")
+      let result = String(data: data.0, encoding: .utf8) ?? "Couldn't decode JSON"
+      throw APIClientError(message: """
+
+        \(error)
+
+        ––––
+
+        \(result)
+      """)
     }
   }
 

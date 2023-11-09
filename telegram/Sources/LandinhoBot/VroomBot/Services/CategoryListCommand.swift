@@ -11,10 +11,27 @@ struct CategoryListCommand: Command {
 
   let command: String = "categories"
   let description: String = "Lista todas as categorias disponíveis"
+  let api = APIClient<[Category]>(endpoint: "category")
 
   func handle(update: ChatUpdate, bot: Bot, debugMessage: (String) -> Void) async throws {
-    // TODO: bater na API e pegar uma lista de todas as categorias disponíveis
+    let result = try await api.fetch()
+    let formattedResult = formatCategories(result)
+    try await bot.reply(update, text: formattedResult)
+  }
 
-    try await bot.reply(update, text: "TODO")
+  func formatCategories(_ categories: [Category]) -> String {
+    guard !categories.isEmpty else {
+      return "Não encontrei nenhuma categoria"
+    }
+
+    let categoryList = categories
+      .map { "`\($0.tag)` – \($0.title)" }
+      .joined(separator: "\n")
+
+    return """
+    As categorias disponíveis são:
+
+    \(categoryList)
+    """
   }
 }

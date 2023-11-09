@@ -1,6 +1,6 @@
 //
 //  Telegram+Bot.swift
-//  
+//
 //
 //  Created by Mauricio Cardozo on 09/11/23.
 //
@@ -15,6 +15,7 @@ extension TelegramBot: Bot {
     }
     try await sendMessageAsync(
       chatId: .chat(chatID),
-      text: text)
+      text: text,
+      parseMode: .markdownv2)
   }
 }
