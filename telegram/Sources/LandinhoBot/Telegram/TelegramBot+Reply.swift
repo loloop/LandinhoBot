@@ -8,10 +8,6 @@
 import Foundation
 import TelegramBotSDK
 
-struct TelegramError: Error {
-  let message: String
-}
-
 extension TelegramBot {
   @discardableResult
   func reply(_ update: ChatUpdate, text: String) async throws -> Message {

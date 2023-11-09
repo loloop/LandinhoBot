@@ -1,10 +1,11 @@
 //
-//  SwiftyBot+Telegram.swift
+//  File.swift
+//  
 //
-//
-//  Created by Mauricio Cardozo on 23/10/23.
+//  Created by Mauricio Cardozo on 09/11/23.
 //
 
+import Foundation
 import TelegramBotSDK
 
 extension ChatUpdate {
@@ -27,13 +28,5 @@ extension ChatUpdate {
     self.message = text
     self.chatID = chatID
     self.chatName = message.chat.username ?? message.chat.title ?? ""
-  }
-}
-
-extension Command {
-  var botCommand: BotCommand {
-    .init(
-      command: command,
-      description: description)
   }
 }

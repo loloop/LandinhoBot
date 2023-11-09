@@ -37,19 +37,19 @@ public enum UploadRaceEventBundle: Equatable {
     switch self {
     case .F1Sprint:
       [
-        .init(title: "Practice 1", date: Date()),
+        .init(title: "Treino Livre", date: Date()),
         .init(title: "Qualifying", date: Date()),
-        .init(title: "Practice 2", date: Date()),
+        .init(title: "Sprint Shootout", date: Date()),
         .init(title: "Sprint", date: Date()),
-        .init(title: "Race", date: Date()),
+        .init(title: "Corrida", date: Date()),
       ]
     case .F1Regular:
       [
-        .init(title: "Practice 1", date: Date()),
-        .init(title: "Practice 2", date: Date()),
-        .init(title: "Practice 3", date: Date()),
+        .init(title: "Treino Livre  1", date: Date()),
+        .init(title: "Treino Livre 2", date: Date()),
+        .init(title: "Treino Livre 3", date: Date()),
         .init(title: "Qualifying", date: Date()),
-        .init(title: "Race", date: Date()),
+        .init(title: "Corrida", date: Date()),
       ]
     }
   }

@@ -1,41 +1,26 @@
 //
+//  NextRaceService.swift
 //
-//  DefaultVroomBot.swift
 //
-//
-//  Created by Mauricio Cardozo on 23/10/23.
+//  Created by Mauricio Cardozo on 09/11/23.
 //
 
 import Foundation
 #if os(Linux)
 import FoundationNetworking
 #endif
-import TelegramBotSDK
 
-final class DefaultVroomBot: SwiftyBot {
-
-  override init() {
-    super.init()
-    update()
-  }
+struct NextRaceCommand: Command {
 
   struct NextRaceResponse: Codable, Equatable {
     let nextRace: Race?
     let categoryComment: String
   }
 
-  override var commands: [Command] {
-    [
-      .init(
-        command: "nextrace",
-        description: "Shows when the next race will happen",
-        handler: { [weak self] update in
-          try await self?.handleNextRace(update: update)
-        })
-    ]
-  }
+  let command: String = "nextrace"
+  let description: String = "Mostra a próxima corrida que irá acontecer"
 
-  func handleNextRace(update: ChatUpdate) async throws {
+  func handle(update: ChatUpdate, bot: Bot, debugMessage: (String) -> Void) async throws {
     let categoryTag = update.arguments.first ?? ""
 
     guard
