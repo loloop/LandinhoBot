@@ -1,17 +1,18 @@
 import Foundation
-#if os(Linux)
-import FoundationNetworking
-#endif
 import TelegramBotSDK
 
 open class SwiftyBot {
 
   public init() {
-    self.bot = TelegramBot(token: Environment.telegramToken)
+    self._bot = TelegramBot(token: Environment.telegramToken)
+    self.bot = _bot
+
     registerCommands()
   }
 
-  public let bot: TelegramBot
+  public let bot: Bot
+  // TODO: Make the internal bot more generic so we can support other platforms in the future
+  let _bot: TelegramBot
 
   open var commands: [Command] {
     fatalError("Please subclass SwiftyBot")
@@ -25,7 +26,7 @@ open class SwiftyBot {
       return
     }
 
-    bot.setMyCommandsAsync(commands: cmds) { [unowned self] result, error in
+    _bot.setMyCommandsAsync(commands: cmds) { [unowned self] result, error in
       debugMessage("SET COMMANDS ASYNC")
 
       if let error {
@@ -35,11 +36,11 @@ open class SwiftyBot {
   }
 
   public func update() {
-    while let update = bot.nextUpdateSync() {
+    while let update = _bot.nextUpdateSync() {
       guard
         let chatUpdate = ChatUpdate(update),
         let cmd = commands.first(where: {
-          chatUpdate.command == "/\($0.command)"
+          chatUpdate.command == "/\($0.command.lowercased())"
         })
       else {
         continue
@@ -47,7 +48,17 @@ open class SwiftyBot {
 
       firehose(chatUpdate)
       Task {
-        try await cmd.handler(chatUpdate)
+        do {
+          try await cmd.handle(
+            update: chatUpdate,
+            bot: bot,
+            debugMessage: { [weak self] str in
+              self?.debugMessage(str)
+            }
+          )
+        } catch(let error) {
+          debugMessage(error.localizedDescription)
+        }
       }
     }
   }
@@ -55,7 +66,7 @@ open class SwiftyBot {
   private func firehose(_ update: ChatUpdate) {
     debugMessage(
       """
-      \(update.command) called by \(update.chatID) - \(update.chatName)
+      \(update.command) called by \(update.chatID) – \(update.chatName)
       """,
       currentUpdate: update)
   }
@@ -74,7 +85,7 @@ open class SwiftyBot {
         return
       }
 
-      try await bot.sendMessageAsync(chatId: .chat(chatID), text: message)
+      try await _bot.sendMessageAsync(chatId: .chat(chatID), text: message)
     }
   }
 }

@@ -11,7 +11,7 @@ struct Category: Codable {
   let title: String
   let tag: String
   let comment: String
-  let races: [Race]
+  let races: [Race]?
 }
 
 struct Race: Codable, Equatable {
