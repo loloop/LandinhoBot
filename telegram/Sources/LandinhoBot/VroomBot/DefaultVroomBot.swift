@@ -7,10 +7,6 @@
 //
 
 import Foundation
-#if os(Linux)
-import FoundationNetworking
-#endif
-import TelegramBotSDK
 
 final class DefaultVroomBot: SwiftyBot {
 
@@ -21,7 +17,9 @@ final class DefaultVroomBot: SwiftyBot {
 
   override var commands: [Command] {
     [
-      NextRaceCommand()
+      HelpCommand(),
+      NextRaceCommand(),
+      CategoryListCommand()
     ]
   }
 }

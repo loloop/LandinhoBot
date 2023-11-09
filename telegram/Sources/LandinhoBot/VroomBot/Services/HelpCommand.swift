@@ -7,8 +7,23 @@
 
 import Foundation
 
-// TODO: Um comando que apenas explica os outros
+struct HelpCommand: Command {
+  let command: String = "help"
+  let description: String = "Ajuda para todos os comandos"
+  func handle(update: ChatUpdate, bot: Bot, debugMessage: (String) -> Void) async throws {
+    try await bot.reply(update, text: helpText)
+  }
 
-/*  \n
- Uso: /nextrace [categoria]
- Deixe a categoria vazia para a próxima corrida ou passe uma categoria para saber qual é a próxima corrida da categoria escolhida.*/
+  let helpText = """
+Os comandos disponíveis são:
+
+/help
+Lista os comandos de ajuda
+
+/nextrace [categoria]
+Lista a próxima corrida que vai acontecer. Passe uma categoria para que ele liste a próxima corrida de uma categoria específica.
+
+/categories
+Lista as categorias disponíveis
+"""
+}

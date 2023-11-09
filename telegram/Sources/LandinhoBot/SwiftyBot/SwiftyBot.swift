@@ -1,7 +1,4 @@
 import Foundation
-#if os(Linux)
-import FoundationNetworking
-#endif
 import TelegramBotSDK
 
 open class SwiftyBot {
@@ -51,13 +48,17 @@ open class SwiftyBot {
 
       firehose(chatUpdate)
       Task {
-        try await cmd.handle(
-          update: chatUpdate,
-          bot: bot,
-          debugMessage: { [weak self] str in
-            self?.debugMessage(str)
-          }
-        )
+        do {
+          try await cmd.handle(
+            update: chatUpdate,
+            bot: bot,
+            debugMessage: { [weak self] str in
+              self?.debugMessage(str)
+            }
+          )
+        } catch(let error) {
+          debugMessage("ERROR: \(error)")
+        }
       }
     }
   }
