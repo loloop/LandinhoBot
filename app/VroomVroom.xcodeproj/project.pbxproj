@@ -8,20 +8,26 @@
 
 /* Begin PBXBuildFile section */
 		B42CA9ED2AFE8B66009B3FFB /* VroomVroomApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42CA9EC2AFE8B66009B3FFB /* VroomVroomApp.swift */; };
-		B42CA9EF2AFE8B66009B3FFB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42CA9EE2AFE8B66009B3FFB /* ContentView.swift */; };
+		B42CA9EF2AFE8B66009B3FFB /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42CA9EE2AFE8B66009B3FFB /* RootView.swift */; };
 		B42CA9F12AFE8B67009B3FFB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B42CA9F02AFE8B67009B3FFB /* Assets.xcassets */; };
 		B42CA9F42AFE8B67009B3FFB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B42CA9F32AFE8B67009B3FFB /* Preview Assets.xcassets */; };
 		B450025C2AFE91EF003CDE6A /* APIClient in Frameworks */ = {isa = PBXBuildFile; productRef = B450025B2AFE91EF003CDE6A /* APIClient */; };
 		B450025E2AFE91F1003CDE6A /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = B450025D2AFE91F1003CDE6A /* Common */; };
+		B48A501F2AFECEEB00A01B7E /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48A501E2AFECEEB00A01B7E /* Root.swift */; };
+		B4D87C482B01AF07000EBEF9 /* Categories in Frameworks */ = {isa = PBXBuildFile; productRef = B4D87C472B01AF07000EBEF9 /* Categories */; };
+		B4D87C4A2B01AF09000EBEF9 /* ScheduleList in Frameworks */ = {isa = PBXBuildFile; productRef = B4D87C492B01AF09000EBEF9 /* ScheduleList */; };
+		B4D87C4C2B01AF0B000EBEF9 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = B4D87C4B2B01AF0B000EBEF9 /* Settings */; };
+		B4D87C4E2B01B12B000EBEF9 /* EventDetail in Frameworks */ = {isa = PBXBuildFile; productRef = B4D87C4D2B01B12B000EBEF9 /* EventDetail */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B42CA9E92AFE8B66009B3FFB /* VroomVroom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VroomVroom.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B42CA9EC2AFE8B66009B3FFB /* VroomVroomApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VroomVroomApp.swift; sourceTree = "<group>"; };
-		B42CA9EE2AFE8B66009B3FFB /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B42CA9EE2AFE8B66009B3FFB /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		B42CA9F02AFE8B67009B3FFB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B42CA9F32AFE8B67009B3FFB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B45002592AFE91A1003CDE6A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B48A501E2AFECEEB00A01B7E /* Root.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Root.swift; sourceTree = "<group>"; };
 		B4D9A1C02AFE8B9A008E3EB6 /* LandinhoLib */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LandinhoLib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -30,7 +36,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4D87C482B01AF07000EBEF9 /* Categories in Frameworks */,
+				B4D87C4C2B01AF0B000EBEF9 /* Settings in Frameworks */,
+				B4D87C4A2B01AF09000EBEF9 /* ScheduleList in Frameworks */,
 				B450025C2AFE91EF003CDE6A /* APIClient in Frameworks */,
+				B4D87C4E2B01B12B000EBEF9 /* EventDetail in Frameworks */,
 				B450025E2AFE91F1003CDE6A /* Common in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -61,7 +71,8 @@
 			children = (
 				B45002592AFE91A1003CDE6A /* Info.plist */,
 				B42CA9EC2AFE8B66009B3FFB /* VroomVroomApp.swift */,
-				B42CA9EE2AFE8B66009B3FFB /* ContentView.swift */,
+				B42CA9EE2AFE8B66009B3FFB /* RootView.swift */,
+				B48A501E2AFECEEB00A01B7E /* Root.swift */,
 				B42CA9F02AFE8B67009B3FFB /* Assets.xcassets */,
 				B42CA9F22AFE8B67009B3FFB /* Preview Content */,
 			);
@@ -102,6 +113,10 @@
 			packageProductDependencies = (
 				B450025B2AFE91EF003CDE6A /* APIClient */,
 				B450025D2AFE91F1003CDE6A /* Common */,
+				B4D87C472B01AF07000EBEF9 /* Categories */,
+				B4D87C492B01AF09000EBEF9 /* ScheduleList */,
+				B4D87C4B2B01AF0B000EBEF9 /* Settings */,
+				B4D87C4D2B01B12B000EBEF9 /* EventDetail */,
 			);
 			productName = VroomVroom;
 			productReference = B42CA9E92AFE8B66009B3FFB /* VroomVroom.app */;
@@ -157,8 +172,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B42CA9EF2AFE8B66009B3FFB /* ContentView.swift in Sources */,
+				B42CA9EF2AFE8B66009B3FFB /* RootView.swift in Sources */,
 				B42CA9ED2AFE8B66009B3FFB /* VroomVroomApp.swift in Sources */,
+				B48A501F2AFECEEB00A01B7E /* Root.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -375,6 +391,22 @@
 		B450025D2AFE91F1003CDE6A /* Common */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Common;
+		};
+		B4D87C472B01AF07000EBEF9 /* Categories */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Categories;
+		};
+		B4D87C492B01AF09000EBEF9 /* ScheduleList */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ScheduleList;
+		};
+		B4D87C4B2B01AF0B000EBEF9 /* Settings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Settings;
+		};
+		B4D87C4D2B01B12B000EBEF9 /* EventDetail */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = EventDetail;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
