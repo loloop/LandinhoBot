@@ -8,8 +8,6 @@
 import Foundation
 import ComposableArchitecture
 
-
-
 public struct APIClient<T: Equatable & Decodable>: Reducer {
   public init() {}
 

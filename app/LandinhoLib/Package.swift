@@ -13,10 +13,13 @@ let package = Package(
     .iOS(.v17),
   ],
   products: [
+    .library(name: "Admin", targets: ["Admin"]),
     .library(name: "APIClient", targets: ["APIClient"]),
     .library(name: "Categories", targets: ["Categories"]),
+    .library(name: "CategoriesAdmin", targets: ["CategoriesAdmin"]),
     .library(name: "Common", targets: ["Common"]),
     .library(name: "EventDetail", targets: ["EventDetail"]),
+    .library(name: "Home", targets: ["Home"]),
     .library(name: "ScheduleList", targets: ["ScheduleList"]),
     .library(name: "Settings", targets: ["Settings"]),
   ],
@@ -26,6 +29,13 @@ let package = Package(
       from: Version(1, 0, 0)),
   ],
   targets: [
+    .target(
+      name: "Admin",
+      dependencies: [
+        "CategoriesAdmin",
+        composable
+      ]),
+
     .target(
       name: "APIClient",
       dependencies: [
@@ -38,15 +48,51 @@ let package = Package(
       .target(
         name: "Categories",
         dependencies: [
-          "ScheduleList",
+          "APIClient",
+          composable
+        ]),
+
+      .target(
+        name: "CategoriesAdmin",
+        dependencies: [
+          "APIClient",
+          "Common",
+          "EventsAdmin",
+          "RacesAdmin",
           composable
         ]),
 
     .target(
       name: "EventDetail",
       dependencies: [
+        "APIClient",
         composable
       ]),
+
+      .target(
+        name: "EventsAdmin",
+        dependencies: [
+          "APIClient",
+          "Common",
+          composable
+        ]),
+
+      .target(
+        name: "Home",
+        dependencies: [
+          "Common",
+          "ScheduleList",
+          composable
+        ]),
+
+      .target(
+        name: "RacesAdmin",
+        dependencies: [
+          "APIClient",
+          "Common",
+          "EventsAdmin",
+          composable
+        ]),
 
       .target(
         name: "ScheduleList",
@@ -58,6 +104,7 @@ let package = Package(
       .target(
         name: "Settings",
         dependencies: [
+          "Admin",
           "APIClient",
           composable
         ]),

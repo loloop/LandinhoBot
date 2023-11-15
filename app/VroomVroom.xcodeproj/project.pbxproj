@@ -14,6 +14,9 @@
 		B450025C2AFE91EF003CDE6A /* APIClient in Frameworks */ = {isa = PBXBuildFile; productRef = B450025B2AFE91EF003CDE6A /* APIClient */; };
 		B450025E2AFE91F1003CDE6A /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = B450025D2AFE91F1003CDE6A /* Common */; };
 		B48A501F2AFECEEB00A01B7E /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48A501E2AFECEEB00A01B7E /* Root.swift */; };
+		B4CBD1632B0401C100BF6776 /* Home in Frameworks */ = {isa = PBXBuildFile; productRef = B4CBD1622B0401C100BF6776 /* Home */; };
+		B4CBD1652B0409FF00BF6776 /* Admin in Frameworks */ = {isa = PBXBuildFile; productRef = B4CBD1642B0409FF00BF6776 /* Admin */; };
+		B4CBD1672B040A0300BF6776 /* CategoriesAdmin in Frameworks */ = {isa = PBXBuildFile; productRef = B4CBD1662B040A0300BF6776 /* CategoriesAdmin */; };
 		B4D87C482B01AF07000EBEF9 /* Categories in Frameworks */ = {isa = PBXBuildFile; productRef = B4D87C472B01AF07000EBEF9 /* Categories */; };
 		B4D87C4A2B01AF09000EBEF9 /* ScheduleList in Frameworks */ = {isa = PBXBuildFile; productRef = B4D87C492B01AF09000EBEF9 /* ScheduleList */; };
 		B4D87C4C2B01AF0B000EBEF9 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = B4D87C4B2B01AF0B000EBEF9 /* Settings */; };
@@ -36,12 +39,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4CBD1672B040A0300BF6776 /* CategoriesAdmin in Frameworks */,
 				B4D87C482B01AF07000EBEF9 /* Categories in Frameworks */,
 				B4D87C4C2B01AF0B000EBEF9 /* Settings in Frameworks */,
 				B4D87C4A2B01AF09000EBEF9 /* ScheduleList in Frameworks */,
 				B450025C2AFE91EF003CDE6A /* APIClient in Frameworks */,
 				B4D87C4E2B01B12B000EBEF9 /* EventDetail in Frameworks */,
 				B450025E2AFE91F1003CDE6A /* Common in Frameworks */,
+				B4CBD1652B0409FF00BF6776 /* Admin in Frameworks */,
+				B4CBD1632B0401C100BF6776 /* Home in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +123,9 @@
 				B4D87C492B01AF09000EBEF9 /* ScheduleList */,
 				B4D87C4B2B01AF0B000EBEF9 /* Settings */,
 				B4D87C4D2B01B12B000EBEF9 /* EventDetail */,
+				B4CBD1622B0401C100BF6776 /* Home */,
+				B4CBD1642B0409FF00BF6776 /* Admin */,
+				B4CBD1662B040A0300BF6776 /* CategoriesAdmin */,
 			);
 			productName = VroomVroom;
 			productReference = B42CA9E92AFE8B66009B3FFB /* VroomVroom.app */;
@@ -391,6 +400,18 @@
 		B450025D2AFE91F1003CDE6A /* Common */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Common;
+		};
+		B4CBD1622B0401C100BF6776 /* Home */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Home;
+		};
+		B4CBD1642B0409FF00BF6776 /* Admin */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Admin;
+		};
+		B4CBD1662B040A0300BF6776 /* CategoriesAdmin */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CategoriesAdmin;
 		};
 		B4D87C472B01AF07000EBEF9 /* Categories */ = {
 			isa = XCSwiftPackageProductDependency;

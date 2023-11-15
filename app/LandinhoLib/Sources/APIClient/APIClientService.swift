@@ -36,12 +36,11 @@ final class APIClientService: APIClientServiceProtocol {
   }()
 
   func makeURL(path: String, queryItems: [URLQueryItem]?) throws -> URL? {
-    #warning("TODO make this configurable in the app itself, or add a separate target idk")
+    // TODO: make this configurable in the app itself, or add a separate target idk
     #if DEBUG
-    // let host: String = "localhost"
-    let host: String = "quake.host"
+    let host: String = "localhost"
     #else
-    let host: String = "myones-backend.onrender.com"
+    let host: String = "quake.host"
     #endif
     let isLocalhost = host == "localhost"
     /**
@@ -51,7 +50,7 @@ final class APIClientService: APIClientServiceProtocol {
     // let host: String = try Configuration.value(for: "BASE_URL", in: .main)
 
     var components = URLComponents()
-    components.scheme = isLocalhost ? "http" : "http"
+    components.scheme = isLocalhost ? "http" : "http" // TODO: Get a domain and change to HTTPS
     components.host = host
 //    if isLocalhost { components.port = 8080 }
     components.port = 8080

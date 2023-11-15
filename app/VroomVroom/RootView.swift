@@ -5,20 +5,34 @@
 //  Created by Mauricio Cardozo on 10/11/23.
 //
 
+import ComposableArchitecture
+import Categories
+import Home
+import Settings
 import SwiftUI
-import APIClient
 
+struct RootView: View {
 
+  let store: StoreOf<Root>
 
-struct HomeView: View {
   var body: some View {
-    VStack {
-      Image(systemName: "globe")
-        .imageScale(.large)
-        .foregroundStyle(.tint)
-      Text("Home!")
+    TabView {
+      HomeView(
+        store: store.scope(state: \.homeState, action: Root.Action.home)
+      )
+        .tabItem {
+          Label("Home", systemImage: "house")
+        }
+
+      CategoriesView()
+        .tabItem {
+          Label("Categories", systemImage: "car.side.rear.open")
+        }
+
+      SettingsView(store: store.scope(state: \.settingsState, action: Root.Action.settings))
+        .tabItem {
+          Label("Settings", systemImage: "gearshape")
+        }
     }
-    .padding()
   }
 }
-

@@ -12,6 +12,7 @@ public enum APIRequestState<T: Equatable & Decodable>: Equatable {
   case idle
   case loading
   case reloading(T)
+  // `TaskResult` will eventually be deprecated in favor of `Result` in TCA - beware
   case finished(TaskResult<T>)
 }
 

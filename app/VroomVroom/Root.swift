@@ -8,6 +8,7 @@
 import Foundation
 import Categories
 import ComposableArchitecture
+import Home
 import Settings
 import SwiftUI
 
@@ -18,10 +19,16 @@ public struct Root: Reducer {
     public init() {}
 
     var isPresentingBetaSheet = false
+    var homeState = Home.State()
+    var categoriesState = Categories.State()
+    var settingsState = Settings.State()
   }
 
   public enum Action: Equatable {
     case onAppear
+    case home(Home.Action)
+    case categories(Categories.Action)
+    case settings(Settings.Action)
   }
 
   public var body: some ReducerOf<Self> {
@@ -33,31 +40,22 @@ public struct Root: Reducer {
       case .onAppear:
         state.isPresentingBetaSheet = !UserDefaults.standard.bool(forKey: betaSheetKey)
         return .none
+      case .home, .categories, .settings:
+        return .none
       }
     }
-  }
-}
 
-struct RootView: View {
+    Scope(state: \.homeState, action: /Action.home) {
+      Home()
+    }
 
-  let store: StoreOf<Root>
+    Scope(state: \.categoriesState, action: /Action.categories) {
+      Categories()
+    }
 
-  var body: some View {
-    TabView {
-      HomeView()
-        .tabItem {
-          Label("Home", systemImage: "house")
-        }
-
-      CategoriesView()
-        .tabItem {
-          Label("Categories", systemImage: "car.side.rear.open")
-        }
-
-      SettingsView()
-        .tabItem {
-          Label("Settings", systemImage: "gearshape")
-        }
+    Scope(state: \.settingsState, action: /Action.settings) {
+      Settings()
     }
   }
 }
+
