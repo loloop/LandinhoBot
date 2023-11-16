@@ -14,32 +14,6 @@ import Common
 
 #warning("TODO categoryTitle")
 
-struct NextRaceLargeWidget: Widget {
-
-  let kind: String = "Próxima Corrida"
-
-  var body: some WidgetConfiguration {
-    AppIntentConfiguration(
-      kind: kind,
-      provider: NextRaceTimelineProvider())
-    { entry in
-      Group {
-        if let response = entry.response {
-          NextRaceLargeWidgetView(
-            response: response,
-            lastUpdatedDate: entry.date)
-        } else {
-          Image(systemName: "xmark.octagon")
-        }
-      }
-      .containerBackground(.background, for: .widget)
-    }
-    .supportedFamilies([.systemLarge])
-    .configurationDisplayName("TODO Name")
-    .description("TODO Description")
-  }
-}
-
 struct NextRaceLargeWidgetView: View {
 
   let response: ScheduleList.ScheduleListResponse
@@ -70,7 +44,7 @@ struct NextRaceLargeWidgetView: View {
 
                 Spacer()
 
-                Text(innerEvent.date.formatted(date: .omitted, time: .shortened))
+                Text(innerEvent.time)
                   .font(.title3)
 
               }
@@ -99,48 +73,10 @@ struct NextRaceLargeWidgetView: View {
 }
 
 #Preview(as: .systemLarge) {
-  NextRaceLargeWidget()
+  NextRaceWidget()
 } timeline: {
   NextRaceEntry(date: Date())
-  NextRaceEntry(
-    date: Date(),
-    response: .init(
-      categoryComment: "Event data by CalendarioF1.com",
-      nextRace: .init(
-        id: UUID(),
-        title: "FORMULA 1 HEINEKEN SILVER LAS VEGAS GRAND PRIX 2023",
-        events: [
-        ]))
-  )
-  NextRaceEntry(
-    date: Date(),
-    response: .init(
-      categoryComment: "Event data by CalendarioF1.com",
-      nextRace: .init(
-        id: UUID(),
-        title: "FORMULA 1 HEINEKEN SILVER LAS VEGAS GRAND PRIX 2023",
-        events: [
-          .init(
-            id: UUID(),
-            title: "Treino Livre 1",
-            date: Date()),
-          .init(
-            id: UUID(),
-            title: "Treino Livre 2",
-            date: Date()),
-          .init(
-            id: UUID(),
-            title: "Treino Livre 3",
-            date: Date()),
-          .init(
-            id: UUID(),
-            title: "Classificação",
-            date: Date()),
-          .init(
-            id: UUID(),
-            title: "Corrida",
-            date: Date().advanced(by: 200000))
-        ]))
-  )
+  NextRaceEntry.empty
+  NextRaceEntry.placeholder
 }
 

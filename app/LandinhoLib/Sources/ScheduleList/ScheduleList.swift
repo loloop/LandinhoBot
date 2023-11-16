@@ -51,7 +51,22 @@ public struct ScheduleList: Reducer {
       self.categoryComment = categoryComment
       self.nextRace = nextRace
     }
-    
+
+    public init() {
+      // init for placeholder widget views
+      categoryComment = ""
+      nextRace = Race(
+        id: UUID(),
+        title: "Placeholder",
+        events: [
+          .init(id: UUID(), title: "Placeholder", date: Date()),
+          .init(id: UUID(), title: "Placeholder", date: Date()),
+          .init(id: UUID(), title: "Placeholder", date: Date().advanced(by: 100000)),
+          .init(id: UUID(), title: "Placeholder", date: Date().advanced(by: 100000)),
+          .init(id: UUID(), title: "Placeholder", date: Date().advanced(by: 200000)),
+        ])
+    }
+
     public let categoryComment: String
     public let nextRace: Race
   }

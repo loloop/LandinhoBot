@@ -13,3 +13,50 @@ struct NextRaceEntry: TimelineEntry {
   var date: Date
   var response: ScheduleList.ScheduleListResponse?
 }
+
+extension NextRaceEntry {
+  static var placeholder: NextRaceEntry {
+    NextRaceEntry(
+      date: Date(),
+      response: .init(
+        categoryComment: "",
+        nextRace: .init(
+          id: UUID(),
+          title: "FORMULA 1 HEINEKEN SILVER LAS VEGAS GRAND PRIX 2023",
+          events: [
+            .init(
+              id: UUID(),
+              title: "Treino Livre 1",
+              date: Date()),
+            .init(
+              id: UUID(),
+              title: "Treino Livre 2",
+              date: Date()),
+            .init(
+              id: UUID(),
+              title: "Treino Livre 3",
+              date: Date().advanced(by: 100000)),
+            .init(
+              id: UUID(),
+              title: "Classificação",
+              date: Date().advanced(by: 100000)),
+            .init(
+              id: UUID(),
+              title: "Corrida",
+              date: Date().advanced(by: 200000))
+          ])))
+  }
+
+  static var empty: NextRaceEntry {
+    NextRaceEntry(
+      date: Date(),
+      response: .init(
+        categoryComment: "Event data by CalendarioF1.com",
+        nextRace: .init(
+          id: UUID(),
+          title: "FORMULA 1 HEINEKEN SILVER LAS VEGAS GRAND PRIX 2023",
+          events: [
+          ]))
+    )
+  }
+}

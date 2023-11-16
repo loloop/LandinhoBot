@@ -19,18 +19,22 @@ struct NextRaceTimelineProvider: AppIntentTimelineProvider {
   }
 
   func placeholder(in context: Context) -> NextRaceEntry {
-    NextRaceEntry(date: Date())
+    .placeholder
   }
 
-  func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> NextRaceEntry {
-    NextRaceEntry(date: Date())
+  func snapshot(
+    for configuration: NextRaceConfigurationIntent,
+    in context: Context)
+  async -> NextRaceEntry
+  {
+    .placeholder
   }
 
   @MainActor
-  func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<NextRaceEntry> {
-    // TODO: This is good for a widget that shows the next single session as well!
+  func timeline(for configuration: NextRaceConfigurationIntent, in context: Context) async -> Timeline<NextRaceEntry> {
     let viewStore = ViewStore(store, observe: { $0 })
     await viewStore.send(.racesRequest(.request(.get))).finish()
+
     guard let nextRace = viewStore.racesState.response.value else {
       return Timeline(entries: [], policy: .atEnd)
     }
@@ -41,6 +45,7 @@ struct NextRaceTimelineProvider: AppIntentTimelineProvider {
         response: nextRace)
     ]
 
+    // TODO: Fetch more than just the single next race to create a timeline
     // Generate a timeline consisting of five entries an hour apart, starting from the current date.
 //    let currentDate = Date()
 //    for hourOffset in 0 ..< 5 {

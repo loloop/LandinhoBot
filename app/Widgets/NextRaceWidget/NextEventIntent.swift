@@ -15,7 +15,7 @@ struct NextEventIntent: AppIntent {
   }
 
   init() {
-    eventCount = 0
+    fatalError("This init should not be called")
   }
 
   let eventCount: Int
@@ -37,7 +37,7 @@ class WidgetPositionManager: ObservableObject {
   static func nextButtonTapped(maxEvents: Int) {
     // TODO: take in the race and compare to the current one to reset
     // TODO: reset if its the end of the array
-    if Self.live.currentPosition == maxEvents - 1 {
+    if Self.live.currentPosition >= maxEvents - 1 {
       Self.live.currentPosition = 0
     } else {
       Self.live.currentPosition += 1

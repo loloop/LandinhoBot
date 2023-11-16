@@ -21,6 +21,7 @@
 		B4877C2E2B06A0D40009760C /* NextRaceLargeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C2D2B06A0D40009760C /* NextRaceLargeWidget.swift */; };
 		B4877C302B06A0E60009760C /* NextRaceExtraLargeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C2F2B06A0E60009760C /* NextRaceExtraLargeWidget.swift */; };
 		B4877C322B06AB700009760C /* EventByDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C312B06AB700009760C /* EventByDate.swift */; };
+		B4877C342B06B4C60009760C /* NextRaceWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C332B06B4C60009760C /* NextRaceWidget.swift */; };
 		B48A501F2AFECEEB00A01B7E /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48A501E2AFECEEB00A01B7E /* Root.swift */; };
 		B4CBD1632B0401C100BF6776 /* Home in Frameworks */ = {isa = PBXBuildFile; productRef = B4CBD1622B0401C100BF6776 /* Home */; };
 		B4CBD1652B0409FF00BF6776 /* Admin in Frameworks */ = {isa = PBXBuildFile; productRef = B4CBD1642B0409FF00BF6776 /* Admin */; };
@@ -29,7 +30,6 @@
 		B4CBD1702B05570F00BF6776 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4CBD16F2B05570F00BF6776 /* SwiftUI.framework */; };
 		B4CBD1732B05570F00BF6776 /* WidgetsBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CBD1722B05570F00BF6776 /* WidgetsBundle.swift */; };
 		B4CBD1752B05570F00BF6776 /* WidgetsLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CBD1742B05570F00BF6776 /* WidgetsLiveActivity.swift */; };
-		B4CBD1772B05570F00BF6776 /* Widgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CBD1762B05570F00BF6776 /* Widgets.swift */; };
 		B4CBD1792B05570F00BF6776 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CBD1782B05570F00BF6776 /* AppIntent.swift */; };
 		B4CBD17B2B05571100BF6776 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4CBD17A2B05571100BF6776 /* Assets.xcassets */; };
 		B4CBD17F2B05571100BF6776 /* WidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B4CBD16C2B05570F00BF6776 /* WidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -80,13 +80,13 @@
 		B4877C2D2B06A0D40009760C /* NextRaceLargeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextRaceLargeWidget.swift; sourceTree = "<group>"; };
 		B4877C2F2B06A0E60009760C /* NextRaceExtraLargeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextRaceExtraLargeWidget.swift; sourceTree = "<group>"; };
 		B4877C312B06AB700009760C /* EventByDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventByDate.swift; sourceTree = "<group>"; };
+		B4877C332B06B4C60009760C /* NextRaceWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextRaceWidget.swift; sourceTree = "<group>"; };
 		B48A501E2AFECEEB00A01B7E /* Root.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Root.swift; sourceTree = "<group>"; };
 		B4CBD16C2B05570F00BF6776 /* WidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4CBD16D2B05570F00BF6776 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		B4CBD16F2B05570F00BF6776 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		B4CBD1722B05570F00BF6776 /* WidgetsBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetsBundle.swift; sourceTree = "<group>"; };
 		B4CBD1742B05570F00BF6776 /* WidgetsLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetsLiveActivity.swift; sourceTree = "<group>"; };
-		B4CBD1762B05570F00BF6776 /* Widgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Widgets.swift; sourceTree = "<group>"; };
 		B4CBD1782B05570F00BF6776 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
 		B4CBD17A2B05571100BF6776 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B4CBD17C2B05571100BF6776 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -179,6 +179,7 @@
 		B4877C1D2B0692100009760C /* NextRaceWidget */ = {
 			isa = PBXGroup;
 			children = (
+				B4877C332B06B4C60009760C /* NextRaceWidget.swift */,
 				B4877C1E2B0692240009760C /* NextRaceSmallWidget.swift */,
 				B4877C2B2B06A0C70009760C /* NextRaceMediumWidget.swift */,
 				B4877C2D2B06A0D40009760C /* NextRaceLargeWidget.swift */,
@@ -197,7 +198,6 @@
 				B4877C1D2B0692100009760C /* NextRaceWidget */,
 				B4CBD1722B05570F00BF6776 /* WidgetsBundle.swift */,
 				B4CBD1742B05570F00BF6776 /* WidgetsLiveActivity.swift */,
-				B4CBD1762B05570F00BF6776 /* Widgets.swift */,
 				B4CBD1782B05570F00BF6776 /* AppIntent.swift */,
 				B4CBD17A2B05571100BF6776 /* Assets.xcassets */,
 				B4CBD17C2B05571100BF6776 /* Info.plist */,
@@ -335,7 +335,7 @@
 				B4877C2A2B0694350009760C /* NextRaceEntry.swift in Sources */,
 				B4877C2C2B06A0C70009760C /* NextRaceMediumWidget.swift in Sources */,
 				B4CBD1792B05570F00BF6776 /* AppIntent.swift in Sources */,
-				B4CBD1772B05570F00BF6776 /* Widgets.swift in Sources */,
+				B4877C342B06B4C60009760C /* NextRaceWidget.swift in Sources */,
 				B4877C232B0692C60009760C /* NextEventIntent.swift in Sources */,
 				B4CBD1732B05570F00BF6776 /* WidgetsBundle.swift in Sources */,
 				B4877C222B0692C30009760C /* NextRaceSmallWidget.swift in Sources */,

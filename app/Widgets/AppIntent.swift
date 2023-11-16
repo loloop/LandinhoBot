@@ -8,11 +8,10 @@
 import WidgetKit
 import AppIntents
 
-struct ConfigurationAppIntent: WidgetConfigurationIntent {
-    static var title: LocalizedStringResource = "Configuration"
-    static var description = IntentDescription("This is an example widget.")
+struct NextRaceConfigurationIntent: WidgetConfigurationIntent {
+    static var title: LocalizedStringResource = "Configuração da Próxima Corrida"
+    static var description = IntentDescription("Configura o widget")
 
-    // An example configurable parameter.
-    @Parameter(title: "Favorite Emoji", default: "😃")
-    var favoriteEmoji: String
+    @Parameter(title: "Mostrar Treinos", default: true)
+    var showNonMainEventSessions : Bool
 }

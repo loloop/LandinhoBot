@@ -17,28 +17,6 @@ import Common
 #warning("TODO extract views to a module so we can visualize them in the full app")
 #warning("TODO extract all these widgets to a single one and switch them based on family")
 
-struct NextRaceSmallWidget: Widget {
-  var body: some WidgetConfiguration {
-    AppIntentConfiguration(
-      kind: "NextRaceWidget",
-      provider: NextRaceTimelineProvider()) { entry in
-        Group {
-          if let response = entry.response {
-            NextRaceSmallWidgetView(
-              response: response,
-              lastUpdatedDate: entry.date)
-          } else {
-            Image(systemName: "xmark.octagon")
-          }
-        }
-        .containerBackground(.background, for: .widget)
-      }
-      .supportedFamilies([.systemSmall])
-      .configurationDisplayName("TODO Name")
-      .description("TODO Description")
-  }
-}
-
 struct NextRaceSmallWidgetView: View {
   @ObservedObject var positionManager = WidgetPositionManager.live
 
@@ -104,47 +82,20 @@ struct NextRaceSmallWidgetView: View {
       return ""
     }
 
-    return event.date.formatted(date: .omitted, time: .shortened)
+    return event.date.formatted(
+      .dateTime
+      .hour(.twoDigits(amPM: .abbreviated))
+      .minute(.twoDigits)
+    )
   }
 }
 
-
 #Preview(as: .systemSmall) {
-  NextRaceSmallWidget()
+  NextRaceWidget()
 } timeline: {
   NextRaceEntry(date: Date())
-  NextRaceEntry(
-    date: Date(),
-    response: .init(
-      categoryComment: "Event data by CalendarioF1.com",
-      nextRace: .init(
-        id: UUID(),
-        title: "FORMULA 1 HEINEKEN SILVER LAS VEGAS GRAND PRIX 2023",
-        events: [
-        ]))
-  )
-  NextRaceEntry(
-    date: Date(),
-    response: .init(
-      categoryComment: "Event data by CalendarioF1.com",
-      nextRace: .init(
-        id: UUID(),
-        title: "FORMULA 1 HEINEKEN SILVER LAS VEGAS GRAND PRIX 2023",
-        events: [
-          .init(
-            id: UUID(),
-            title: "Treino Livre 1",
-            date: Date()),
-          .init(
-            id: UUID(),
-            title: "Treino Livre 1",
-            date: Date()),
-          .init(
-            id: UUID(),
-            title: "Treino Livre 1",
-            date: Date())
-        ]))
-  )
+  NextRaceEntry.empty
+  NextRaceEntry.placeholder
 }
 
 
