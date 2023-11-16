@@ -15,6 +15,7 @@ struct NextRaceEntry: TimelineEntry {
 }
 
 extension NextRaceEntry {
+  // TODO: Change this for the official times of the 2021 Interlagos Grand Prix
   static var placeholder: NextRaceEntry {
     NextRaceEntry(
       date: Date(),
