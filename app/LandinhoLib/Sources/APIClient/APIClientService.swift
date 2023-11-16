@@ -38,9 +38,10 @@ final class APIClientService: APIClientServiceProtocol {
   func makeURL(path: String, queryItems: [URLQueryItem]?) throws -> URL? {
     // TODO: make this configurable in the app itself, or add a separate target idk
     #if DEBUG
-    let host: String = "localhost"
+//    let host: String = "localhost"
+    let host: String = "api.vroomvroom.racing"
     #else
-    let host: String = "quake.host"
+    let host: String = "api.vroomvroom.racing"
     #endif
     let isLocalhost = host == "localhost"
     /**
@@ -50,10 +51,9 @@ final class APIClientService: APIClientServiceProtocol {
     // let host: String = try Configuration.value(for: "BASE_URL", in: .main)
 
     var components = URLComponents()
-    components.scheme = isLocalhost ? "http" : "http" // TODO: Get a domain and change to HTTPS
+    components.scheme = isLocalhost ? "http" : "https"
     components.host = host
-//    if isLocalhost { components.port = 8080 }
-    components.port = 8080
+    components.port = isLocalhost ? 8080 : 443
     components.path = "/\(path)"
     components.queryItems = queryItems
     return components.url
