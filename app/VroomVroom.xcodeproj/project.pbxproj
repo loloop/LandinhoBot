@@ -13,15 +13,57 @@
 		B42CA9F42AFE8B67009B3FFB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B42CA9F32AFE8B67009B3FFB /* Preview Assets.xcassets */; };
 		B450025C2AFE91EF003CDE6A /* APIClient in Frameworks */ = {isa = PBXBuildFile; productRef = B450025B2AFE91EF003CDE6A /* APIClient */; };
 		B450025E2AFE91F1003CDE6A /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = B450025D2AFE91F1003CDE6A /* Common */; };
+		B4877C222B0692C30009760C /* NextRaceSmallWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C1E2B0692240009760C /* NextRaceSmallWidget.swift */; };
+		B4877C232B0692C60009760C /* NextEventIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C202B06928F0009760C /* NextEventIntent.swift */; };
+		B4877C272B0692F40009760C /* NextRaceTimelineProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C262B0692F40009760C /* NextRaceTimelineProvider.swift */; };
+		B4877C2A2B0694350009760C /* NextRaceEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C292B0694350009760C /* NextRaceEntry.swift */; };
+		B4877C2C2B06A0C70009760C /* NextRaceMediumWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C2B2B06A0C70009760C /* NextRaceMediumWidget.swift */; };
+		B4877C2E2B06A0D40009760C /* NextRaceLargeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C2D2B06A0D40009760C /* NextRaceLargeWidget.swift */; };
+		B4877C302B06A0E60009760C /* NextRaceExtraLargeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C2F2B06A0E60009760C /* NextRaceExtraLargeWidget.swift */; };
+		B4877C322B06AB700009760C /* EventByDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C312B06AB700009760C /* EventByDate.swift */; };
 		B48A501F2AFECEEB00A01B7E /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48A501E2AFECEEB00A01B7E /* Root.swift */; };
 		B4CBD1632B0401C100BF6776 /* Home in Frameworks */ = {isa = PBXBuildFile; productRef = B4CBD1622B0401C100BF6776 /* Home */; };
 		B4CBD1652B0409FF00BF6776 /* Admin in Frameworks */ = {isa = PBXBuildFile; productRef = B4CBD1642B0409FF00BF6776 /* Admin */; };
 		B4CBD1672B040A0300BF6776 /* CategoriesAdmin in Frameworks */ = {isa = PBXBuildFile; productRef = B4CBD1662B040A0300BF6776 /* CategoriesAdmin */; };
+		B4CBD16E2B05570F00BF6776 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4CBD16D2B05570F00BF6776 /* WidgetKit.framework */; };
+		B4CBD1702B05570F00BF6776 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4CBD16F2B05570F00BF6776 /* SwiftUI.framework */; };
+		B4CBD1732B05570F00BF6776 /* WidgetsBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CBD1722B05570F00BF6776 /* WidgetsBundle.swift */; };
+		B4CBD1752B05570F00BF6776 /* WidgetsLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CBD1742B05570F00BF6776 /* WidgetsLiveActivity.swift */; };
+		B4CBD1772B05570F00BF6776 /* Widgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CBD1762B05570F00BF6776 /* Widgets.swift */; };
+		B4CBD1792B05570F00BF6776 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CBD1782B05570F00BF6776 /* AppIntent.swift */; };
+		B4CBD17B2B05571100BF6776 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4CBD17A2B05571100BF6776 /* Assets.xcassets */; };
+		B4CBD17F2B05571100BF6776 /* WidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B4CBD16C2B05570F00BF6776 /* WidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		B4CBD1AB2B05582000BF6776 /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = B4CBD1AA2B05582000BF6776 /* Common */; };
+		B4CBD1AD2B05582300BF6776 /* ScheduleList in Frameworks */ = {isa = PBXBuildFile; productRef = B4CBD1AC2B05582300BF6776 /* ScheduleList */; };
 		B4D87C482B01AF07000EBEF9 /* Categories in Frameworks */ = {isa = PBXBuildFile; productRef = B4D87C472B01AF07000EBEF9 /* Categories */; };
 		B4D87C4A2B01AF09000EBEF9 /* ScheduleList in Frameworks */ = {isa = PBXBuildFile; productRef = B4D87C492B01AF09000EBEF9 /* ScheduleList */; };
 		B4D87C4C2B01AF0B000EBEF9 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = B4D87C4B2B01AF0B000EBEF9 /* Settings */; };
 		B4D87C4E2B01B12B000EBEF9 /* EventDetail in Frameworks */ = {isa = PBXBuildFile; productRef = B4D87C4D2B01B12B000EBEF9 /* EventDetail */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B4CBD17D2B05571100BF6776 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B42CA9E12AFE8B66009B3FFB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B4CBD16B2B05570F00BF6776;
+			remoteInfo = WidgetsExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B4CBD1832B05571100BF6776 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B4CBD17F2B05571100BF6776 /* WidgetsExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		B42CA9E92AFE8B66009B3FFB /* VroomVroom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VroomVroom.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -30,7 +72,25 @@
 		B42CA9F02AFE8B67009B3FFB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B42CA9F32AFE8B67009B3FFB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B45002592AFE91A1003CDE6A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B4877C1E2B0692240009760C /* NextRaceSmallWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextRaceSmallWidget.swift; sourceTree = "<group>"; };
+		B4877C202B06928F0009760C /* NextEventIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextEventIntent.swift; sourceTree = "<group>"; };
+		B4877C262B0692F40009760C /* NextRaceTimelineProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextRaceTimelineProvider.swift; sourceTree = "<group>"; };
+		B4877C292B0694350009760C /* NextRaceEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextRaceEntry.swift; sourceTree = "<group>"; };
+		B4877C2B2B06A0C70009760C /* NextRaceMediumWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextRaceMediumWidget.swift; sourceTree = "<group>"; };
+		B4877C2D2B06A0D40009760C /* NextRaceLargeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextRaceLargeWidget.swift; sourceTree = "<group>"; };
+		B4877C2F2B06A0E60009760C /* NextRaceExtraLargeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextRaceExtraLargeWidget.swift; sourceTree = "<group>"; };
+		B4877C312B06AB700009760C /* EventByDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventByDate.swift; sourceTree = "<group>"; };
 		B48A501E2AFECEEB00A01B7E /* Root.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Root.swift; sourceTree = "<group>"; };
+		B4CBD16C2B05570F00BF6776 /* WidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4CBD16D2B05570F00BF6776 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		B4CBD16F2B05570F00BF6776 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		B4CBD1722B05570F00BF6776 /* WidgetsBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetsBundle.swift; sourceTree = "<group>"; };
+		B4CBD1742B05570F00BF6776 /* WidgetsLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetsLiveActivity.swift; sourceTree = "<group>"; };
+		B4CBD1762B05570F00BF6776 /* Widgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Widgets.swift; sourceTree = "<group>"; };
+		B4CBD1782B05570F00BF6776 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
+		B4CBD17A2B05571100BF6776 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B4CBD17C2B05571100BF6776 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B4CBD1A92B05574100BF6776 /* VroomVroom copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "VroomVroom copy-Info.plist"; path = "/Users/mauriciocardozo/Developer/LandinhoBot/app/VroomVroom copy-Info.plist"; sourceTree = "<absolute>"; };
 		B4D9A1C02AFE8B9A008E3EB6 /* LandinhoLib */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LandinhoLib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -51,6 +111,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B4CBD1692B05570F00BF6776 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B4CBD1702B05570F00BF6776 /* SwiftUI.framework in Frameworks */,
+				B4CBD1AD2B05582300BF6776 /* ScheduleList in Frameworks */,
+				B4CBD16E2B05570F00BF6776 /* WidgetKit.framework in Frameworks */,
+				B4CBD1AB2B05582000BF6776 /* Common in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -59,8 +130,10 @@
 			children = (
 				B4D9A1C02AFE8B9A008E3EB6 /* LandinhoLib */,
 				B42CA9EB2AFE8B66009B3FFB /* VroomVroom */,
+				B4CBD1712B05570F00BF6776 /* Widgets */,
 				B42CA9EA2AFE8B66009B3FFB /* Products */,
 				B450025A2AFE91EF003CDE6A /* Frameworks */,
+				B4CBD1A92B05574100BF6776 /* VroomVroom copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -68,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				B42CA9E92AFE8B66009B3FFB /* VroomVroom.app */,
+				B4CBD16C2B05570F00BF6776 /* WidgetsExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -96,8 +170,39 @@
 		B450025A2AFE91EF003CDE6A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B4CBD16D2B05570F00BF6776 /* WidgetKit.framework */,
+				B4CBD16F2B05570F00BF6776 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B4877C1D2B0692100009760C /* NextRaceWidget */ = {
+			isa = PBXGroup;
+			children = (
+				B4877C1E2B0692240009760C /* NextRaceSmallWidget.swift */,
+				B4877C2B2B06A0C70009760C /* NextRaceMediumWidget.swift */,
+				B4877C2D2B06A0D40009760C /* NextRaceLargeWidget.swift */,
+				B4877C2F2B06A0E60009760C /* NextRaceExtraLargeWidget.swift */,
+				B4877C202B06928F0009760C /* NextEventIntent.swift */,
+				B4877C262B0692F40009760C /* NextRaceTimelineProvider.swift */,
+				B4877C292B0694350009760C /* NextRaceEntry.swift */,
+				B4877C312B06AB700009760C /* EventByDate.swift */,
+			);
+			path = NextRaceWidget;
+			sourceTree = "<group>";
+		};
+		B4CBD1712B05570F00BF6776 /* Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				B4877C1D2B0692100009760C /* NextRaceWidget */,
+				B4CBD1722B05570F00BF6776 /* WidgetsBundle.swift */,
+				B4CBD1742B05570F00BF6776 /* WidgetsLiveActivity.swift */,
+				B4CBD1762B05570F00BF6776 /* Widgets.swift */,
+				B4CBD1782B05570F00BF6776 /* AppIntent.swift */,
+				B4CBD17A2B05571100BF6776 /* Assets.xcassets */,
+				B4CBD17C2B05571100BF6776 /* Info.plist */,
+			);
+			path = Widgets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -110,10 +215,12 @@
 				B42CA9E52AFE8B66009B3FFB /* Sources */,
 				B42CA9E62AFE8B66009B3FFB /* Frameworks */,
 				B42CA9E72AFE8B66009B3FFB /* Resources */,
+				B4CBD1832B05571100BF6776 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B4CBD17E2B05571100BF6776 /* PBXTargetDependency */,
 			);
 			name = VroomVroom;
 			packageProductDependencies = (
@@ -131,6 +238,27 @@
 			productReference = B42CA9E92AFE8B66009B3FFB /* VroomVroom.app */;
 			productType = "com.apple.product-type.application";
 		};
+		B4CBD16B2B05570F00BF6776 /* WidgetsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B4CBD1802B05571100BF6776 /* Build configuration list for PBXNativeTarget "WidgetsExtension" */;
+			buildPhases = (
+				B4CBD1682B05570F00BF6776 /* Sources */,
+				B4CBD1692B05570F00BF6776 /* Frameworks */,
+				B4CBD16A2B05570F00BF6776 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WidgetsExtension;
+			packageProductDependencies = (
+				B4CBD1AA2B05582000BF6776 /* Common */,
+				B4CBD1AC2B05582300BF6776 /* ScheduleList */,
+			);
+			productName = WidgetsExtension;
+			productReference = B4CBD16C2B05570F00BF6776 /* WidgetsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -142,6 +270,9 @@
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					B42CA9E82AFE8B66009B3FFB = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					B4CBD16B2B05570F00BF6776 = {
 						CreatedOnToolsVersion = 15.0;
 					};
 				};
@@ -160,6 +291,7 @@
 			projectRoot = "";
 			targets = (
 				B42CA9E82AFE8B66009B3FFB /* VroomVroom */,
+				B4CBD16B2B05570F00BF6776 /* WidgetsExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -171,6 +303,14 @@
 			files = (
 				B42CA9F42AFE8B67009B3FFB /* Preview Assets.xcassets in Resources */,
 				B42CA9F12AFE8B67009B3FFB /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B4CBD16A2B05570F00BF6776 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B4CBD17B2B05571100BF6776 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,7 +327,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B4CBD1682B05570F00BF6776 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B4CBD1752B05570F00BF6776 /* WidgetsLiveActivity.swift in Sources */,
+				B4877C2A2B0694350009760C /* NextRaceEntry.swift in Sources */,
+				B4877C2C2B06A0C70009760C /* NextRaceMediumWidget.swift in Sources */,
+				B4CBD1792B05570F00BF6776 /* AppIntent.swift in Sources */,
+				B4CBD1772B05570F00BF6776 /* Widgets.swift in Sources */,
+				B4877C232B0692C60009760C /* NextEventIntent.swift in Sources */,
+				B4CBD1732B05570F00BF6776 /* WidgetsBundle.swift in Sources */,
+				B4877C222B0692C30009760C /* NextRaceSmallWidget.swift in Sources */,
+				B4877C272B0692F40009760C /* NextRaceTimelineProvider.swift in Sources */,
+				B4877C302B06A0E60009760C /* NextRaceExtraLargeWidget.swift in Sources */,
+				B4877C2E2B06A0D40009760C /* NextRaceLargeWidget.swift in Sources */,
+				B4877C322B06AB700009760C /* EventByDate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B4CBD17E2B05571100BF6776 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B4CBD16B2B05570F00BF6776 /* WidgetsExtension */;
+			targetProxy = B4CBD17D2B05571100BF6776 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		B42CA9F52AFE8B67009B3FFB /* Debug */ = {
@@ -312,12 +479,13 @@
 		B42CA9F82AFE8B67009B3FFB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"VroomVroom/Preview Content\"";
-				DEVELOPMENT_TEAM = 7N9Z7384YN;
+				DEVELOPMENT_TEAM = UQCQ667RNK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VroomVroom/Info.plist;
@@ -342,12 +510,13 @@
 		B42CA9F92AFE8B67009B3FFB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"VroomVroom/Preview Content\"";
-				DEVELOPMENT_TEAM = 7N9Z7384YN;
+				DEVELOPMENT_TEAM = UQCQ667RNK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VroomVroom/Info.plist;
@@ -363,6 +532,62 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.mauriciocardozo.VroomVroom;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B4CBD1812B05571100BF6776 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UQCQ667RNK;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Widgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Widgets;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = me.mauriciocardozo.VroomVroom.Widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B4CBD1822B05571100BF6776 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UQCQ667RNK;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Widgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Widgets;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = me.mauriciocardozo.VroomVroom.Widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -390,6 +615,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		B4CBD1802B05571100BF6776 /* Build configuration list for PBXNativeTarget "WidgetsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B4CBD1812B05571100BF6776 /* Debug */,
+				B4CBD1822B05571100BF6776 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -412,6 +646,14 @@
 		B4CBD1662B040A0300BF6776 /* CategoriesAdmin */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CategoriesAdmin;
+		};
+		B4CBD1AA2B05582000BF6776 /* Common */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Common;
+		};
+		B4CBD1AC2B05582300BF6776 /* ScheduleList */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ScheduleList;
 		};
 		B4D87C472B01AF07000EBEF9 /* Categories */ = {
 			isa = XCSwiftPackageProductDependency;

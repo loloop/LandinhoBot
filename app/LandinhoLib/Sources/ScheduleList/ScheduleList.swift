@@ -22,13 +22,13 @@ public struct ScheduleList: Reducer {
 
     let categoryTag: String?
 
-    var racesState = APIClient<Race>.State(endpoint: "next-race")
+    public var racesState = APIClient<ScheduleListResponse>.State(endpoint: "next-race")
   }
 
   public enum Action: Equatable {
     case onAppear
 
-    case racesRequest(APIClient<Race>.Action)
+    case racesRequest(APIClient<ScheduleListResponse>.Action)
   }
 
   public var body: some ReducerOf<Self> {
@@ -45,6 +45,16 @@ public struct ScheduleList: Reducer {
       APIClient()
     }
   }
+
+  public struct ScheduleListResponse: Codable, Equatable {
+    public init(categoryComment: String, nextRace: Race) {
+      self.categoryComment = categoryComment
+      self.nextRace = nextRace
+    }
+    
+    public let categoryComment: String
+    public let nextRace: Race
+  }
 }
 
 public struct ScheduleListView: View {
@@ -56,18 +66,17 @@ public struct ScheduleListView: View {
 
   public var body: some View {
     WithViewStore(store, observe: { $0 }) { viewStore in
-      ScrollView {
-        VStack {
-          switch viewStore.racesState.response {
-          case .idle:
-            Text("idle")
-          case .loading:
-            Text("loading")
-          case .reloading(let race), .finished(.success(let race)):
-            Text("finished or reloading - \(race.title)")
-          case .finished(.failure(let error)):
-            APIErrorView(error: error)
-          }
+      List {
+        switch viewStore.racesState.response {
+        case .idle:
+          EmptyView()
+        case .loading:
+          ProgressView()
+        case .reloading(let response), .finished(.success(let response)):
+          ScheduleListItem(response)
+            .padding(.vertical)
+        case .finished(.failure(let error)):
+          APIErrorView(error: error)
         }
       }
     }
@@ -76,4 +85,42 @@ public struct ScheduleListView: View {
     }
   }
 }
+
+// TODO: This should not take in an 'internal' model
+public struct ScheduleListItem: View {
+  public init(_ response: ScheduleList.ScheduleListResponse) {
+    self.response = response
+  }
+
+  let response: ScheduleList.ScheduleListResponse
+
+  public var body: some View {
+    VStack(alignment: .leading) {
+      Text("Category title")
+        .font(.callout)
+
+      Text(response.nextRace.title)
+        .font(.title3)
+
+      HStack {
+        RoundedRectangle(cornerRadius: 25.0, style: .continuous)
+          .frame(maxWidth: 100)
+
+        Spacer()
+        VStack(alignment: .leading) {
+
+
+          ForEach(response.nextRace.events) { event in
+            HStack {
+              Text(event.title)
+              Text(event.date.formatted())
+            }
+            .font(.caption)
+          }
+        }
+      }
+    }
+  }
+}
+
 

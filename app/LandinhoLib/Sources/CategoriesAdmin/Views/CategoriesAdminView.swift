@@ -20,7 +20,13 @@ public struct CategoriesAdminView: View {
   public var body: some View {
     WithViewStore(store, observe: { $0 }) { viewStore in
       switch viewStore.categoryList.response {
-      case .idle, .loading, .reloading:
+      case .idle:
+        Color(.systemBackground)
+          .opacity(0.01)
+          .onAppear {
+            store.send(.onAppear)
+          }
+      case .loading, .reloading:
         ProgressView()
       case .finished(.failure(let error)):
         APIErrorView(error: error)
@@ -57,9 +63,6 @@ public struct CategoriesAdminView: View {
     }
     .navigationTitle("Categories")
     .navigationBarTitleDisplayMode(.large)
-    .onAppear {
-      store.send(.onAppear)
-    }
     .toolbar {
       ToolbarItem {
         Button(action: {

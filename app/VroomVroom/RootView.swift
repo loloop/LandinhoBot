@@ -20,19 +20,26 @@ struct RootView: View {
       HomeView(
         store: store.scope(state: \.homeState, action: Root.Action.home)
       )
-        .tabItem {
-          Label("Home", systemImage: "house")
-        }
+      .tabItem {
+        Label("Home", systemImage: "house")
+      }
 
-      CategoriesView()
-        .tabItem {
-          Label("Categories", systemImage: "car.side.rear.open")
-        }
+      CategoriesView(
+        store: store.scope(state: \.categoriesState, action: Root.Action.categories)
+      )
+      .tabItem {
+        Label("Categories", systemImage: "car.side.rear.open")
+      }
 
-      SettingsView(store: store.scope(state: \.settingsState, action: Root.Action.settings))
-        .tabItem {
-          Label("Settings", systemImage: "gearshape")
-        }
+      SettingsView(
+        store: store.scope(state: \.settingsState, action: Root.Action.settings)
+      )
+      .tabItem {
+        Label("Settings", systemImage: "gearshape")
+      }
+    }
+    .onAppear {
+      store.send(.onAppear)
     }
   }
 }

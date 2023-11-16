@@ -39,7 +39,10 @@ public struct Root: Reducer {
       switch action {
       case .onAppear:
         state.isPresentingBetaSheet = !UserDefaults.standard.bool(forKey: betaSheetKey)
-        return .none
+        return .merge(
+          .send(.home(.scheduleList(.racesRequest(.request(.get))))),
+          .send(.categories(.categoriesRequest(.request(.get))))
+        )
       case .home, .categories, .settings:
         return .none
       }

@@ -10,6 +10,8 @@ import Foundation
 import ComposableArchitecture
 import SwiftUI
 
+
+
 public struct Settings: Reducer {
   public init() {}
 
@@ -45,6 +47,7 @@ public struct SettingsView: View {
   let store: StoreOf<Settings>
 
   public var body: some View {
+    // TODO: Create an actual settings view instead of just encapsulating Admin
     AdminView(store: store.scope(
       state: \.adminState,
       action: Settings.Action.admin)
