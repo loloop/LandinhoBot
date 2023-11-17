@@ -30,7 +30,7 @@ let package = Package(
   dependencies: [
     .package(
       url: "https://github.com/pointfreeco/swift-composable-architecture",
-      from: Version(1, 0, 0)),
+      from: Version(1, 4, 2)),
   ],
   targets: [
     .target(
