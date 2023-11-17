@@ -12,11 +12,6 @@ import WidgetKit
 import ScheduleList
 import Common
 
-#warning("TODO name, description, backend fixes, etc")
-#warning("TODO figure out a good way to add placeholders/errors to widgets")
-#warning("TODO extract views to a module so we can visualize them in the full app")
-#warning("TODO extract all these widgets to a single one and switch them based on family")
-
 struct NextRaceSmallWidgetView: View {
   @ObservedObject var positionManager = WidgetPositionManager.live
 
@@ -25,9 +20,9 @@ struct NextRaceSmallWidgetView: View {
 
   var body: some View {
     VStack(alignment: .leading) {
-      Text("categoryName")
+      Text(response.category.title)
         .font(.callout)
-      Text("shortTitle")
+      Text(response.nextRace.shortTitle)
         .font(.title3)
       Spacer()
 
@@ -57,6 +52,7 @@ struct NextRaceSmallWidgetView: View {
     }
   }
 
+  // TODO: Bring this to `EventByDate` to standardize date formatting
   var currentEvent: RaceEvent? {
     guard response.nextRace.events.indices.contains(positionManager.currentPosition) else {
       return nil
@@ -70,7 +66,11 @@ struct NextRaceSmallWidgetView: View {
       return ""
     }
 
-    return event.date.formatted(date: .numeric, time: .omitted)
+    return event.date.formatted(
+      .dateTime
+        .day(.twoDigits)
+        .month(.twoDigits)
+    )
   }
 
   var currentEventTitle: String {

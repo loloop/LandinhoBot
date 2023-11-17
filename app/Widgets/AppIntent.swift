@@ -12,6 +12,7 @@ struct NextRaceConfigurationIntent: WidgetConfigurationIntent {
     static var title: LocalizedStringResource = "Configuração da Próxima Corrida"
     static var description = IntentDescription("Configura o widget")
 
-    @Parameter(title: "Mostrar Treinos", default: true)
-    var showNonMainEventSessions : Bool
+    // TODO: Filter non main event sections
+//    @Parameter(title: "Mostrar Treinos (Não funciona ainda)", default: true)
+//    var showNonMainEventSessions: Bool
 }

@@ -21,22 +21,22 @@ public struct CategoryEditorView: View {
       NavigationStack {
         List {
           HStack {
-            Text("Title")
-            TextField("Title", text: viewStore.$title)
+            Text("Título")
+            TextField("Título", text: viewStore.$title)
           }
           HStack {
             Text("Tag")
             TextField("Tag", text: viewStore.$tag)
           }
           HStack {
-            Text("Comment")
-            TextField("Comment", text: viewStore.$comment)
+            Text("Comentário")
+            TextField("Comentário", text: viewStore.$comment)
           }
 
         }
         .toolbar {
           ToolbarItem(placement: .primaryAction) {
-            Button("Save") {
+            Button("Salvar") {
               viewStore.send(.onSaveTap)
             }
           }
@@ -44,4 +44,10 @@ public struct CategoryEditorView: View {
       }
     }
   }
+}
+
+#Preview {
+  CategoryEditorView(store: .init(initialState: .init(), reducer: {
+    CategoryEditor()
+  }))
 }

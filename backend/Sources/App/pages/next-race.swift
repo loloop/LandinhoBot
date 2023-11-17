@@ -39,7 +39,7 @@ struct NextRaceHandler: AsyncRequestHandler {
 
     return NextRaceResponse(
       nextRace: nextRace,
-      categoryComment: nextRace?.category.comment ?? "")
+      category: nextRace?.category)
   }
 
   struct NextRaceRequest: Content {
@@ -48,7 +48,7 @@ struct NextRaceHandler: AsyncRequestHandler {
 
   struct NextRaceResponse: Content {
     let nextRace: Race?
-    let categoryComment: String
+    let category: Category?
   }
 }
 

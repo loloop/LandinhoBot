@@ -16,6 +16,7 @@ public struct RaceEditor: Reducer {
     public init(race: RacesAdmin.Race, tag: String) {
       id = race.id
       title = race.title
+      shortTitle = race.shortTitle
       isEditing = true
       self.tag = tag
     }
@@ -24,6 +25,7 @@ public struct RaceEditor: Reducer {
       self.tag = tag
       id = ""
       title = ""
+      shortTitle = ""
       isEditing = false
     }
 
@@ -31,6 +33,7 @@ public struct RaceEditor: Reducer {
     let tag: String
     @BindingState var title: String
     @BindingState var date = Date()
+    @BindingState var shortTitle: String
 
     let isEditing: Bool
     var raceAPI = APIClient<RacesAdmin.Race>.State(endpoint: "race")
@@ -55,7 +58,8 @@ public struct RaceEditor: Reducer {
         if state.isEditing {
           let request = RacesAdmin.Race(
             id: state.id,
-            title: state.title,
+            title: state.title, 
+            shortTitle: state.shortTitle,
             earliestEventDate: state.date)
           return .run { send in
             try await send(.raceRequest(.request(.patch(request))))
@@ -69,6 +73,10 @@ public struct RaceEditor: Reducer {
             try await send(.raceRequest(.request(.post(request))))
           }
         }
+
+      case .binding(\.$shortTitle):
+        state.shortTitle = String(state.shortTitle.prefix(25))
+        return .none
 
       case .binding, .raceRequest:
         return .none

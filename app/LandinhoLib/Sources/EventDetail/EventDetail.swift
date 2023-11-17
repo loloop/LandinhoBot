@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Mauricio Cardozo on 12/11/23.
 //
@@ -17,13 +17,14 @@ public struct EventDetail: Reducer {
   }
 
   public enum Action: Equatable {
-
+    case onAppear
   }
 
   public var body: some ReducerOf<Self> {
     Reduce { state, action in
       switch action {
-
+      case .onAppear:
+        return .none
       }
     }
   }

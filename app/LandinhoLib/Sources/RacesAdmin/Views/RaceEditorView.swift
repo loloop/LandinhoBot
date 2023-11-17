@@ -20,9 +20,13 @@ public struct RaceEditorView: View {
     WithViewStore(store, observe: { $0 }) { viewStore in
       NavigationStack {
         List {
-          HStack {
-            Text("Title")
-            TextField("Title", text: viewStore.$title)
+          VStack(alignment: .leading) {
+            Text("Título")
+            TextField("Título", text: viewStore.$title)
+          }
+          VStack(alignment: .leading) {
+            Text("Título Curto")
+            TextField("Título curto", text: viewStore.$shortTitle)
           }
           HStack {
             DatePicker("Date", selection: viewStore.$date)
@@ -31,7 +35,7 @@ public struct RaceEditorView: View {
         }
         .toolbar {
           ToolbarItem(placement: .primaryAction) {
-            Button("Save") {
+            Button("Salvar") {
               viewStore.send(.onSaveTap)
             }
             .disabled(viewStore.isSaveInactive)
@@ -42,3 +46,10 @@ public struct RaceEditorView: View {
   }
 }
 
+#Preview {
+  NavigationStack {
+    RaceEditorView(store: .init(initialState: .init(tag: "tag"), reducer: {
+      RaceEditor()
+    }))
+  }
+}

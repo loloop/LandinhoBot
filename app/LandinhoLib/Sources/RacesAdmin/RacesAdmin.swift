@@ -104,6 +104,7 @@ public struct RacesAdmin: Reducer {
   public struct Race: Codable, Equatable, Identifiable, Hashable {
     public let id: String
     public let title: String
+    public let shortTitle: String
     public let earliestEventDate: Date?
   }
 }

@@ -18,6 +18,7 @@ public func configure(_ app: Application) async throws {
     ), as: .psql)
 
   app.migrations.add(v0_1Migration())
+  app.migrations.add(v0_2Migration())
 
   [
     // category

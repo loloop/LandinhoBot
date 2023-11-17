@@ -24,7 +24,7 @@ public struct CategoriesAdminView: View {
         Color(.systemBackground)
           .opacity(0.01)
           .onAppear {
-            store.send(.onAppear)
+            viewStore.send(.onAppear)
           }
       case .loading, .reloading:
         ProgressView()
@@ -61,7 +61,7 @@ public struct CategoriesAdminView: View {
         }
       }
     }
-    .navigationTitle("Categories")
+    .navigationTitle("Categorias")
     .navigationBarTitleDisplayMode(.large)
     .toolbar {
       ToolbarItem {
@@ -79,5 +79,13 @@ public struct CategoriesAdminView: View {
           action: CategoriesAdmin.Action.categoryEditor)) { store in
             CategoryEditorView(store: store)
           }
+  }
+}
+
+#Preview {
+  NavigationStack {
+    CategoriesAdminView(store: .init(initialState: .init(), reducer: {
+      CategoriesAdmin()
+    }))
   }
 }

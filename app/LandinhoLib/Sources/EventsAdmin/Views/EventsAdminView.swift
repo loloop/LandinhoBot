@@ -21,7 +21,13 @@ public struct EventsAdminView: View {
     WithViewStore(store, observe: { $0 }) { viewStore in
       Group {
         switch viewStore.eventList.response {
-        case .idle, .loading, .reloading:
+        case .idle:
+          Color(.systemBackground)
+            .opacity(0.01)
+            .onAppear {
+              viewStore.send(.onAppear)
+            }
+        case .loading, .reloading:
           ProgressView()
         case .finished(.failure(let error)):
           APIErrorView(error: error)
@@ -37,36 +43,33 @@ public struct EventsAdminView: View {
       .toolbarTitleDisplayMode(.large)
       .toolbar {
         ToolbarItem(placement: .secondaryAction) {
-          Button("Add F1 Weekend") {
+          Button("Adicionar fim de semana da F1") {
             viewStore.send(.addBundle(.F1Regular))
           }
         }
 
         ToolbarItem(placement: .secondaryAction) {
-          Button("Add F1 Sprint Weekend") {
+          Button("Adicionar fim de semana Sprint da F1") {
             viewStore.send(.addBundle(.F1Sprint))
           }
         }
 
         ToolbarItem {
-          Button("Save") {
+          Button("Salvar") {
             viewStore.send(.saveList)
           }
           .disabled(viewStore.hasEditedEventList)
         }
       }
     }
-    .onAppear {
-      store.send(.onAppear)
-    }
   }
 
   @MainActor
   var emptyList: some View {
     ContentUnavailableView(label: {
-      Label("This race has no events", systemImage: "magnifyingglass")
+      Label("Esta corrida não tem eventos", systemImage: "magnifyingglass")
     }, actions: {
-      Button("Add event") {
+      Button("Adicionar evento") {
         store.send(.addEvent)
       }
     })
@@ -74,22 +77,43 @@ public struct EventsAdminView: View {
 
   @MainActor
   func eventsList(with viewStore: ViewStoreOf<EventsAdmin>) -> some View {
-    VStack {
-      List(viewStore.$events, editActions: .all) { event in
-        VStack {
-          HStack {
-            Text("Title")
-            TextField("Title", text: event.title)
+    Form {
+      Section {
+        List(viewStore.$events, editActions: .all) { event in
+          VStack {
+            HStack {
+              Text("Título")
+              TextField("Título", text: event.title)
+            }
+            HStack {
+              Toggle(isOn: event.isMainEvent, label: {
+                Text("É evento principal?")
+              })
+            }
+            DatePicker("Data", selection: event.date)
           }
-          DatePicker("Date", selection: event.date)
         }
-      }
-      // TODO: This button is on a really bad position, please make it better
-      Button("Add event") {
-        viewStore.send(.addEvent)
+      } footer: {
+        Button("Adicionar evento") {
+          viewStore.send(.addEvent)
+        }
       }
     }
   }
 }
 
 
+#Preview {
+  var state = EventsAdmin.State(id: "", title: "Spa Francorchamps")
+  state.eventList.response = .finished(.success([]))
+  state.events = [
+    .init(title: "", date: Date(), isMainEvent: false),
+    .init(title: "", date: Date(), isMainEvent: false),
+  ]
+
+  return NavigationStack {
+    EventsAdminView(store: .init(initialState: state, reducer: {
+      EventsAdmin()
+    }))
+  }
+}

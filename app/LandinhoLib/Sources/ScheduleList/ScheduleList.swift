@@ -47,27 +47,28 @@ public struct ScheduleList: Reducer {
   }
 
   public struct ScheduleListResponse: Codable, Equatable {
-    public init(categoryComment: String, nextRace: Race) {
-      self.categoryComment = categoryComment
+    public init(category: RaceCategory, nextRace: Race) {
+      self.category = category
       self.nextRace = nextRace
     }
 
     public init() {
       // init for placeholder widget views
-      categoryComment = ""
+      category = RaceCategory(id: "", title: "Formula 1", tag: "")
       nextRace = Race(
         id: UUID(),
-        title: "Placeholder",
+        title: "Placeholder", 
+        shortTitle: "Placeholder",
         events: [
-          .init(id: UUID(), title: "Placeholder", date: Date()),
-          .init(id: UUID(), title: "Placeholder", date: Date()),
-          .init(id: UUID(), title: "Placeholder", date: Date().advanced(by: 100000)),
-          .init(id: UUID(), title: "Placeholder", date: Date().advanced(by: 100000)),
-          .init(id: UUID(), title: "Placeholder", date: Date().advanced(by: 200000)),
+          .init(id: UUID(), title: "Placeholder", date: Date(), isMainEvent: false),
+          .init(id: UUID(), title: "Placeholder", date: Date(), isMainEvent: false),
+          .init(id: UUID(), title: "Placeholder", date: Date().advanced(by: 100000), isMainEvent: false),
+          .init(id: UUID(), title: "Placeholder", date: Date().advanced(by: 100000), isMainEvent: false),
+          .init(id: UUID(), title: "Placeholder", date: Date().advanced(by: 200000), isMainEvent: true),
         ])
     }
 
-    public let categoryComment: String
+    public let category: RaceCategory
     public let nextRace: Race
   }
 }

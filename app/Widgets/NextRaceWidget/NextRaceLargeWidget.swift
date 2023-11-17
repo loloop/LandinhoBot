@@ -12,8 +12,6 @@ import WidgetKit
 import ScheduleList
 import Common
 
-#warning("TODO categoryTitle")
-
 struct NextRaceLargeWidgetView: View {
 
   let response: ScheduleList.ScheduleListResponse
@@ -22,7 +20,7 @@ struct NextRaceLargeWidgetView: View {
   var body: some View {
     VStack {
       VStack(alignment: .leading) {
-        Text("categoryTitle")
+        Text(response.category.title)
           .font(.callout)
          Text(response.nextRace.title)
           .font(.title3)

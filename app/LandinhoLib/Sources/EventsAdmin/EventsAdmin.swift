@@ -21,6 +21,7 @@ public struct UploadRaceEvent: Codable, Equatable, Identifiable {
   public var id = UUID()
   var title: String
   var date: Date
+  var isMainEvent: Bool
 }
 
 public enum UploadRaceEventBundle: Equatable {
@@ -38,19 +39,19 @@ public enum UploadRaceEventBundle: Equatable {
     switch self {
     case .F1Sprint:
       [
-        .init(title: "Treino Livre", date: Date()),
-        .init(title: "Classificação", date: Date()),
-        .init(title: "Sprint Shootout", date: Date()),
-        .init(title: "Sprint", date: Date()),
-        .init(title: "Corrida", date: Date()),
+        .init(title: "Treino Livre", date: Date(), isMainEvent: false),
+        .init(title: "Classificação", date: Date(), isMainEvent: false),
+        .init(title: "Sprint Shootout", date: Date(), isMainEvent: false),
+        .init(title: "Sprint", date: Date(), isMainEvent: true),
+        .init(title: "Corrida", date: Date(), isMainEvent: true),
       ]
     case .F1Regular:
       [
-        .init(title: "Treino Livre  1", date: Date()),
-        .init(title: "Treino Livre 2", date: Date()),
-        .init(title: "Treino Livre 3", date: Date()),
-        .init(title: "Classificação", date: Date()),
-        .init(title: "Corrida", date: Date()),
+        .init(title: "Treino Livre  1", date: Date(), isMainEvent: false),
+        .init(title: "Treino Livre 2", date: Date(), isMainEvent: false),
+        .init(title: "Treino Livre 3", date: Date(), isMainEvent: false),
+        .init(title: "Classificação", date: Date(), isMainEvent: false),
+        .init(title: "Corrida", date: Date(), isMainEvent: true),
       ]
     }
   }
@@ -73,7 +74,11 @@ public struct EventsAdmin: Reducer {
 
     var hasEditedEventList: Bool {
       eventList.response.value?.compactMap {
-        UploadRaceEvent(id: $0.id, title: $0.title, date: $0.date)
+        UploadRaceEvent(
+          id: $0.id,
+          title: $0.title,
+          date: $0.date,
+          isMainEvent: $0.isMainEvent)
       } == events
     }
   }
@@ -110,9 +115,9 @@ public struct EventsAdmin: Reducer {
 
       case .addEvent:
         if let ev = state.events.last {
-          state.events.append(.init(title: "", date: ev.date))
+          state.events.append(.init(title: "", date: ev.date, isMainEvent: false))
         } else {
-          state.events.append(.init(title: "", date: Date()))
+          state.events.append(.init(title: "", date: Date(), isMainEvent: false))
         }
 
         return .none
@@ -132,7 +137,11 @@ public struct EventsAdmin: Reducer {
 
       case .eventListRequest(.response(.finished(.success(let events)))):
         state.events = events.map {
-          UploadRaceEvent(id: $0.id, title: $0.title, date: $0.date)
+          UploadRaceEvent(
+            id: $0.id,
+            title: $0.title,
+            date: $0.date,
+            isMainEvent: $0.isMainEvent)
         }
         return .none
 
