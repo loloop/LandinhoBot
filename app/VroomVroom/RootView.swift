@@ -28,14 +28,14 @@ struct RootView: View {
         store: store.scope(state: \.categoriesState, action: Root.Action.categories)
       )
       .tabItem {
-        Label("Categories", systemImage: "car.side.rear.open")
+        Label("Categorias", systemImage: "car.side.rear.open")
       }
 
       SettingsView(
         store: store.scope(state: \.settingsState, action: Root.Action.settings)
       )
       .tabItem {
-        Label("Settings", systemImage: "gearshape")
+        Label("Ajustes", systemImage: "gearshape")
       }
     }
     .onAppear {
