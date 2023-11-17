@@ -12,7 +12,6 @@ struct NextRaceHandler: AsyncRequestHandler {
   var method: HTTPMethod { .GET }
   var path: String { "next-race" }
   
-  @Sendable
   func handle(req: Request) async throws -> some AsyncResponseEncodable {
     var args: String
     do {

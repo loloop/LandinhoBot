@@ -65,7 +65,7 @@ public struct SettingsView: View {
         Button {
           store.send(.showAdmin)
         } label: {
-          Label("Admin", systemImage: "fuel.pump")
+          Label("Admin", systemImage: "fuelpump")
         }
       }
       .navigationTitle("Ajustes")

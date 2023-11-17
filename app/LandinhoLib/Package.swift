@@ -100,7 +100,9 @@ let package = Package(
       .target(
         name: "ScheduleList",
         dependencies: [
+          "Common",
           "EventDetail",
+          "WidgetUI",
           composable
         ]),
 

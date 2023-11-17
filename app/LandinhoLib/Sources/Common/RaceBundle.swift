@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct RaceBundle: Codable, Equatable {
+public struct RaceBundle: Codable, Equatable, Identifiable {
   public init(category: RaceCategory, nextRace: Race) {
     self.category = category
     self.nextRace = nextRace
@@ -31,4 +31,5 @@ public struct RaceBundle: Codable, Equatable {
 
   public let category: RaceCategory
   public let nextRace: Race
+  public var id: UUID { nextRace.id }
 }

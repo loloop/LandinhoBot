@@ -43,6 +43,10 @@ public extension Request {
       method: "GET")
   }
 
+  static func get(_ queryItems: [String: String] = [:]) -> Self {
+    return .get(queryItems: queryItems.map { URLQueryItem(name: $0.key, value: $0.value)})
+  }
+
   static var get: Self {
     Request(
       data: nil,
