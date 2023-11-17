@@ -53,7 +53,7 @@ public struct CategoriesAdminView: View {
             }
             .foregroundStyle(.primary)
             .contextMenu {
-              Button("Edit") {
+              Button("Editar") {
                 viewStore.send(.onCategoryEditorTap(category.id))
               }
             }

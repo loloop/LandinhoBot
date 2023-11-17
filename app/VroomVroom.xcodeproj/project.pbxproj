@@ -20,6 +20,7 @@
 		B4877C2A2B0694350009760C /* NextRaceEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C292B0694350009760C /* NextRaceEntry.swift */; };
 		B4877C342B06B4C60009760C /* NextRaceWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C332B06B4C60009760C /* NextRaceWidget.swift */; };
 		B48A501F2AFECEEB00A01B7E /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48A501E2AFECEEB00A01B7E /* Root.swift */; };
+		B48D11D62B080B86003A05B3 /* TODOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D11D52B080B86003A05B3 /* TODOs.swift */; };
 		B4CBD1632B0401C100BF6776 /* Home in Frameworks */ = {isa = PBXBuildFile; productRef = B4CBD1622B0401C100BF6776 /* Home */; };
 		B4CBD1652B0409FF00BF6776 /* Admin in Frameworks */ = {isa = PBXBuildFile; productRef = B4CBD1642B0409FF00BF6776 /* Admin */; };
 		B4CBD1672B040A0300BF6776 /* CategoriesAdmin in Frameworks */ = {isa = PBXBuildFile; productRef = B4CBD1662B040A0300BF6776 /* CategoriesAdmin */; };
@@ -72,6 +73,7 @@
 		B4877C292B0694350009760C /* NextRaceEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextRaceEntry.swift; sourceTree = "<group>"; };
 		B4877C332B06B4C60009760C /* NextRaceWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextRaceWidget.swift; sourceTree = "<group>"; };
 		B48A501E2AFECEEB00A01B7E /* Root.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Root.swift; sourceTree = "<group>"; };
+		B48D11D52B080B86003A05B3 /* TODOs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TODOs.swift; sourceTree = "<group>"; };
 		B4CBD16C2B05570F00BF6776 /* WidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4CBD16D2B05570F00BF6776 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		B4CBD16F2B05570F00BF6776 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -145,6 +147,7 @@
 				B42CA9EC2AFE8B66009B3FFB /* VroomVroomApp.swift */,
 				B42CA9EE2AFE8B66009B3FFB /* RootView.swift */,
 				B48A501E2AFECEEB00A01B7E /* Root.swift */,
+				B48D11D52B080B86003A05B3 /* TODOs.swift */,
 				B42CA9F02AFE8B67009B3FFB /* Assets.xcassets */,
 				B42CA9F22AFE8B67009B3FFB /* Preview Content */,
 			);
@@ -312,6 +315,7 @@
 				B42CA9EF2AFE8B66009B3FFB /* RootView.swift in Sources */,
 				B42CA9ED2AFE8B66009B3FFB /* VroomVroomApp.swift in Sources */,
 				B48A501F2AFECEEB00A01B7E /* Root.swift in Sources */,
+				B48D11D62B080B86003A05B3 /* TODOs.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

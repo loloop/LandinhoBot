@@ -98,7 +98,7 @@ public struct RacesAdminView: View {
         }
         .foregroundStyle(.primary)
         .contextMenu(menuItems: {
-          Button("Edit") {
+          Button("Editar") {
             store.send(.onEditTap(race))
           }
         })
