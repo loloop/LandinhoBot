@@ -9,6 +9,7 @@ import ComposableArchitecture
 import Foundation
 import SwiftUI
 import WidgetKit
+import WidgetUI
 import ScheduleList
 import Common
 
@@ -52,8 +53,11 @@ struct NextRaceWidgetView: View {
         response: response,
         lastUpdatedDate: lastUpdatedDate)
     case .systemMedium:
+      #warning("TODO remove RaceBundle initializer")
       NextRaceMediumWidgetView(
-        response: response,
+        response: .init(
+          category: response.category,
+          nextRace: response.nextRace),
         lastUpdatedDate: lastUpdatedDate)
     case .systemLarge:
       NextRaceLargeWidgetView(
@@ -74,3 +78,14 @@ struct NextRaceWidgetView: View {
   }
 }
 
+import Foundation
+import WidgetKit
+import WidgetUI
+
+#Preview(as: .systemMedium) {
+  NextRaceWidget()
+} timeline: {
+  NextRaceEntry(date: Date())
+  NextRaceEntry.empty
+  NextRaceEntry.placeholder
+}

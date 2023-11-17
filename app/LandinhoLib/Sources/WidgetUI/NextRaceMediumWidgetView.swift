@@ -1,23 +1,26 @@
 //
-//  NextRaceMediumWidget.swift
-//  WidgetsExtension
+//  File.swift
+//  
 //
-//  Created by Mauricio Cardozo on 16/11/23.
+//  Created by Mauricio Cardozo on 17/11/23.
 //
 
-import ComposableArchitecture
+import Common
 import Foundation
 import SwiftUI
 import WidgetKit
-import ScheduleList
-import Common
 
-struct NextRaceMediumWidgetView: View {
+public struct NextRaceMediumWidgetView: View {
 
-  let response: ScheduleList.ScheduleListResponse
+  public init(response: RaceBundle, lastUpdatedDate: Date) {
+    self.response = response
+    self.lastUpdatedDate = lastUpdatedDate
+  }
+
+  let response: RaceBundle
   let lastUpdatedDate: Date
 
-  var body: some View {
+  public var body: some View {
     VStack {
       HStack {
         VStack(alignment: .leading) {
@@ -52,21 +55,11 @@ struct NextRaceMediumWidgetView: View {
         .foregroundStyle(.secondary)
         .frame(maxWidth: .infinity)
     }
-
   }
 
   var eventsByDate: [EventByDate] {
     EventByDateFactory.convert(events: response.nextRace.events)
   }
 }
-
-#Preview(as: .systemMedium) {
-  NextRaceWidget()
-} timeline: {
-  NextRaceEntry(date: Date())
-  NextRaceEntry.empty
-  NextRaceEntry.placeholder
-}
-
 
 

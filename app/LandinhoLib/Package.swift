@@ -24,6 +24,7 @@ let package = Package(
     .library(name: "RacesAdmin", targets: ["RacesAdmin"]),
     .library(name: "ScheduleList", targets: ["ScheduleList"]),
     .library(name: "Settings", targets: ["Settings"]),
+    .library(name: "WidgetUI", targets: ["WidgetUI"]),
   ],
   dependencies: [
     .package(
@@ -108,6 +109,13 @@ let package = Package(
         dependencies: [
           "Admin",
           "APIClient",
+          composable
+        ]),
+
+      .target(
+        name: "WidgetUI",
+        dependencies: [
+          "Common",
           composable
         ]),
   ]
