@@ -19,8 +19,6 @@
 		B4877C232B0692C60009760C /* NextEventIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C202B06928F0009760C /* NextEventIntent.swift */; };
 		B4877C272B0692F40009760C /* NextRaceTimelineProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C262B0692F40009760C /* NextRaceTimelineProvider.swift */; };
 		B4877C2A2B0694350009760C /* NextRaceEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C292B0694350009760C /* NextRaceEntry.swift */; };
-		B4877C2E2B06A0D40009760C /* NextRaceLargeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C2D2B06A0D40009760C /* NextRaceLargeWidget.swift */; };
-		B4877C302B06A0E60009760C /* NextRaceExtraLargeWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C2F2B06A0E60009760C /* NextRaceExtraLargeWidget.swift */; };
 		B4877C342B06B4C60009760C /* NextRaceWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C332B06B4C60009760C /* NextRaceWidget.swift */; };
 		B48A501F2AFECEEB00A01B7E /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48A501E2AFECEEB00A01B7E /* Root.swift */; };
 		B4CBD1632B0401C100BF6776 /* Home in Frameworks */ = {isa = PBXBuildFile; productRef = B4CBD1622B0401C100BF6776 /* Home */; };
@@ -76,8 +74,6 @@
 		B4877C202B06928F0009760C /* NextEventIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextEventIntent.swift; sourceTree = "<group>"; };
 		B4877C262B0692F40009760C /* NextRaceTimelineProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextRaceTimelineProvider.swift; sourceTree = "<group>"; };
 		B4877C292B0694350009760C /* NextRaceEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextRaceEntry.swift; sourceTree = "<group>"; };
-		B4877C2D2B06A0D40009760C /* NextRaceLargeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextRaceLargeWidget.swift; sourceTree = "<group>"; };
-		B4877C2F2B06A0E60009760C /* NextRaceExtraLargeWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextRaceExtraLargeWidget.swift; sourceTree = "<group>"; };
 		B4877C332B06B4C60009760C /* NextRaceWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextRaceWidget.swift; sourceTree = "<group>"; };
 		B48A501E2AFECEEB00A01B7E /* Root.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Root.swift; sourceTree = "<group>"; };
 		B4CBD16C2B05570F00BF6776 /* WidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -181,8 +177,6 @@
 			children = (
 				B4877C332B06B4C60009760C /* NextRaceWidget.swift */,
 				B4877C1E2B0692240009760C /* NextRaceSmallWidget.swift */,
-				B4877C2D2B06A0D40009760C /* NextRaceLargeWidget.swift */,
-				B4877C2F2B06A0E60009760C /* NextRaceExtraLargeWidget.swift */,
 				B4877C202B06928F0009760C /* NextEventIntent.swift */,
 				B4877C262B0692F40009760C /* NextRaceTimelineProvider.swift */,
 				B4877C292B0694350009760C /* NextRaceEntry.swift */,
@@ -339,8 +333,6 @@
 				B4CBD1732B05570F00BF6776 /* WidgetsBundle.swift in Sources */,
 				B4877C222B0692C30009760C /* NextRaceSmallWidget.swift in Sources */,
 				B4877C272B0692F40009760C /* NextRaceTimelineProvider.swift in Sources */,
-				B4877C302B06A0E60009760C /* NextRaceExtraLargeWidget.swift in Sources */,
-				B4877C2E2B06A0D40009760C /* NextRaceLargeWidget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

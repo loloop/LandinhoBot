@@ -1,23 +1,22 @@
 //
-//  NextRaceExtraLargeWidget.swift
-//  WidgetsExtension
+//  NextRaceExtraLargeWidgetView.swift
 //
-//  Created by Mauricio Cardozo on 16/11/23.
+//
+//  Created by Mauricio Cardozo on 17/11/23.
 //
 
-import ComposableArchitecture
+import Common
 import Foundation
 import SwiftUI
-import WidgetKit
-import ScheduleList
-import Common
 
-struct NextRaceExtraLargeWidgetView: View {
+// TODO: Finish this Widget once we have more a `next-races` endpoint
 
-  let response: ScheduleList.ScheduleListResponse
+public struct NextRaceExtraLargeWidgetView: View {
+
+  let response: RaceBundle
   let lastUpdatedDate: Date
 
-  var body: some View {
+  public var body: some View {
     VStack(alignment: .leading, spacing: 10) {
       Text("Próximas corridas")
         .font(.title)
@@ -75,12 +74,3 @@ struct NextRaceExtraLargeWidgetView: View {
     EventByDateFactory.convert(events: response.nextRace.events)
   }
 }
-
-#Preview(as: .systemExtraLarge) {
-  NextRaceWidget()
-} timeline: {
-  NextRaceEntry(date: Date())
-  NextRaceEntry.empty
-  NextRaceEntry.placeholder
-}
-

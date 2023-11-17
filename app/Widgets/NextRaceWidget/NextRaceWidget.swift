@@ -60,16 +60,13 @@ struct NextRaceWidgetView: View {
           nextRace: response.nextRace),
         lastUpdatedDate: lastUpdatedDate)
     case .systemLarge:
+      #warning("TODO remove RaceBundle initializer")
       NextRaceLargeWidgetView(
-        response: response,
+        response: .init(
+          category: response.category,
+          nextRace: response.nextRace),
         lastUpdatedDate: lastUpdatedDate)
-    case .systemExtraLarge:
-      // Disabled for now -- maybe this isn't what
-      // TODO: Enable when Timeline provider fetches more than a single race
-      NextRaceExtraLargeWidgetView(
-        response: response,
-        lastUpdatedDate: lastUpdatedDate)
-    case .accessoryCircular, .accessoryRectangular, .accessoryInline:
+    case .systemExtraLarge, .accessoryCircular, .accessoryRectangular, .accessoryInline:
       // TODO: Accessory Widgets
       EmptyView()
     @unknown default:
@@ -78,11 +75,23 @@ struct NextRaceWidgetView: View {
   }
 }
 
-import Foundation
-import WidgetKit
-import WidgetUI
+#Preview(as: .systemSmall) {
+  NextRaceWidget()
+} timeline: {
+  NextRaceEntry(date: Date())
+  NextRaceEntry.empty
+  NextRaceEntry.placeholder
+}
 
 #Preview(as: .systemMedium) {
+  NextRaceWidget()
+} timeline: {
+  NextRaceEntry(date: Date())
+  NextRaceEntry.empty
+  NextRaceEntry.placeholder
+}
+
+#Preview(as: .systemLarge) {
   NextRaceWidget()
 } timeline: {
   NextRaceEntry(date: Date())

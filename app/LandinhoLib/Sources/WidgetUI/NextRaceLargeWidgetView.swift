@@ -1,23 +1,25 @@
 //
-//  NextRaceLargeWidget.swift
-//  WidgetsExtension
+//  NextRaceLargeWidgetView.swift
 //
-//  Created by Mauricio Cardozo on 16/11/23.
+//
+//  Created by Mauricio Cardozo on 17/11/23.
 //
 
-import ComposableArchitecture
+import Common
 import Foundation
 import SwiftUI
-import WidgetKit
-import ScheduleList
-import Common
 
-struct NextRaceLargeWidgetView: View {
+public struct NextRaceLargeWidgetView: View {
 
-  let response: ScheduleList.ScheduleListResponse
+  public init(response: RaceBundle, lastUpdatedDate: Date) {
+    self.response = response
+    self.lastUpdatedDate = lastUpdatedDate
+  }
+
+  let response: RaceBundle
   let lastUpdatedDate: Date
 
-  var body: some View {
+  public var body: some View {
     VStack {
       VStack(alignment: .leading) {
         Text(response.category.title)
@@ -69,12 +71,3 @@ struct NextRaceLargeWidgetView: View {
     EventByDateFactory.convert(events: response.nextRace.events)
   }
 }
-
-#Preview(as: .systemLarge) {
-  NextRaceWidget()
-} timeline: {
-  NextRaceEntry(date: Date())
-  NextRaceEntry.empty
-  NextRaceEntry.placeholder
-}
-

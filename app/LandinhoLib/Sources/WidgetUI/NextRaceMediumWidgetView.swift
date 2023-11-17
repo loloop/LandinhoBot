@@ -8,7 +8,6 @@
 import Common
 import Foundation
 import SwiftUI
-import WidgetKit
 
 public struct NextRaceMediumWidgetView: View {
 
