@@ -5,13 +5,15 @@
 //  Created by Mauricio Cardozo on 16/11/23.
 //
 
+import Common
 import Foundation
 import WidgetKit
-import ScheduleList
+import Widgets
 
 struct NextRaceEntry: TimelineEntry {
   var date: Date
-  var response: ScheduleList.ScheduleListResponse?
+  var response: RaceBundle
+  var error: Error?
 }
 
 extension NextRaceEntry {

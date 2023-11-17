@@ -8,12 +8,10 @@
 import Common
 import ComposableArchitecture
 import Foundation
-import ScheduleList
 import SwiftUI
+import Widgets
 import WidgetKit
 import WidgetUI
-
-// TODO: extract views to a module so we can visualize them in the full app
 
 struct NextRaceWidget: Widget {
   var body: some WidgetConfiguration {
@@ -21,10 +19,9 @@ struct NextRaceWidget: Widget {
       kind: "NextRaceWidget",
       provider: NextRaceTimelineProvider()) { entry in
         Group {
-          if let response = entry.response {
-            #warning("TODO remove RaceBundle initializer")
+          if entry.error == nil {
             NextRaceWidgetView(
-              bundle: .init(category: response.category, nextRace: response.nextRace),
+              bundle: entry.response,
               lastUpdatedDate: entry.date)
           } else {
             NextRaceWidgetView(
@@ -70,12 +67,15 @@ struct NextRaceWidgetView: View {
   }
 }
 
-// MARK: Previews
+// MARK: - Previews
 
 #Preview(as: .systemSmall) {
   NextRaceWidget()
 } timeline: {
-  NextRaceEntry(date: Date())
+  NextRaceEntry(
+    date: Date(),
+    response: .init(),
+    error: NextRaceTimelineProvider.TimelineError.failure)
   NextRaceEntry.empty
   NextRaceEntry.placeholder
 }
@@ -83,7 +83,10 @@ struct NextRaceWidgetView: View {
 #Preview(as: .systemSmall) {
   NextRaceWidget()
 } timeline: {
-  NextRaceEntry(date: Date())
+  NextRaceEntry(
+    date: Date(),
+    response: .init(),
+    error: NextRaceTimelineProvider.TimelineError.failure)
   NextRaceEntry.empty
   NextRaceEntry.placeholder
 }
@@ -91,7 +94,10 @@ struct NextRaceWidgetView: View {
 #Preview(as: .systemMedium) {
   NextRaceWidget()
 } timeline: {
-  NextRaceEntry(date: Date())
+  NextRaceEntry(
+    date: Date(),
+    response: .init(),
+    error: NextRaceTimelineProvider.TimelineError.failure)
   NextRaceEntry.empty
   NextRaceEntry.placeholder
 }
@@ -99,7 +105,10 @@ struct NextRaceWidgetView: View {
 #Preview(as: .systemLarge) {
   NextRaceWidget()
 } timeline: {
-  NextRaceEntry(date: Date())
+  NextRaceEntry(
+    date: Date(),
+    response: .init(),
+    error: NextRaceTimelineProvider.TimelineError.failure)
   NextRaceEntry.empty
   NextRaceEntry.placeholder
 }

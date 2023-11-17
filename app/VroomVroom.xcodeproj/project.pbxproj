@@ -15,6 +15,7 @@
 		B450025E2AFE91F1003CDE6A /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = B450025D2AFE91F1003CDE6A /* Common */; };
 		B453CE022B07B07F00B0CEA5 /* WidgetUI in Frameworks */ = {isa = PBXBuildFile; productRef = B453CE012B07B07F00B0CEA5 /* WidgetUI */; };
 		B453CE042B07B08700B0CEA5 /* WidgetUI in Frameworks */ = {isa = PBXBuildFile; productRef = B453CE032B07B08700B0CEA5 /* WidgetUI */; };
+		B453CE082B07DDBE00B0CEA5 /* Widgets in Frameworks */ = {isa = PBXBuildFile; productRef = B453CE072B07DDBE00B0CEA5 /* Widgets */; };
 		B4877C272B0692F40009760C /* NextRaceTimelineProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C262B0692F40009760C /* NextRaceTimelineProvider.swift */; };
 		B4877C2A2B0694350009760C /* NextRaceEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C292B0694350009760C /* NextRaceEntry.swift */; };
 		B4877C342B06B4C60009760C /* NextRaceWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C332B06B4C60009760C /* NextRaceWidget.swift */; };
@@ -30,7 +31,6 @@
 		B4CBD17B2B05571100BF6776 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4CBD17A2B05571100BF6776 /* Assets.xcassets */; };
 		B4CBD17F2B05571100BF6776 /* WidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B4CBD16C2B05570F00BF6776 /* WidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B4CBD1AB2B05582000BF6776 /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = B4CBD1AA2B05582000BF6776 /* Common */; };
-		B4CBD1AD2B05582300BF6776 /* ScheduleList in Frameworks */ = {isa = PBXBuildFile; productRef = B4CBD1AC2B05582300BF6776 /* ScheduleList */; };
 		B4D87C482B01AF07000EBEF9 /* Categories in Frameworks */ = {isa = PBXBuildFile; productRef = B4D87C472B01AF07000EBEF9 /* Categories */; };
 		B4D87C4A2B01AF09000EBEF9 /* ScheduleList in Frameworks */ = {isa = PBXBuildFile; productRef = B4D87C492B01AF09000EBEF9 /* ScheduleList */; };
 		B4D87C4C2B01AF0B000EBEF9 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = B4D87C4B2B01AF0B000EBEF9 /* Settings */; };
@@ -107,8 +107,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4CBD1702B05570F00BF6776 /* SwiftUI.framework in Frameworks */,
-				B4CBD1AD2B05582300BF6776 /* ScheduleList in Frameworks */,
 				B4CBD16E2B05570F00BF6776 /* WidgetKit.framework in Frameworks */,
+				B453CE082B07DDBE00B0CEA5 /* Widgets in Frameworks */,
 				B4CBD1AB2B05582000BF6776 /* Common in Frameworks */,
 				B453CE042B07B08700B0CEA5 /* WidgetUI in Frameworks */,
 			);
@@ -240,8 +240,8 @@
 			name = WidgetsExtension;
 			packageProductDependencies = (
 				B4CBD1AA2B05582000BF6776 /* Common */,
-				B4CBD1AC2B05582300BF6776 /* ScheduleList */,
 				B453CE032B07B08700B0CEA5 /* WidgetUI */,
+				B453CE072B07DDBE00B0CEA5 /* Widgets */,
 			);
 			productName = WidgetsExtension;
 			productReference = B4CBD16C2B05570F00BF6776 /* WidgetsExtension.appex */;
@@ -627,6 +627,10 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = WidgetUI;
 		};
+		B453CE072B07DDBE00B0CEA5 /* Widgets */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Widgets;
+		};
 		B4CBD1622B0401C100BF6776 /* Home */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Home;
@@ -642,10 +646,6 @@
 		B4CBD1AA2B05582000BF6776 /* Common */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Common;
-		};
-		B4CBD1AC2B05582300BF6776 /* ScheduleList */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ScheduleList;
 		};
 		B4D87C472B01AF07000EBEF9 /* Categories */ = {
 			isa = XCSwiftPackageProductDependency;

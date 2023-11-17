@@ -35,20 +35,26 @@ struct NextRaceHandler: AsyncRequestHandler {
       query.filter(Category.self, \.$tag, .equal, args)
     }
 
-    let nextRace = try await query.first()
+    guard let nextRace = try await query.first() else {
+      throw Abort(.notFound)
+    }
 
     return NextRaceResponse(
       nextRace: nextRace,
-      category: nextRace?.category)
+      category: nextRace.category)
   }
 
+}
+
+// MARK: - Request/Response
+
+extension NextRaceHandler {
   struct NextRaceRequest: Content {
     let argument: String
   }
 
   struct NextRaceResponse: Content {
-    let nextRace: Race?
-    let category: Category?
+    let nextRace: Race
+    let category: Category
   }
 }
-

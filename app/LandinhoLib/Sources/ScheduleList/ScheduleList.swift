@@ -11,6 +11,7 @@ import Foundation
 import ComposableArchitecture
 import SwiftUI
 
+// TODO: Fetch next races, paginate
 public struct ScheduleList: Reducer {
 
   public init() {}
@@ -21,14 +22,12 @@ public struct ScheduleList: Reducer {
     }
 
     let categoryTag: String?
-
-    public var racesState = APIClient<ScheduleListResponse>.State(endpoint: "next-race")
+    public var racesState = APIClient<RaceBundle>.State(endpoint: "next-race")
   }
 
   public enum Action: Equatable {
     case onAppear
-
-    case racesRequest(APIClient<ScheduleListResponse>.Action)
+    case racesRequest(APIClient<RaceBundle>.Action)
   }
 
   public var body: some ReducerOf<Self> {
@@ -44,32 +43,6 @@ public struct ScheduleList: Reducer {
     Scope(state: \.racesState, action: /Action.racesRequest) {
       APIClient()
     }
-  }
-
-  public struct ScheduleListResponse: Codable, Equatable {
-    public init(category: RaceCategory, nextRace: Race) {
-      self.category = category
-      self.nextRace = nextRace
-    }
-
-    public init() {
-      // init for placeholder widget views
-      category = RaceCategory(id: "", title: "Formula 1", tag: "")
-      nextRace = Race(
-        id: UUID(),
-        title: "Placeholder", 
-        shortTitle: "Placeholder",
-        events: [
-          .init(id: UUID(), title: "Placeholder", date: Date(), isMainEvent: false),
-          .init(id: UUID(), title: "Placeholder", date: Date(), isMainEvent: false),
-          .init(id: UUID(), title: "Placeholder", date: Date().advanced(by: 100000), isMainEvent: false),
-          .init(id: UUID(), title: "Placeholder", date: Date().advanced(by: 100000), isMainEvent: false),
-          .init(id: UUID(), title: "Placeholder", date: Date().advanced(by: 200000), isMainEvent: true),
-        ])
-    }
-
-    public let category: RaceCategory
-    public let nextRace: Race
   }
 }
 
@@ -102,13 +75,12 @@ public struct ScheduleListView: View {
   }
 }
 
-// TODO: This should not take in an 'internal' model
 public struct ScheduleListItem: View {
-  public init(_ response: ScheduleList.ScheduleListResponse) {
+  public init(_ response: RaceBundle) {
     self.response = response
   }
 
-  let response: ScheduleList.ScheduleListResponse
+  let response: RaceBundle
 
   public var body: some View {
     VStack(alignment: .leading) {
