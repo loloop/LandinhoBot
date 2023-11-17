@@ -12,7 +12,23 @@ public struct RaceBundle: Codable, Equatable {
     self.category = category
     self.nextRace = nextRace
   }
-  
+
+  public init() {
+    // init meant for placeholder widget views
+    category = RaceCategory(id: "", title: "Formula 1", tag: "")
+    nextRace = Race(
+      id: UUID(),
+      title: "Placeholder",
+      shortTitle: "Placeholder",
+      events: [
+        .init(id: UUID(), title: "Placeholder", date: Date(), isMainEvent: false),
+        .init(id: UUID(), title: "Placeholder", date: Date(), isMainEvent: false),
+        .init(id: UUID(), title: "Placeholder", date: Date().advanced(by: 100000), isMainEvent: false),
+        .init(id: UUID(), title: "Placeholder", date: Date().advanced(by: 100000), isMainEvent: false),
+        .init(id: UUID(), title: "Placeholder", date: Date().advanced(by: 200000), isMainEvent: true),
+      ])
+  }
+
   public let category: RaceCategory
   public let nextRace: Race
 }

@@ -5,13 +5,13 @@
 //  Created by Mauricio Cardozo on 16/11/23.
 //
 
+import Common
 import ComposableArchitecture
 import Foundation
+import ScheduleList
 import SwiftUI
 import WidgetKit
 import WidgetUI
-import ScheduleList
-import Common
 
 // TODO: extract views to a module so we can visualize them in the full app
 
@@ -22,12 +22,13 @@ struct NextRaceWidget: Widget {
       provider: NextRaceTimelineProvider()) { entry in
         Group {
           if let response = entry.response {
+            #warning("TODO remove RaceBundle initializer")
             NextRaceWidgetView(
-              response: response,
+              bundle: .init(category: response.category, nextRace: response.nextRace),
               lastUpdatedDate: entry.date)
           } else {
             NextRaceWidgetView(
-              response: .init(),
+              bundle: .init(),
               lastUpdatedDate: entry.date)
             .redacted(reason: .placeholder)
           }
@@ -43,28 +44,22 @@ struct NextRaceWidget: Widget {
 struct NextRaceWidgetView: View {
 
   @Environment(\.widgetFamily) var family
-  let response: ScheduleList.ScheduleListResponse
+  let bundle: RaceBundle
   let lastUpdatedDate: Date
 
   var body: some View {
     switch family {
     case .systemSmall:
       NextRaceSmallWidgetView(
-        response: response,
+        bundle: bundle,
         lastUpdatedDate: lastUpdatedDate)
     case .systemMedium:
-      #warning("TODO remove RaceBundle initializer")
       NextRaceMediumWidgetView(
-        response: .init(
-          category: response.category,
-          nextRace: response.nextRace),
+        bundle: bundle,
         lastUpdatedDate: lastUpdatedDate)
     case .systemLarge:
-      #warning("TODO remove RaceBundle initializer")
       NextRaceLargeWidgetView(
-        response: .init(
-          category: response.category,
-          nextRace: response.nextRace),
+        bundle: bundle,
         lastUpdatedDate: lastUpdatedDate)
     case .systemExtraLarge, .accessoryCircular, .accessoryRectangular, .accessoryInline:
       // TODO: Accessory Widgets
@@ -73,6 +68,16 @@ struct NextRaceWidgetView: View {
       EmptyView()
     }
   }
+}
+
+// MARK: Previews
+
+#Preview(as: .systemSmall) {
+  NextRaceWidget()
+} timeline: {
+  NextRaceEntry(date: Date())
+  NextRaceEntry.empty
+  NextRaceEntry.placeholder
 }
 
 #Preview(as: .systemSmall) {

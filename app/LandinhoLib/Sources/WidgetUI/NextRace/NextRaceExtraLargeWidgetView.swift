@@ -13,7 +13,7 @@ import SwiftUI
 
 public struct NextRaceExtraLargeWidgetView: View {
 
-  let response: RaceBundle
+  let bundle: RaceBundle
   let lastUpdatedDate: Date
 
   public var body: some View {
@@ -41,7 +41,7 @@ public struct NextRaceExtraLargeWidgetView: View {
         Text("Formula 1")
           .font(.callout)
 
-        Text(response.nextRace.title)
+        Text(bundle.nextRace.title)
           .font(.title3)
       }
 
@@ -71,6 +71,6 @@ public struct NextRaceExtraLargeWidgetView: View {
   }
 
   var eventsByDate: [EventByDate] {
-    EventByDateFactory.convert(events: response.nextRace.events)
+    EventByDateFactory.convert(events: bundle.nextRace.events)
   }
 }
