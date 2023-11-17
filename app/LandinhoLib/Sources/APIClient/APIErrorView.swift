@@ -19,8 +19,11 @@ public struct APIErrorView: View {
   public var body: some View {
     // TODO: Don't show description on RELEASE
     ContentUnavailableView(
-      "Something went wrong",
+      "Algo de errado aconteceu",
       systemImage: "xmark.octagon",
       description: Text((error as? APIError)?.jsonString ?? ""))
+    .onAppear {
+      dump(error as? APIError)
+    }
   }
 }

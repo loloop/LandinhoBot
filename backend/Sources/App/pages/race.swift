@@ -106,8 +106,14 @@ struct UpdateRaceHandler: AsyncRequestHandler {
       throw Abort(.badRequest)
     }
 
+    guard request.shortTitle.count <= 23 else {
+      // 23 is the exact number of characters in "Circuit of the Americas"
+      throw Abort(.badRequest, reason: "Short title is too long!")
+    }
+
     try await Race.query(on: req.db)
       .set(\.$title, to: request.title)
+      .set(\.$shortTitle, to: request.shortTitle)
       .filter(\.$id, .equal, id)
       .update()
 
@@ -117,5 +123,6 @@ struct UpdateRaceHandler: AsyncRequestHandler {
   struct UpdateRaceRequest: Content {
     let id: String
     let title: String
+    let shortTitle: String
   }
 }

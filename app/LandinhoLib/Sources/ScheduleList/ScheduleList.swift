@@ -10,7 +10,21 @@ import Common
 import Foundation
 import ComposableArchitecture
 import SwiftUI
+import WidgetUI
 
+// TODO: Move to Common
+public struct Page<T: Codable & Equatable & Identifiable>: Codable, Equatable {
+  let items: [T]
+  let metadata: Metadata
+
+  public struct Metadata: Codable, Equatable {
+    let page: Int
+    let per: Int
+    let total: Int
+  }
+}
+
+// TODO: Fetch next races, paginate
 public struct ScheduleList: Reducer {
 
   public init() {}
@@ -21,22 +35,28 @@ public struct ScheduleList: Reducer {
     }
 
     let categoryTag: String?
-
-    public var racesState = APIClient<ScheduleListResponse>.State(endpoint: "next-race")
+    public var racesState = APIClient<Page<MegaRace>>.State(endpoint: "next-races")
   }
 
   public enum Action: Equatable {
     case onAppear
+    case delegate(DelegateAction)
+    case racesRequest(APIClient<Page<MegaRace>>.Action)
+  }
 
-    case racesRequest(APIClient<ScheduleListResponse>.Action)
+  public enum DelegateAction: Equatable {
+    case onWidgetTap(MegaRace)
   }
 
   public var body: some ReducerOf<Self> {
     Reduce { state, action in
       switch action {
       case .onAppear:
-        return .send(.racesRequest(.request(.get)))
-      case .racesRequest:
+        return .send(.racesRequest(.request(.get([
+          "page": "0",
+          "per": "5"
+        ]))))
+      case .racesRequest, .delegate:
         return .none
       }
     }
@@ -45,98 +65,5 @@ public struct ScheduleList: Reducer {
       APIClient()
     }
   }
-
-  public struct ScheduleListResponse: Codable, Equatable {
-    public init(category: RaceCategory, nextRace: Race) {
-      self.category = category
-      self.nextRace = nextRace
-    }
-
-    public init() {
-      // init for placeholder widget views
-      category = RaceCategory(id: "", title: "Formula 1", tag: "")
-      nextRace = Race(
-        id: UUID(),
-        title: "Placeholder", 
-        shortTitle: "Placeholder",
-        events: [
-          .init(id: UUID(), title: "Placeholder", date: Date(), isMainEvent: false),
-          .init(id: UUID(), title: "Placeholder", date: Date(), isMainEvent: false),
-          .init(id: UUID(), title: "Placeholder", date: Date().advanced(by: 100000), isMainEvent: false),
-          .init(id: UUID(), title: "Placeholder", date: Date().advanced(by: 100000), isMainEvent: false),
-          .init(id: UUID(), title: "Placeholder", date: Date().advanced(by: 200000), isMainEvent: true),
-        ])
-    }
-
-    public let category: RaceCategory
-    public let nextRace: Race
-  }
 }
-
-public struct ScheduleListView: View {
-  public init(store: StoreOf<ScheduleList>) {
-    self.store = store
-  }
-
-  let store: StoreOf<ScheduleList>
-
-  public var body: some View {
-    WithViewStore(store, observe: { $0 }) { viewStore in
-      List {
-        switch viewStore.racesState.response {
-        case .idle:
-          EmptyView()
-        case .loading:
-          ProgressView()
-        case .reloading(let response), .finished(.success(let response)):
-          ScheduleListItem(response)
-            .padding(.vertical)
-        case .finished(.failure(let error)):
-          APIErrorView(error: error)
-        }
-      }
-    }
-    .task {
-      store.send(.onAppear)
-    }
-  }
-}
-
-// TODO: This should not take in an 'internal' model
-public struct ScheduleListItem: View {
-  public init(_ response: ScheduleList.ScheduleListResponse) {
-    self.response = response
-  }
-
-  let response: ScheduleList.ScheduleListResponse
-
-  public var body: some View {
-    VStack(alignment: .leading) {
-      Text("Category title")
-        .font(.callout)
-
-      Text(response.nextRace.title)
-        .font(.title3)
-
-      HStack {
-        RoundedRectangle(cornerRadius: 25.0, style: .continuous)
-          .frame(maxWidth: 100)
-
-        Spacer()
-        VStack(alignment: .leading) {
-
-
-          ForEach(response.nextRace.events) { event in
-            HStack {
-              Text(event.title)
-              Text(event.date.formatted())
-            }
-            .font(.caption)
-          }
-        }
-      }
-    }
-  }
-}
-
 

@@ -10,28 +10,33 @@ import Foundation
 import ComposableArchitecture
 import SwiftUI
 
-public struct Settings: Reducer {
+@Reducer
+public struct Settings {
   public init() {}
 
   public struct State: Equatable {
     public init() {}
 
-    var adminState = Admin.State()
+    @PresentationState var adminState: Admin.State?
   }
 
   public enum Action: Equatable {
-    case admin(Admin.Action)
+    case showAdmin
+    case admin(PresentationAction<Admin.Action>)
   }
 
   public var body: some ReducerOf<Self> {
     Reduce { state, action in
       switch action {
+      case .showAdmin:
+        state.adminState = .init()
+        return .none
+
       case .admin:
         return .none
       }
     }
-
-    Scope(state: \.adminState, action: /Action.admin) {
+    .ifLet(\.$adminState, action: \.admin) {
       Admin()
     }
   }
@@ -45,11 +50,31 @@ public struct SettingsView: View {
   let store: StoreOf<Settings>
 
   public var body: some View {
-    // TODO: Create an actual settings view instead of just encapsulating Admin
-    AdminView(store: store.scope(
-      state: \.adminState,
-      action: Settings.Action.admin)
-    )
+    NavigationStack {
+      List {
+        Button {
+
+        } label: {
+          Label("Changelog", systemImage: "")
+        }
+        Button {
+
+        } label: {
+          Label("Termos de Serviço", systemImage: "")
+        }
+        Button {
+          store.send(.showAdmin)
+        } label: {
+          Label("Admin", systemImage: "fuelpump")
+        }
+      }
+      .navigationTitle("Ajustes")
+      .navigationDestination(store: store.scope(
+        state: \.$adminState,
+        action: { .admin($0) } )
+      ) { store in
+        AdminView(store: store)
+      }
+    }
   }
 }
-

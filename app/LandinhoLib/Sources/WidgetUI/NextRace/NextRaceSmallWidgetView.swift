@@ -1,28 +1,31 @@
 //
-//  NextRaceWidget.swift
-//  VroomVroom
+//  File.swift
+//  
 //
-//  Created by Mauricio Cardozo on 16/11/23.
+//  Created by Mauricio Cardozo on 17/11/23.
 //
 
-import ComposableArchitecture
+import Common
 import Foundation
 import SwiftUI
 import WidgetKit
-import ScheduleList
-import Common
 
-struct NextRaceSmallWidgetView: View {
+public struct NextRaceSmallWidgetView: View {
+
+  public init(bundle: RaceBundle, lastUpdatedDate: Date) {
+    self.bundle = bundle
+    self.lastUpdatedDate = lastUpdatedDate
+  }
+
   @ObservedObject var positionManager = WidgetPositionManager.live
-
-  let response: ScheduleList.ScheduleListResponse
+  let bundle: RaceBundle
   let lastUpdatedDate: Date
 
-  var body: some View {
+  public var body: some View {
     VStack(alignment: .leading) {
-      Text(response.category.title)
+      Text(bundle.category.title)
         .font(.callout)
-      Text(response.nextRace.shortTitle)
+      Text(bundle.nextRace.shortTitle)
         .font(.title3)
       Spacer()
 
@@ -35,7 +38,7 @@ struct NextRaceSmallWidgetView: View {
         }
         .frame(maxWidth: .infinity, alignment: .trailing)
         HStack {
-          Button(intent: NextEventIntent(race: response.nextRace)) {
+          Button(intent: NextEventIntent(race: bundle.nextRace)) {
             Image(systemName: "chevron.right")
           }
           Spacer()
@@ -54,11 +57,11 @@ struct NextRaceSmallWidgetView: View {
 
   // TODO: Bring this to `EventByDate` to standardize date formatting
   var currentEvent: RaceEvent? {
-    guard response.nextRace.events.indices.contains(positionManager.currentPosition) else {
+    guard bundle.nextRace.events.indices.contains(positionManager.currentPosition) else {
       return nil
     }
 
-    return response.nextRace.events[positionManager.currentPosition]
+    return bundle.nextRace.events[positionManager.currentPosition]
   }
 
   var currentEventDate: String {
@@ -89,13 +92,3 @@ struct NextRaceSmallWidgetView: View {
     )
   }
 }
-
-#Preview(as: .systemSmall) {
-  NextRaceWidget()
-} timeline: {
-  NextRaceEntry(date: Date())
-  NextRaceEntry.empty
-  NextRaceEntry.placeholder
-}
-
-

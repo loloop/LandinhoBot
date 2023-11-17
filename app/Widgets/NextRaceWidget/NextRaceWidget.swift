@@ -5,14 +5,13 @@
 //  Created by Mauricio Cardozo on 16/11/23.
 //
 
+import Common
 import ComposableArchitecture
 import Foundation
 import SwiftUI
+import Widgets
 import WidgetKit
-import ScheduleList
-import Common
-
-// TODO: extract views to a module so we can visualize them in the full app
+import WidgetUI
 
 struct NextRaceWidget: Widget {
   var body: some WidgetConfiguration {
@@ -20,13 +19,13 @@ struct NextRaceWidget: Widget {
       kind: "NextRaceWidget",
       provider: NextRaceTimelineProvider()) { entry in
         Group {
-          if let response = entry.response {
+          if entry.error == nil {
             NextRaceWidgetView(
-              response: response,
+              bundle: entry.response,
               lastUpdatedDate: entry.date)
           } else {
             NextRaceWidgetView(
-              response: .init(),
+              bundle: .init(),
               lastUpdatedDate: entry.date)
             .redacted(reason: .placeholder)
           }
@@ -42,30 +41,24 @@ struct NextRaceWidget: Widget {
 struct NextRaceWidgetView: View {
 
   @Environment(\.widgetFamily) var family
-  let response: ScheduleList.ScheduleListResponse
+  let bundle: RaceBundle
   let lastUpdatedDate: Date
 
   var body: some View {
     switch family {
     case .systemSmall:
       NextRaceSmallWidgetView(
-        response: response,
+        bundle: bundle,
         lastUpdatedDate: lastUpdatedDate)
     case .systemMedium:
       NextRaceMediumWidgetView(
-        response: response,
+        bundle: bundle,
         lastUpdatedDate: lastUpdatedDate)
     case .systemLarge:
       NextRaceLargeWidgetView(
-        response: response,
+        bundle: bundle,
         lastUpdatedDate: lastUpdatedDate)
-    case .systemExtraLarge:
-      // Disabled for now -- maybe this isn't what
-      // TODO: Enable when Timeline provider fetches more than a single race
-      NextRaceExtraLargeWidgetView(
-        response: response,
-        lastUpdatedDate: lastUpdatedDate)
-    case .accessoryCircular, .accessoryRectangular, .accessoryInline:
+    case .systemExtraLarge, .accessoryCircular, .accessoryRectangular, .accessoryInline:
       // TODO: Accessory Widgets
       EmptyView()
     @unknown default:
@@ -74,3 +67,48 @@ struct NextRaceWidgetView: View {
   }
 }
 
+// MARK: - Previews
+
+#Preview(as: .systemSmall) {
+  NextRaceWidget()
+} timeline: {
+  NextRaceEntry(
+    date: Date(),
+    response: .init(),
+    error: NextRaceTimelineProvider.TimelineError.failure)
+  NextRaceEntry.empty
+  NextRaceEntry.placeholder
+}
+
+#Preview(as: .systemSmall) {
+  NextRaceWidget()
+} timeline: {
+  NextRaceEntry(
+    date: Date(),
+    response: .init(),
+    error: NextRaceTimelineProvider.TimelineError.failure)
+  NextRaceEntry.empty
+  NextRaceEntry.placeholder
+}
+
+#Preview(as: .systemMedium) {
+  NextRaceWidget()
+} timeline: {
+  NextRaceEntry(
+    date: Date(),
+    response: .init(),
+    error: NextRaceTimelineProvider.TimelineError.failure)
+  NextRaceEntry.empty
+  NextRaceEntry.placeholder
+}
+
+#Preview(as: .systemLarge) {
+  NextRaceWidget()
+} timeline: {
+  NextRaceEntry(
+    date: Date(),
+    response: .init(),
+    error: NextRaceTimelineProvider.TimelineError.failure)
+  NextRaceEntry.empty
+  NextRaceEntry.placeholder
+}

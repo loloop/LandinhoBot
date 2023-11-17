@@ -21,13 +21,7 @@ public struct EventsAdminView: View {
     WithViewStore(store, observe: { $0 }) { viewStore in
       Group {
         switch viewStore.eventList.response {
-        case .idle:
-          Color(.systemBackground)
-            .opacity(0.01)
-            .onAppear {
-              viewStore.send(.onAppear)
-            }
-        case .loading, .reloading:
+        case .idle, .loading, .reloading:
           ProgressView()
         case .finished(.failure(let error)):
           APIErrorView(error: error)
@@ -42,15 +36,11 @@ public struct EventsAdminView: View {
       .navigationTitle(viewStore.title)
       .toolbarTitleDisplayMode(.large)
       .toolbar {
-        ToolbarItem(placement: .secondaryAction) {
-          Button("Adicionar fim de semana da F1") {
-            viewStore.send(.addBundle(.F1Regular))
-          }
-        }
-
-        ToolbarItem(placement: .secondaryAction) {
-          Button("Adicionar fim de semana Sprint da F1") {
-            viewStore.send(.addBundle(.F1Sprint))
+        ToolbarItemGroup(placement: .secondaryAction) {
+          ForEach(UploadRaceEventBundle.allCases) { item in
+            Button("Adicionar \(item.title)") {
+              viewStore.send(.addBundle(item))
+            }
           }
         }
 

@@ -28,9 +28,9 @@ public struct CategoryEditorView: View {
             Text("Tag")
             TextField("Tag", text: viewStore.$tag)
           }
-          HStack {
+          VStack(alignment: .leading) {
             Text("Comentário")
-            TextField("Comentário", text: viewStore.$comment)
+            TextField("Comentário", text: viewStore.$comment, axis: .vertical)
           }
 
         }

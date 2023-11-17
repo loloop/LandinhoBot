@@ -24,11 +24,13 @@ let package = Package(
     .library(name: "RacesAdmin", targets: ["RacesAdmin"]),
     .library(name: "ScheduleList", targets: ["ScheduleList"]),
     .library(name: "Settings", targets: ["Settings"]),
+    .library(name: "Widgets", targets: ["Widgets"]),
+    .library(name: "WidgetUI", targets: ["WidgetUI"]),
   ],
   dependencies: [
     .package(
       url: "https://github.com/pointfreeco/swift-composable-architecture",
-      from: Version(1, 0, 0)),
+      from: Version(1, 4, 2)),
   ],
   targets: [
     .target(
@@ -38,11 +40,11 @@ let package = Package(
         composable
       ]),
 
-    .target(
-      name: "APIClient",
-      dependencies: [
-        composable
-      ]),
+      .target(
+        name: "APIClient",
+        dependencies: [
+          composable
+        ]),
 
       .target(
         name: "Common"),
@@ -59,17 +61,16 @@ let package = Package(
         dependencies: [
           "APIClient",
           "Common",
-          "EventsAdmin",
           "RacesAdmin",
           composable
         ]),
 
-    .target(
-      name: "EventDetail",
-      dependencies: [
-        "APIClient",
-        composable
-      ]),
+      .target(
+        name: "EventDetail",
+        dependencies: [
+          "APIClient",
+          composable
+        ]),
 
       .target(
         name: "EventsAdmin",
@@ -99,7 +100,9 @@ let package = Package(
       .target(
         name: "ScheduleList",
         dependencies: [
+          "Common",
           "EventDetail",
+          "WidgetUI",
           composable
         ]),
 
@@ -109,6 +112,20 @@ let package = Package(
           "Admin",
           "APIClient",
           composable
+        ]),
+
+      .target(
+        name: "Widgets",
+        dependencies: [
+          "Common",
+          "APIClient",
+          composable
+        ]),
+
+      .target(
+        name: "WidgetUI",
+        dependencies: [
+          "Common"
         ]),
   ]
 )

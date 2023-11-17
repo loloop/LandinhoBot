@@ -1,19 +1,18 @@
 //
 //  EventByDate.swift
-//  WidgetsExtension
 //
-//  Created by Mauricio Cardozo on 16/11/23.
+//
+//  Created by Mauricio Cardozo on 17/11/23.
 //
 
-import Common
 import Foundation
 
-struct EventByDate: Identifiable {
-  let date: String
-  let events: [Event]
-  var id: String { date }
+public struct EventByDate: Identifiable {
+  public let date: String
+  public let events: [Event]
+  public var id: String { date }
 
-  struct Event: Identifiable {
+  public struct Event: Identifiable {
     init(raceEvent: RaceEvent) {
       title = raceEvent.title
       time = raceEvent.date.formatted(
@@ -23,14 +22,14 @@ struct EventByDate: Identifiable {
       )
     }
 
-    let title: String
-    let time: String
-    var id: String { title }
+    public let title: String
+    public let time: String
+    public var id: String { title }
   }
 }
 
-struct EventByDateFactory {
-  static func convert(events: [RaceEvent]) -> [EventByDate] {
+public struct EventByDateFactory {
+  public static func convert(events: [RaceEvent]) -> [EventByDate] {
     guard !events.isEmpty else { return [] }
 
     return Dictionary(grouping: events) {

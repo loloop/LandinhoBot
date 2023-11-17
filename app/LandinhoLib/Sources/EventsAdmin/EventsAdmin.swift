@@ -24,40 +24,8 @@ public struct UploadRaceEvent: Codable, Equatable, Identifiable {
   var isMainEvent: Bool
 }
 
-public enum UploadRaceEventBundle: Equatable {
-  case F1Sprint
-  case F1Regular
-
-  var tag: String {
-    switch self {
-    case .F1Sprint, .F1Regular:
-      "f1"
-    }
-  }
-
-  var events: [UploadRaceEvent] {
-    switch self {
-    case .F1Sprint:
-      [
-        .init(title: "Treino Livre", date: Date(), isMainEvent: false),
-        .init(title: "Classificação", date: Date(), isMainEvent: false),
-        .init(title: "Sprint Shootout", date: Date(), isMainEvent: false),
-        .init(title: "Sprint", date: Date(), isMainEvent: true),
-        .init(title: "Corrida", date: Date(), isMainEvent: true),
-      ]
-    case .F1Regular:
-      [
-        .init(title: "Treino Livre  1", date: Date(), isMainEvent: false),
-        .init(title: "Treino Livre 2", date: Date(), isMainEvent: false),
-        .init(title: "Treino Livre 3", date: Date(), isMainEvent: false),
-        .init(title: "Classificação", date: Date(), isMainEvent: false),
-        .init(title: "Corrida", date: Date(), isMainEvent: true),
-      ]
-    }
-  }
-}
-
-public struct EventsAdmin: Reducer {
+@Reducer
+public struct EventsAdmin {
   public init() {}
 
   public struct State: Equatable {

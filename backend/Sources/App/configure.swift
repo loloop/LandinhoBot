@@ -29,6 +29,9 @@ public func configure(_ app: Application) async throws {
     // next-race
     NextRaceHandler(),
 
+    // next-races
+    NextRacesHandler(),
+
     // race
     RaceListHandler(),
     UpdateRaceHandler(),

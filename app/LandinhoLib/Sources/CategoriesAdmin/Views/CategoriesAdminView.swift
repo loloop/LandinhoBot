@@ -9,6 +9,7 @@ import APIClient
 import ComposableArchitecture
 import Foundation
 import SwiftUI
+import RacesAdmin
 
 public struct CategoriesAdminView: View {
   public init(store: StoreOf<CategoriesAdmin>) {
@@ -52,7 +53,7 @@ public struct CategoriesAdminView: View {
             }
             .foregroundStyle(.primary)
             .contextMenu {
-              Button("Edit") {
+              Button("Editar") {
                 viewStore.send(.onCategoryEditorTap(category.id))
               }
             }
@@ -73,12 +74,19 @@ public struct CategoriesAdminView: View {
       }
     }
     .sheet(
-      store: store
-        .scope(
-          state: { $0.$categoryEditorState },
-          action: CategoriesAdmin.Action.categoryEditor)) { store in
-            CategoryEditorView(store: store)
-          }
+      store: store.scope(state: \.$destination, action: { .destination($0) }),
+      state: \.categoryEditor,
+      action: { .categoryEditor($0) }
+    ) { store in
+      CategoryEditorView(store: store)
+    }
+    .navigationDestination(
+      store: store.scope(state: \.$destination, action: { .destination($0) }),
+      state: \.racesAdmin,
+      action: { .racesAdmin($0) }
+    ) { store in
+      RacesAdminView(store: store)
+    }
   }
 }
 

@@ -7,15 +7,17 @@
 
 import ComposableArchitecture
 import Foundation
-import ScheduleList
+import Widgets
 import WidgetKit
-
-// TODO: We should remove ScheduleList from this. Completely different use cases.
 
 struct NextRaceTimelineProvider: AppIntentTimelineProvider {
 
-  let store = Store(initialState: ScheduleList.State(categoryTag: nil)) {
-    ScheduleList()
+  enum TimelineError: LocalizedError {
+    case failure
+  }
+
+  let store = Store(initialState: Widgets.State(shouldFilterNonMainEvents: false, categoryTag: nil)) {
+    Widgets()
   }
 
   func placeholder(in context: Context) -> NextRaceEntry {
@@ -36,7 +38,14 @@ struct NextRaceTimelineProvider: AppIntentTimelineProvider {
     await viewStore.send(.racesRequest(.request(.get))).finish()
 
     guard let nextRace = viewStore.racesState.response.value else {
-      return Timeline(entries: [], policy: .atEnd)
+      return Timeline(
+        entries: [
+          .init(
+            date: Date(),
+            response: .init(),
+            error: TimelineError.failure)
+        ],
+        policy: .atEnd)
     }
 
     let entries: [NextRaceEntry] = [

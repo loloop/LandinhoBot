@@ -48,10 +48,13 @@ public struct HomeView: View {
   let store: StoreOf<Home>
 
   public var body: some View {
+    NavigationStack {
+      ScheduleListView(
+        store: store.scope(
+          state: \.scheduleListState,
+          action: Home.Action.scheduleList))
+      .navigationTitle("Home")
+    }
 
-    ScheduleListView(
-      store: store.scope(
-        state: \.scheduleListState,
-        action: Home.Action.scheduleList))
   }
 }

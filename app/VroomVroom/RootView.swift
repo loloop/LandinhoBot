@@ -21,7 +21,7 @@ struct RootView: View {
         store: store.scope(state: \.homeState, action: Root.Action.home)
       )
       .tabItem {
-        Label("Home", systemImage: "house")
+        Label("Home", systemImage: "flag.checkered")
       }
 
       CategoriesView(
