@@ -15,6 +15,11 @@ struct UploadRaceHandler: AsyncRequestHandler {
   func handle(req: Request) async throws -> some AsyncResponseEncodable {
     let request = try req.content.decode(UploadRaceRequest.self)
 
+    guard request.shortTitle.count <= 23 else {
+      // 23 is the exact number of characters in "Circuit of the Americas"
+      throw Abort(.badRequest, reason: "Short title is too long!")
+    }
+
     guard let category = try await Category.query(on: req.db)
       .filter(\.$tag, .equal, request.categoryTag)
       .first() else {
@@ -22,7 +27,7 @@ struct UploadRaceHandler: AsyncRequestHandler {
     }
 
     let events = request.events?.compactMap {
-      RaceEvent(title: $0.title, date: $0.date)
+      RaceEvent(title: $0.title, date: $0.date, isMainEvent: $0.isMainEvent)
     } ?? []
 
     if events.isEmpty && request.earliestEventDate == nil {
@@ -44,7 +49,8 @@ struct UploadRaceHandler: AsyncRequestHandler {
 
     let race = Race(
       title: request.title,
-      earliestEventDate: earliestDate)
+      earliestEventDate: earliestDate,
+      shortTitle: request.shortTitle)
 
     try await req.db.transaction { db in
       try await category.$races.create(race, on: db)
@@ -56,6 +62,7 @@ struct UploadRaceHandler: AsyncRequestHandler {
 
   struct UploadRaceRequest: Content {
     let title: String
+    let shortTitle: String
     let categoryTag: String
     let events: [UploadRaceEvent]?
     let earliestEventDate: Date?
@@ -63,6 +70,7 @@ struct UploadRaceHandler: AsyncRequestHandler {
     struct UploadRaceEvent: Content {
       let title: String
       let date: Date
+      let isMainEvent: Bool
     }
   }
 }

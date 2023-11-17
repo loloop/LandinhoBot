@@ -49,11 +49,14 @@ final class Race: Model, Content {
   init(
     id: UUID = UUID(),
     title: String,
-    earliestEventDate: Date)
+    earliestEventDate: Date,
+    shortTitle: String
+  )
   {
     self.id = id
     self.title = title
     self.earliestEventDate = earliestEventDate
+    self.shortTitle = shortTitle
   }
 
   @ID(key: .id)
@@ -61,6 +64,9 @@ final class Race: Model, Content {
 
   @Field(key: "title")
   var title: String?
+
+  @Field(key: "short_title")
+  var shortTitle: String?
 
   @Field(key: "earliest_event_date")
   var earliestEventDate: Date
@@ -80,11 +86,14 @@ final class RaceEvent: Model, Content {
   init(
     id: UUID = UUID(),
     title: String,
-    date: Date)
+    date: Date,
+    isMainEvent: Bool
+  )
   {
     self.id = id
     self.title = title
     self.date = date
+    self.isMainEvent = isMainEvent
   }
 
   @ID(key: .id)
@@ -95,6 +104,9 @@ final class RaceEvent: Model, Content {
 
   @Field(key: "date")
   var date: Date?
+
+  @Field(key: "is_main_event")
+  var isMainEvent: Bool
 
   @Parent(key: "race")
   var race: Race

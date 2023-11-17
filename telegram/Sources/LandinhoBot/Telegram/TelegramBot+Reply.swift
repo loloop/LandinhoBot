@@ -10,16 +10,6 @@ import TelegramBotSDK
 
 extension TelegramBot {
   @discardableResult
-  func reply(_ update: ChatUpdate, text: String) async throws -> Message {
-    guard let chatID = Int64(update.chatID) else {
-      throw TelegramError(message: "Couldn't convert chatID String to Int64")
-    }
-    return try await sendMessageAsync(
-      chatId: .chat(chatID),
-      text: text)
-  }
-
-  @discardableResult
   func sendMessageAsync(
     chatId: ChatId,
     text: String,

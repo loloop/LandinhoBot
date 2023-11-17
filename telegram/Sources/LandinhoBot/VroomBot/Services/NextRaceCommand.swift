@@ -29,7 +29,7 @@ struct NextRaceCommand: Command {
     return """
     \(nextRace.title)
     \(formatRace(nextRace))
-    \(response.categoryComment)
+    \(response.category?.comment ?? "")
     """
   }
 
@@ -70,6 +70,6 @@ struct NextRaceCommand: Command {
 
   struct NextRaceResponse: Codable, Equatable {
     let nextRace: Race?
-    let categoryComment: String
+    let category: Category?
   }
 }

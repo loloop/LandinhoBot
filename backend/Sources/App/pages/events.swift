@@ -48,10 +48,15 @@ struct UpdateEventsHandler: AsyncRequestHandler {
     }
 
     let events = request.events.compactMap {
-      RaceEvent(title: $0.title, date: $0.date)
+      RaceEvent(title: $0.title, date: $0.date, isMainEvent: $0.isMainEvent)
     }
 
-    guard !events.isEmpty else {
+    guard
+      !events.isEmpty,
+      let newEarliestDate = events.sorted(by: {
+        $0.date ?? Date() > $1.date ?? Date()
+      }).first?.date
+    else {
       throw Abort(.badRequest)
     }
 
@@ -62,6 +67,12 @@ struct UpdateEventsHandler: AsyncRequestHandler {
         .filter(Race.self, \.$id, .equal, raceID)
         .all()
         .delete(on: db)
+
+      try await Race
+        .query(on: db)
+        .set(\.$earliestEventDate, to: newEarliestDate)
+        .filter(\.$id, .equal, raceID)
+        .update()
 
       try await race.$events.create(events, on: db)
     }
@@ -76,6 +87,7 @@ struct UpdateEventsHandler: AsyncRequestHandler {
     struct UploadRaceEvent: Content {
       let title: String
       let date: Date
+      let isMainEvent: Bool
     }
   }
 }

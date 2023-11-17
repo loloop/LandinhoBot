@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Category: Codable {
+struct Category: Codable, Equatable {
   let title: String
   let tag: String
   let comment: String
