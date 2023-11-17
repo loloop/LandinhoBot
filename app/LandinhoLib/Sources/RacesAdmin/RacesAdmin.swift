@@ -8,12 +8,40 @@
 import APIClient
 import Common
 import ComposableArchitecture
+import EventsAdmin
 import Foundation
 import SwiftUI
 
-import EventsAdmin
+extension RacesAdmin {
+  @Reducer
+  public struct Destination {
+    public init() {}
 
-public struct RacesAdmin: Reducer {
+    public enum State: Equatable {
+      case raceEditor(RaceEditor.State)
+      case eventsAdmin(EventsAdmin.State)
+    }
+
+    public enum Action: Equatable {
+      case raceEditor(RaceEditor.Action)
+      case eventsAdmin(EventsAdmin.Action)
+    }
+
+    public var body: some ReducerOf<Self> {
+      Scope(state: \.raceEditor, action: \.raceEditor) {
+        RaceEditor()
+      }
+
+      Scope(state: \.eventsAdmin, action: \.eventsAdmin) {
+        EventsAdmin()
+      }
+    }
+  }
+}
+
+
+@Reducer
+public struct RacesAdmin {
   public init() {}
 
   public struct State: Equatable {
@@ -28,7 +56,7 @@ public struct RacesAdmin: Reducer {
     var raceList = APIClient<[Race]>.State(endpoint: "race")
     var removePastRacesState = APIClient<[Race]>.State(endpoint: "prune-race")
 
-    @PresentationState var raceEditorState: RaceEditor.State?
+    @PresentationState var destination: Destination.State?
   }
 
   public enum Action: Equatable {
@@ -41,14 +69,14 @@ public struct RacesAdmin: Reducer {
 
     case removePastRacesRequest(APIClient<[Race]>.Action)
     case raceRequest(APIClient<[Race]>.Action)
-    case raceEditor(PresentationAction<RaceEditor.Action>)
+    case destination(PresentationAction<Destination.Action>)
   }
 
   public var body: some ReducerOf<Self> {
     Reduce { state, action in
       switch action {
       case .onPlusTap:
-        state.raceEditorState = .init(tag: state.tag)
+        state.destination = .raceEditor(.init(tag: state.tag))
         return .none
 
       case .onAppear:
@@ -60,8 +88,12 @@ public struct RacesAdmin: Reducer {
         }
 
       case .onEditTap(let race):
-        state.raceEditorState = .init(race: race, tag: state.tag)
+        state.destination = .raceEditor(.init(race: race, tag: state.tag))
         return .none
+
+      case .onRaceTap(let race):
+        state.destination = .eventsAdmin(.init(id: race.id, title: race.title))
+        return .send(.destination(.presented(.eventsAdmin(.onAppear))))
 
       case .onPruneTap:
         let tag = state.tag
@@ -71,13 +103,13 @@ public struct RacesAdmin: Reducer {
           ]))))
         }
 
-      case .raceEditor(.presented(.raceRequest(.response(.finished(.success))))):
+      case .destination(.presented(.raceEditor(.raceRequest(.response(.finished(.success)))))):
         return .merge(
           .send(.onAppear),
-          .send(.raceEditor(.dismiss))
+          .send(.destination(.dismiss))
         )
 
-      case .raceEditor(.presented(.raceRequest(.response(.finished(.failure(let error)))))):
+      case .destination(.presented(.raceEditor(.raceRequest(.response(.finished(.failure(let error))))))):
         print(error)
         return .none
 
@@ -85,11 +117,12 @@ public struct RacesAdmin: Reducer {
         state.raceList.response = .finished(.success(races))
         return .none
 
-      case .raceRequest, .raceEditor, .removePastRacesRequest, .onRaceTap:
+      case .raceRequest, .destination, .removePastRacesRequest:
         return .none
       }
-    }.ifLet(\.$raceEditorState, action: /Action.raceEditor) {
-      RaceEditor()
+    }
+    .ifLet(\.$destination, action: \.destination) {
+      Destination()
     }
 
     Scope(state: \.raceList, action: /Action.raceRequest) {

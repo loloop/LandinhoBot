@@ -7,6 +7,7 @@
 
 import APIClient
 import ComposableArchitecture
+import EventsAdmin
 import Foundation
 import SwiftUI
 
@@ -21,7 +22,12 @@ public struct RacesAdminView: View {
     WithViewStore(store, observe: { $0 }) { viewStore in
       Group {
         switch viewStore.raceList.response {
-        case .idle, .loading, .reloading:
+        case .idle:
+          Color(.systemBackground)
+            .onAppear {
+              store.send(.onAppear)
+            }
+        case .loading, .reloading:
           ProgressView()
         case .finished(.failure(let error)):
           APIErrorView(error: error)
@@ -55,18 +61,21 @@ public struct RacesAdminView: View {
           Image(systemName: "plus")
         })
       }
-
-    }
-    .onAppear {
-      store.send(.onAppear)
     }
     .sheet(
-      store: store
-        .scope(
-          state: { $0.$raceEditorState },
-          action: RacesAdmin.Action.raceEditor)) { store in
-            RaceEditorView(store: store)
-          }
+      store: store.scope(state: \.$destination, action: { .destination($0) }),
+      state: \.raceEditor,
+      action: { .raceEditor($0) }
+    ) { store in
+      RaceEditorView(store: store)
+    }
+    .navigationDestination(
+      store: store.scope(state: \.$destination, action: { .destination($0) }),
+      state: \.eventsAdmin,
+      action: { .eventsAdmin($0) }
+    ) { store in
+      EventsAdminView(store: store)
+    }
   }
 
   @MainActor

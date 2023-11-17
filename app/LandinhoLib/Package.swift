@@ -40,11 +40,11 @@ let package = Package(
         composable
       ]),
 
-    .target(
-      name: "APIClient",
-      dependencies: [
-        composable
-      ]),
+      .target(
+        name: "APIClient",
+        dependencies: [
+          composable
+        ]),
 
       .target(
         name: "Common"),
@@ -61,17 +61,16 @@ let package = Package(
         dependencies: [
           "APIClient",
           "Common",
-          "EventsAdmin",
           "RacesAdmin",
           composable
         ]),
 
-    .target(
-      name: "EventDetail",
-      dependencies: [
-        "APIClient",
-        composable
-      ]),
+      .target(
+        name: "EventDetail",
+        dependencies: [
+          "APIClient",
+          composable
+        ]),
 
       .target(
         name: "EventsAdmin",

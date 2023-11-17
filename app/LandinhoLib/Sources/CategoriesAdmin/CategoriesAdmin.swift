@@ -9,19 +9,47 @@ import APIClient
 import Common
 import ComposableArchitecture
 import Foundation
-import EventsAdmin
 import RacesAdmin
 
-public struct CategoriesAdmin: Reducer {
+import EventsAdmin
+
+extension CategoriesAdmin {
+  @Reducer
+  public struct Destination {
+    public init() {}
+
+    public enum State: Equatable {
+      case categoryEditor(CategoryEditor.State)
+      case racesAdmin(RacesAdmin.State)
+    }
+
+    public enum Action: Equatable {
+      case categoryEditor(CategoryEditor.Action)
+      case racesAdmin(RacesAdmin.Action)
+    }
+
+    public var body: some ReducerOf<Self> {
+      Scope(state: \.categoryEditor, action: \.categoryEditor) {
+        CategoryEditor()
+      }
+
+      Scope(state: \.racesAdmin, action: \.racesAdmin) {
+        RacesAdmin()
+      }
+    }
+  }
+}
+
+@Reducer
+public struct CategoriesAdmin {
   public init() {}
 
   public struct State: Equatable {
     public init() {}
 
-    @PresentationState var categoryEditorState: CategoryEditor.State?
+    @PresentationState var destination: Destination.State?
 
     public var categoryList = APIClient<[RaceCategory]>.State(endpoint: "category")
-    var path = StackState<Path.State>()
   }
 
   public enum Action: Equatable {
@@ -31,8 +59,7 @@ public struct CategoriesAdmin: Reducer {
     case onCategoryEditorTap(String)
 
     case categoryRequest(APIClient<[RaceCategory]>.Action)
-    case categoryEditor(PresentationAction<CategoryEditor.Action>)
-    case path(StackAction<Path.State, Path.Action>)
+    case destination(PresentationAction<Destination.Action>)
   }
 
   public var body: some ReducerOf<CategoriesAdmin> {
@@ -43,13 +70,22 @@ public struct CategoriesAdmin: Reducer {
           await send(.categoryRequest(.request(.get)))
         }
 
-      case .onCategoryTap:
-        // TODO: Add a DelegateAction
-        // Used to let parent feature know which one has been tapped
+      case .onCategoryTap(let id):
+        guard
+          let categories = state.categoryList.response.value,
+          let selectedCategory = categories.first(where: { $0.id == id })
+        else {
+          return .none
+        }
+
+        state.destination = .racesAdmin(
+          .init(
+            title: selectedCategory.title,
+            tag: selectedCategory.tag))
         return .none
 
       case .onPlusTap:
-        state.categoryEditorState = .init()
+        state.destination = .categoryEditor(.init())
         return .none
 
       case .onCategoryEditorTap(let id):
@@ -60,52 +96,25 @@ public struct CategoriesAdmin: Reducer {
           return .none
         }
 
-        state.categoryEditorState = .init(category: selectedCategory)
+        state.destination = .categoryEditor(.init(category: selectedCategory))
         return .none
 
-      case .categoryEditor(.presented(.categoryRequest(.response(.finished(.success))))):
+      case .destination(.presented(.categoryEditor(.categoryRequest(.response(.finished(.success)))))):
         return .merge(
           .send(.onAppear),
-          .send(.categoryEditor(.dismiss))
+          .send(.destination(.dismiss))
         )
 
-      case .categoryRequest, .categoryEditor, .path:
+      case .categoryRequest, .destination:
         return .none
       }
     }
-    .ifLet(\.$categoryEditorState, action: /Action.categoryEditor) {
-      CategoryEditor()
-    }
-    .forEach(\.path, action: /Action.path) {
-      Path()
+    .ifLet(\.$destination, action: \.destination) {
+      Destination()
     }
 
     Scope(state: \.categoryList, action: /Action.categoryRequest) {
       APIClient()
-    }
-  }
-
-  public struct Path: Reducer {
-    public init() {}
-
-    public enum State: Equatable {
-      case races(RacesAdmin.State)
-      case events(EventsAdmin.State)
-    }
-
-    public enum Action: Equatable {
-      case races(RacesAdmin.Action)
-      case events(EventsAdmin.Action)
-    }
-
-    public var body: some ReducerOf<Self> {
-      Scope(state: /State.races, action: /Action.races) {
-        RacesAdmin()
-      }
-
-      Scope(state: /State.events, action: /Action.events) {
-        EventsAdmin()
-      }
     }
   }
 }
