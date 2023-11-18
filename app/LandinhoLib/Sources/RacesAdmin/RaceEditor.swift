@@ -68,7 +68,8 @@ public struct RaceEditor: Reducer {
           let request = UploadRaceRequest(
             title: state.title,
             categoryTag: state.tag,
-            earliestEventDate: state.date)
+            earliestEventDate: state.date,
+            shortTitle: state.shortTitle)
           return .run { send in
             try await send(.raceRequest(.request(.post(request))))
           }
@@ -92,5 +93,6 @@ public struct RaceEditor: Reducer {
     let title: String
     let categoryTag: String
     let earliestEventDate: Date
+    let shortTitle: String
   }
 }

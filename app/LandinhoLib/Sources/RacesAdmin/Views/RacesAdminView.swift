@@ -23,9 +23,9 @@ public struct RacesAdminView: View {
       Group {
         switch viewStore.raceList.response {
         case .idle:
-          Color(.systemBackground)
+          Color(.secondarySystemBackground)
             .onAppear {
-              store.send(.onAppear)
+              viewStore.send(.onAppear)
             }
         case .loading, .reloading:
           ProgressView()
@@ -44,7 +44,7 @@ public struct RacesAdminView: View {
       .navigationTitle(viewStore.title)
       .navigationBarTitleDisplayMode(.large)
     }
-    .background(Color(.secondarySystemBackground))
+    .background(.background.secondary)
     .toolbar {
       ToolbarItem(placement: .secondaryAction) {
         Button(action: {
@@ -90,7 +90,10 @@ public struct RacesAdminView: View {
             VStack(alignment: .leading) {
               Text(race.title)
                 .font(.title3)
+              Text(race.shortTitle)
+                .font(.headline)
               Text("\(race.earliestEventDate?.formatted() ?? "")")
+                .font(.subheadline)
             }
             Spacer()
             Image(systemName: "chevron.right")
