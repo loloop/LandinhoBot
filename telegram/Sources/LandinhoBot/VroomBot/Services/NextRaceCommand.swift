@@ -24,12 +24,14 @@ struct NextRaceCommand: Command {
   }
 
   func formatResponse(_ response: NextRaceResponse) -> String? {
-    guard let nextRace = response.nextRace else { return nil }
-
     return """
-    \(nextRace.title)
-    \(formatRace(nextRace))
-    \(response.category?.comment ?? "")
+    \(response.category.title)
+    \(response.nextRace.title)
+    \(formatRace(response.nextRace))
+    \(response.category.comment)
+
+    Procura a próxima corrida de outra categoria? Digite o comando `/nextrace` seguido da tag da categoria que você está procurando, ex.:
+    `/nextrace f1`
     """
   }
 
@@ -47,7 +49,7 @@ struct NextRaceCommand: Command {
   }
 
   func formatEvent(_ event: RaceEvent) -> String {
-    "\(Self.formatter.string(from: event.date)) - \(event.title)"
+    "\(Self.formatter.string(from: event.date)) – \(event.title)"
   }
 
   func formatEventlessRace(race: Race) -> String {
@@ -69,7 +71,7 @@ struct NextRaceCommand: Command {
   }()
 
   struct NextRaceResponse: Codable, Equatable {
-    let nextRace: Race?
-    let category: Category?
+    let nextRace: Race
+    let category: Category
   }
 }

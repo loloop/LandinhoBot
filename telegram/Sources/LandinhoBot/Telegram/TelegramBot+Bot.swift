@@ -23,7 +23,7 @@ extension TelegramBot: Bot {
 
   private func escapeCharacters(in text: String) -> String {
     // Inefficient but gets the job done
-    let charactersToEscape = ["_", "*", "[", "]", "(", ")", "~", "`", ">", "#", "+", "-", "=", "|", "{", "}", ".", "!"]
+    let charactersToEscape = ["_", "*", "[", "]", "(", ")", "~", ">", "#", "+", "-", "=", "|", "{", "}", ".", "!"]
     return charactersToEscape.reduce(text) { partialResult, character in
       partialResult.replacingOccurrences(of: character, with: #"\"#+character)
     }
