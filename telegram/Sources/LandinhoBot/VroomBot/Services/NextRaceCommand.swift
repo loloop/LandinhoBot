@@ -16,22 +16,23 @@ struct NextRaceCommand: Command {
   func handle(update: ChatUpdate, bot: Bot, debugMessage: (String) -> Void) async throws {
     let categoryTag = update.arguments.first ?? ""
     let response = try await api.fetch(arguments: ["argument": categoryTag])
-    guard let formattedResponse = formatResponse(response) else {
+    guard let formattedResponse = formatResponse(
+      response,
+      showsHelpText: categoryTag.isEmpty)
+    else {
       try await bot.reply(update, text: "Não encontrei a próxima corrida")
       return
     }
     try await bot.reply(update, text: formattedResponse)
   }
 
-  func formatResponse(_ response: NextRaceResponse) -> String? {
+  func formatResponse(_ response: NextRaceResponse, showsHelpText: Bool) -> String? {
     return """
     \(response.category.title)
     \(response.nextRace.title)
     \(formatRace(response.nextRace))
     \(response.category.comment)
-
-    Procura a próxima corrida de outra categoria? Digite o comando `/nextrace` seguido da tag da categoria que você está procurando, ex.:
-    `/nextrace f1`
+    \(showsHelpText ? Self.helpText : "")
     """
   }
 
@@ -39,6 +40,7 @@ struct NextRaceCommand: Command {
     let events = race.events.map(formatEvent(_:)).joined(separator: "\n")
     guard !events.isEmpty else { return formatEventlessRace(race: race) }
     return """
+
     🏎️🏎️🏎️🏎️🏎️🏎️🏎️
 
     \(events)
@@ -63,6 +65,12 @@ struct NextRaceCommand: Command {
 
     """
   }
+
+  static let helpText = """
+  Procura a próxima corrida de outra categoria? Digite o comando `/nextrace` seguido da tag da categoria que você está procurando, ex.:
+
+  `/nextrace f1`
+  """
 
   static let formatter = {
     let f = DateFormatter()
