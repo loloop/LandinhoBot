@@ -8,19 +8,23 @@
 import Foundation
 import SwiftUI
 
-struct CriticalErrorView: View {
+struct SuccessNotificationView: View {
   let text: String
 
   var body: some View {
     HStack {
-      Image(systemName: "xmark.octagon")
+      Image(systemName: "checkmark.circle.fill")
         .font(.title)
       Text(text)
       Spacer()
     }
+    .foregroundStyle(.white)
     .frame(maxWidth: .infinity)
     .padding()
-    .background(.red)
+    .background(.green)
   }
 }
 
+#Preview {
+  SuccessNotificationView(text: "Salvo com sucesso")
+}

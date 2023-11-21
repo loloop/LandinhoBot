@@ -51,6 +51,7 @@ public class NotificationQueueClient {
     case testflight
     case warning
     case critical
+    case success
   }
 
   lazy var observer: AsyncStream<QueueableNotification> = {

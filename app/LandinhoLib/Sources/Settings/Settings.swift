@@ -59,18 +59,39 @@ public struct SettingsView: View {
         NavigationLink {
           BetaSheet()
         } label: {
-          Label("Changelog", systemImage: "")
+          Label("Changelog", systemImage: "tree")
         }
 
         Button {
           notificationQueue.enqueue(.critical("Ainda não amigo"))
         } label: {
-          Label("Termos de Serviço", systemImage: "")
+          Label("Termos de Serviço", systemImage: "book.closed")
         }
+
+        Button {
+          notificationQueue.enqueue(.warning("Ainda não amigo"))
+        } label: {
+          Label("Política de privacidade", systemImage: "lock")
+        }
+
+        Button {
+          notificationQueue.enqueue(.success("Ainda não amigo"))
+        } label: {
+          Label("Sobre o desenvolvedor", systemImage: "person")
+        }
+
         Button {
           store.send(.showAdmin)
         } label: {
           Label("Admin", systemImage: "fuelpump")
+        }
+
+        if let version = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+          HStack {
+            Text("Versão")
+            Spacer()
+            Text(version)
+          }
         }
       }
       .navigationTitle("Ajustes")
@@ -82,4 +103,10 @@ public struct SettingsView: View {
       }
     }
   }
+}
+
+#Preview {
+  SettingsView(store: .init(initialState: .init(), reducer: {
+    Settings()
+  }))
 }

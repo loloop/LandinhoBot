@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct WarningErrorView: View {
+struct WarningNotificationView: View {
   let text: String
 
   var body: some View {

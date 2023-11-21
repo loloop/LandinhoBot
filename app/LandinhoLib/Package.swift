@@ -46,6 +46,7 @@ let package = Package(
       .target(
         name: "APIClient",
         dependencies: [
+          "NotificationsQueue",
           composable
         ]),
 
@@ -87,6 +88,7 @@ let package = Package(
         dependencies: [
           "APIClient",
           "Common",
+          "NotificationsQueue",
           composable
         ]),
 

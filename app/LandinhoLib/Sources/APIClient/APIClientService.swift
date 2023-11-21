@@ -5,8 +5,9 @@
 //  Created by Mauricio Cardozo on 30/06/23.
 //
 
-import Foundation
 import ComposableArchitecture
+import Foundation
+import NotificationsQueue
 
 @_spi(Internal) public protocol APIClientServiceProtocol: DependencyKey, TestDependencyKey {
   func request<T: Decodable>(
@@ -23,6 +24,8 @@ import ComposableArchitecture
 final class APIClientService: APIClientServiceProtocol {
   static var liveValue: APIClientService = APIClientService()
   public static let live: any APIClientServiceProtocol = APIClientService()
+
+  @Dependency(\.notificationQueue) var notificationQueue
 
   var persistentHeaders: [String: String] = [
     "Content-Type": "application/json",
@@ -90,8 +93,11 @@ final class APIClientService: APIClientServiceProtocol {
       let decoded = try decoder.decode(T.self, from: response.0)
       return decoded
     } catch(let error) {
+      let JSONString = String(data: response.0, encoding: .utf8)
+      notificationQueue.enqueue(.critical("Erro de conexão"))
+      notificationQueue.enqueue(.debug(JSONString ?? ""))
       throw APIError(
-        jsonString: String(data: response.0, encoding: .utf8),
+        jsonString: JSONString,
         innerError: error)
     }
   }

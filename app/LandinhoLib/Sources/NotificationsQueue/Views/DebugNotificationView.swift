@@ -8,19 +8,18 @@
 import Foundation
 import SwiftUI
 
-struct TestflightErrorView: View {
+struct DebugNotificationView: View {
   let text: String
 
   var body: some View {
     HStack {
-      Image(systemName: "paperplane")
+      Image(systemName: "magnifyingglass.circle")
         .font(.title)
       Text(text)
       Spacer()
     }
     .frame(maxWidth: .infinity)
     .padding()
-    .background(.purple)
-    .foregroundStyle(.white)
+    .background(.ultraThinMaterial)
   }
 }

@@ -15,18 +15,22 @@ public struct QueueableNotification: Equatable & Identifiable {
 
 public extension QueueableNotification {
   static func debug(_ text: String) -> Self {
-    QueueableNotification(text: text, type: .debug)
+    .init(text: text, type: .debug)
   }
 
   static func testflight(_ text: String) -> Self {
-    QueueableNotification(text: text, type: .testflight)
+    .init(text: text, type: .testflight)
   }
 
   static func warning(_ text: String) -> Self {
-    QueueableNotification(text: text, type: .warning)
+    .init(text: text, type: .warning)
   }
 
   static func critical(_ text: String) -> Self {
-    QueueableNotification(text: text, type: .critical)
+    .init(text: text, type: .critical)
+  }
+
+  static func success(_ text: String) -> Self {
+    .init(text: text, type: .success)
   }
 }

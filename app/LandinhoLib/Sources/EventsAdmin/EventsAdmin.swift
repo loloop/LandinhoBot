@@ -9,6 +9,7 @@ import APIClient
 import Common
 import ComposableArchitecture
 import Foundation
+import NotificationsQueue
 import SwiftUI
 
 public struct UploadRaceRequest: Codable, Equatable {
@@ -64,6 +65,8 @@ public struct EventsAdmin {
     case binding(BindingAction<State>)
   }
 
+  @Dependency(\.notificationQueue) var notificationQueue
+
   public var body: some ReducerOf<Self> {
     BindingReducer()
 
@@ -104,6 +107,8 @@ public struct EventsAdmin {
         }
 
       case .eventListRequest(.response(.finished(.success(let events)))):
+        notificationQueue.enqueue(.success("Salvo com sucesso!"))
+
         state.events = events.map {
           UploadRaceEvent(
             id: $0.id,

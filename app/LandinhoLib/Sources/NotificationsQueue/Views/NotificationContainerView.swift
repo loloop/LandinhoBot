@@ -80,14 +80,26 @@ struct NotificationContainerView: View {
     var body: some View {
       switch error.type {
       case .debug:
-        DebugErrorView(text: error.text)
+        DebugNotificationView(text: error.text)
       case .testflight:
-        TestflightErrorView(text: error.text)
+        TestflightNotificationView(text: error.text)
       case .warning:
-        WarningErrorView(text: error.text)
+        WarningNotificationView(text: error.text)
       case .critical:
-        CriticalErrorView(text: error.text)
+        CriticalNotificationView(text: error.text)
+      case .success:
+        SuccessNotificationView(text: error.text)
       }
     }
+  }
+}
+
+#Preview {
+  VStack {
+    NotificationContainerView(error: .debug("Texto"), onDragEnd: { })
+    NotificationContainerView(error: .testflight("Texto"), onDragEnd: { })
+    NotificationContainerView(error: .warning("Texto"), onDragEnd: { })
+    NotificationContainerView(error: .critical("Texto"), onDragEnd: { })
+    NotificationContainerView(error: .success("Texto"), onDragEnd: { })
   }
 }
