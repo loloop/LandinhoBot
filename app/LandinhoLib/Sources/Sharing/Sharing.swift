@@ -49,7 +49,7 @@ public struct Sharing {
         state.hasTappedShare = true
         return .none
       case .onBackgroundTap:
-        // TODO: Put up image selector, swap background
+        // TODO: If there's more than a single background for this category, go to the next one
         return .none
       case .onWidgetTap:
         state.currentWidgetType = ShareableWidgetType.allCases.next(element: state.currentWidgetType)

@@ -15,6 +15,8 @@ struct VroomVroomApp: App {
     Root()
   }
 
+  @UIApplicationDelegateAdaptor var delegate: VroomAppDelegate
+
   var body: some Scene {
     WindowGroup {
       RootView(store: store)

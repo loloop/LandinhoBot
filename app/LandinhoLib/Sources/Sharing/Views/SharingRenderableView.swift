@@ -26,7 +26,6 @@ struct SharingRenderableView: View {
       .padding()
       .background {
         SharingBackground()
-        // TODO: Remove border radius when rendering
           .clipShape(RoundedRectangle(cornerRadius: viewStore.hasTappedShare ? 0.0 : 30.0, style: .continuous))
           .padding(viewStore.hasTappedShare ? 0 : 2)
           .onTapGesture {

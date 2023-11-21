@@ -6,8 +6,10 @@
 //
 
 import Admin
+import BetaSheet
 import Foundation
 import ComposableArchitecture
+import NotificationsQueue
 import SwiftUI
 
 @Reducer
@@ -42,9 +44,6 @@ public struct Settings {
   }
 }
 
-// TODO: Sobre o desenvolvedor
-// TODO: Compartilhar
-
 public struct SettingsView: View {
   public init(store: StoreOf<Settings>) {
     self.store = store
@@ -52,16 +51,19 @@ public struct SettingsView: View {
 
   let store: StoreOf<Settings>
 
+  @Dependency(\.notificationQueue) var notificationQueue
+
   public var body: some View {
     NavigationStack {
       List {
-        Button {
-
+        NavigationLink {
+          BetaSheet()
         } label: {
           Label("Changelog", systemImage: "")
         }
-        Button {
 
+        Button {
+          notificationQueue.enqueue(.critical("Ainda não amigo"))
         } label: {
           Label("Termos de Serviço", systemImage: "")
         }

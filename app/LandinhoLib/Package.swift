@@ -15,12 +15,14 @@ let package = Package(
   products: [
     .library(name: "Admin", targets: ["Admin"]),
     .library(name: "APIClient", targets: ["APIClient"]),
+    .library(name: "BetaSheet", targets: ["BetaSheet"]),
     .library(name: "Categories", targets: ["Categories"]),
     .library(name: "CategoriesAdmin", targets: ["CategoriesAdmin"]),
     .library(name: "Common", targets: ["Common"]),
     .library(name: "EventDetail", targets: ["EventDetail"]),
     .library(name: "EventsAdmin", targets: ["EventsAdmin"]),
     .library(name: "Home", targets: ["Home"]),
+    .library(name: "NotificationsQueue", targets: ["NotificationsQueue"]),
     .library(name: "RacesAdmin", targets: ["RacesAdmin"]),
     .library(name: "ScheduleList", targets: ["ScheduleList"]),
     .library(name: "Settings", targets: ["Settings"]),
@@ -48,7 +50,10 @@ let package = Package(
         ]),
 
       .target(
-        name: "Common"),
+        name: "BetaSheet",
+        dependencies: [
+          composable
+        ]),
 
       .target(
         name: "Categories",
@@ -65,6 +70,9 @@ let package = Package(
           "RacesAdmin",
           composable
         ]),
+
+      .target(
+        name: "Common"),
 
       .target(
         name: "EventDetail",
@@ -93,6 +101,12 @@ let package = Package(
         ]),
 
       .target(
+        name: "NotificationsQueue",
+        dependencies: [
+          composable
+        ]),
+
+      .target(
         name: "RacesAdmin",
         dependencies: [
           "APIClient",
@@ -115,6 +129,8 @@ let package = Package(
         dependencies: [
           "Admin",
           "APIClient",
+          "BetaSheet",
+          "NotificationsQueue",
           composable
         ]),
 
