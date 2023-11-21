@@ -47,3 +47,44 @@ public struct MegaRace: Codable, Equatable, Identifiable, Hashable {
         events: events))
   }
 }
+
+@_spi(Mock) public extension MegaRace {
+  static var mock: MegaRace {
+    .init(
+      id: UUID(),
+      title: "Fórmula 1 Heineken Grande Prêmio de São Paulo 2021",
+      shortTitle: "São Paulo",
+      events: [
+        .init(
+          id: UUID(),
+          title: "Treino Livre 1",
+          date: Date(),
+          isMainEvent: false),
+        .init(
+          id: UUID(),
+          title: "Treino Livre 2",
+          date: Date(),
+          isMainEvent: false),
+        .init(
+          id: UUID(),
+          title: "Treino Livre 3",
+          date: Date().advanced(by: 100000),
+          isMainEvent: false),
+        .init(
+          id: UUID(),
+          title: "Classificação",
+          date: Date().advanced(by: 100000),
+          isMainEvent: false),
+        .init(
+          id: UUID(),
+          title: "Corrida",
+          date: Date().advanced(by: 200000),
+          isMainEvent: true)
+      ],
+      category: .init(
+        id: UUID().uuidString,
+        title: "Formula 1",
+        tag: "f1",
+        comment: "Event data by CalendarioF1.com"))
+  }
+}

@@ -21,6 +21,7 @@
 		B4877C342B06B4C60009760C /* NextRaceWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C332B06B4C60009760C /* NextRaceWidget.swift */; };
 		B48A501F2AFECEEB00A01B7E /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48A501E2AFECEEB00A01B7E /* Root.swift */; };
 		B48D11D62B080B86003A05B3 /* TODOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D11D52B080B86003A05B3 /* TODOs.swift */; };
+		B48E4FEC2B0BBCB0001457B2 /* Sharing in Frameworks */ = {isa = PBXBuildFile; productRef = B48E4FEB2B0BBCB0001457B2 /* Sharing */; };
 		B4CBD1632B0401C100BF6776 /* Home in Frameworks */ = {isa = PBXBuildFile; productRef = B4CBD1622B0401C100BF6776 /* Home */; };
 		B4CBD1652B0409FF00BF6776 /* Admin in Frameworks */ = {isa = PBXBuildFile; productRef = B4CBD1642B0409FF00BF6776 /* Admin */; };
 		B4CBD1672B040A0300BF6776 /* CategoriesAdmin in Frameworks */ = {isa = PBXBuildFile; productRef = B4CBD1662B040A0300BF6776 /* CategoriesAdmin */; };
@@ -100,6 +101,7 @@
 				B4D87C4E2B01B12B000EBEF9 /* EventDetail in Frameworks */,
 				B450025E2AFE91F1003CDE6A /* Common in Frameworks */,
 				B4CBD1652B0409FF00BF6776 /* Admin in Frameworks */,
+				B48E4FEC2B0BBCB0001457B2 /* Sharing in Frameworks */,
 				B4CBD1632B0401C100BF6776 /* Home in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -223,6 +225,7 @@
 				B4CBD1642B0409FF00BF6776 /* Admin */,
 				B4CBD1662B040A0300BF6776 /* CategoriesAdmin */,
 				B453CE012B07B07F00B0CEA5 /* WidgetUI */,
+				B48E4FEB2B0BBCB0001457B2 /* Sharing */,
 			);
 			productName = VroomVroom;
 			productReference = B42CA9E92AFE8B66009B3FFB /* VroomVroom.app */;
@@ -634,6 +637,10 @@
 		B453CE072B07DDBE00B0CEA5 /* Widgets */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Widgets;
+		};
+		B48E4FEB2B0BBCB0001457B2 /* Sharing */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Sharing;
 		};
 		B4CBD1622B0401C100BF6776 /* Home */ = {
 			isa = XCSwiftPackageProductDependency;

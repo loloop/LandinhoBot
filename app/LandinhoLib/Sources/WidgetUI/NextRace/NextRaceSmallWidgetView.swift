@@ -46,7 +46,7 @@ public struct NextRaceSmallWidgetView: View {
             .font(.title2)
         }
 
-        Text("Última atualização: \(lastUpdatedDate.formatted(date: .omitted, time: .shortened))")
+        Text("Atualizado em: \(lastUpdatedDate.formatted(date: .omitted, time: .shortened))")
           .font(.system(size: 10))
           .foregroundStyle(.secondary)
           .frame(maxWidth: .infinity)
