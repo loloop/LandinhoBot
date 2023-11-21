@@ -88,12 +88,12 @@ public struct BetaSheet: View {
   21/11
   • Essa tela!
   • Notificações de erro - Clica em "Termos de Serviço" nos Ajustes pra testar
+  • Ícone novo
   warning("TODO remover sessões de treino do widget pequeno")
   warning("TODO categorias funcionam na tela de categorias - sem favorito")
   warning("TODO [Admin] notificationQueue quando salva (com sucesso)")
   warning("TODO [settings] número da versão")
   warning("TODO [APIClient] notificationQueue error quando um request falhar")
-  warning("TODO ícone novo")
 
   20/11
   • WIP: É possível compartilhar uma imagem que tem os horários de uma corrida
