@@ -42,6 +42,9 @@ public struct Settings {
   }
 }
 
+// TODO: Sobre o desenvolvedor
+// TODO: Compartilhar
+
 public struct SettingsView: View {
   public init(store: StoreOf<Settings>) {
     self.store = store

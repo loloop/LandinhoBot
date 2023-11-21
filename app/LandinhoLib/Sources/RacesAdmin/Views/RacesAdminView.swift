@@ -34,7 +34,7 @@ public struct RacesAdminView: View {
         case .finished(.success(let races)):
           if races.isEmpty {
             ContentUnavailableView(
-              "This category has no races",
+              "Esta categoria não tem corridas",
               systemImage: "magnifyingglass")
           } else {
             list(from: races)
@@ -50,7 +50,7 @@ public struct RacesAdminView: View {
         Button(action: {
           store.send(.onPruneTap)
         }, label: {
-          Text("Remove past races")
+          Text("Remover corridas passadas")
         })
       }
 

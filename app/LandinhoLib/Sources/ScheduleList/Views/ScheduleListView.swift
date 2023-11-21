@@ -32,14 +32,23 @@ public struct ScheduleListView: View {
         case .reloading(let response), .finished(.success(let response)):
           ScrollView {
             VStack(spacing: 20) {
-              Text("Ainda não tem nada por aqui, mas se você quiser ver, esse são os Widgets do app por enquanto:")
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding()
+              VStack {
+                Text("Ainda não tem nada por aqui, mas se você quiser ver, esse são os Widgets do app por enquanto:")
+                  .frame(maxWidth: .infinity, alignment: .leading)
+                Text("*Toca neles pra ir pra tela da corrida*")
+                  .font(.caption)
+                  .foregroundStyle(.secondary)
+                  .frame(maxWidth: .infinity, alignment: .leading)
+              }
+              .padding(.horizontal)
+
               ScrollView(.horizontal) {
                 HStack {
                   Spacer().padding(.leading, 5)
                   ForEach(response.items) { item in
-                    smallWidget(for: item)
+                    NextRaceSmallWidgetView(bundle: item.bundled, lastUpdatedDate: Date())
+                      .widgetBackground()
+                      .widgetFrame(family: .systemSmall)
                       .onTapAnimate {
                         viewStore.send(.delegate(.onWidgetTap(item)))
                       }
@@ -55,11 +64,8 @@ public struct ScheduleListView: View {
                   Spacer().padding(.leading, 5)
                   ForEach(response.items) { item in
                     NextRaceMediumWidgetView(bundle: item.bundled, lastUpdatedDate: Date())
-                      .padding()
-                      .background(Color(.systemBackground))
-                      .clipShape(RoundedRectangle(cornerRadius: 25.0, style: .continuous))
-                      .frame(width: 364, height: 170)
-                      .shadow(color: .black.opacity(0.1), radius: 1)
+                      .widgetBackground()
+                      .widgetFrame(family: .systemMedium)
                       .onTapAnimate {
                         viewStore.send(.delegate(.onWidgetTap(item)))
                       }
@@ -75,11 +81,8 @@ public struct ScheduleListView: View {
                   Spacer().padding(.leading, 5)
                   ForEach(response.items) { item in
                     NextRaceLargeWidgetView(bundle: item.bundled, lastUpdatedDate: Date())
-                      .padding()
-                      .background(Color(.systemBackground))
-                      .clipShape(RoundedRectangle(cornerRadius: 25.0, style: .continuous))
-                      .frame(width: 364, height: 384)
-                      .shadow(color: .black.opacity(0.1), radius: 1)
+                      .widgetBackground()
+                      .widgetFrame(family: .systemLarge)
                       .onTapAnimate {
                         viewStore.send(.delegate(.onWidgetTap(item)))
                       }
@@ -103,16 +106,6 @@ public struct ScheduleListView: View {
           APIErrorView(error: error)
         }
     }
-  }
-
-  @MainActor
-  func smallWidget(for bundle: MegaRace) -> some View {
-    NextRaceSmallWidgetView(bundle: bundle.bundled, lastUpdatedDate: Date())
-      .padding()
-      .background(Color(.systemBackground))
-      .frame(width: 170, height: 170)
-      .clipShape(RoundedRectangle(cornerRadius: 25.0, style: .continuous))
-      .shadow(color: .black.opacity(0.1), radius: 1)
   }
 }
 
@@ -148,8 +141,7 @@ public struct ScheduleListView: View {
 struct TapAnimationModifier: ViewModifier {
     @State private var isTapped = false
     var completion: () -> Void
-    var animation: Animation = .default
-    var delay: TimeInterval = 0.2  // Default dela
+    var delay: TimeInterval = 0.2
 
     func body(content: Content) -> some View {
         content
@@ -160,7 +152,7 @@ struct TapAnimationModifier: ViewModifier {
           }
           DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             completion()
-            withAnimation(.spring(duration: 0.1)) {
+            withAnimation(.spring(duration: delay)) {
               isTapped = false
             }
           }
@@ -169,7 +161,7 @@ struct TapAnimationModifier: ViewModifier {
 }
 
 extension View {
-    func onTapAnimate(animation: Animation = .default, delay: TimeInterval = 0.5, completion: @escaping () -> Void) -> some View {
-        self.modifier(TapAnimationModifier(completion: completion, animation: animation, delay: delay))
+    func onTapAnimate(delay: TimeInterval = 0.2, completion: @escaping () -> Void) -> some View {
+        self.modifier(TapAnimationModifier(completion: completion, delay: delay))
     }
 }

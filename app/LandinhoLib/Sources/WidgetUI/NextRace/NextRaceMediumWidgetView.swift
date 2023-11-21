@@ -11,13 +11,13 @@ import SwiftUI
 
 public struct NextRaceMediumWidgetView: View {
 
-  public init(bundle: RaceBundle, lastUpdatedDate: Date) {
+  public init(bundle: RaceBundle, lastUpdatedDate: Date?) {
     self.bundle = bundle
     self.lastUpdatedDate = lastUpdatedDate
   }
 
   let bundle: RaceBundle
-  let lastUpdatedDate: Date
+  let lastUpdatedDate: Date?
 
   public var body: some View {
     VStack {
@@ -49,10 +49,12 @@ public struct NextRaceMediumWidgetView: View {
         }
       }
 
-      Text("Última atualização: \(lastUpdatedDate.formatted(date: .omitted, time: .shortened))")
-        .font(.system(size: 10))
-        .foregroundStyle(.secondary)
-        .frame(maxWidth: .infinity)
+      if let date = lastUpdatedDate {
+        Text("Atualizado em: \(date.formatted(date: .omitted, time: .shortened))")
+          .font(.system(size: 10))
+          .foregroundStyle(.secondary)
+          .frame(maxWidth: .infinity)
+      }
     }
   }
 

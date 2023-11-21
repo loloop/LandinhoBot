@@ -24,6 +24,7 @@ let package = Package(
     .library(name: "RacesAdmin", targets: ["RacesAdmin"]),
     .library(name: "ScheduleList", targets: ["ScheduleList"]),
     .library(name: "Settings", targets: ["Settings"]),
+    .library(name: "Sharing", targets: ["Sharing"]),
     .library(name: "Widgets", targets: ["Widgets"]),
     .library(name: "WidgetUI", targets: ["WidgetUI"]),
   ],
@@ -69,6 +70,7 @@ let package = Package(
         name: "EventDetail",
         dependencies: [
           "APIClient",
+          "WidgetUI",
           composable
         ]),
 
@@ -85,6 +87,8 @@ let package = Package(
         dependencies: [
           "Common",
           "ScheduleList",
+          "EventDetail",
+          "Sharing",
           composable
         ]),
 
@@ -111,6 +115,14 @@ let package = Package(
         dependencies: [
           "Admin",
           "APIClient",
+          composable
+        ]),
+
+      .target(
+        name: "Sharing",
+        dependencies: [
+          "Common",
+          "WidgetUI",
           composable
         ]),
 
