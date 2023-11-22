@@ -63,18 +63,21 @@ public struct SettingsView: View {
         }
 
         Button {
+          // TODO: Link terms of service
           notificationQueue.enqueue(.critical("Ainda não amigo"))
         } label: {
           Label("Termos de Serviço", systemImage: "book.closed")
         }
 
         Button {
+          // TODO: Link privacy policy
           notificationQueue.enqueue(.warning("Ainda não amigo"))
         } label: {
           Label("Política de privacidade", systemImage: "lock")
         }
 
         Button {
+          // TODO: Create developer page
           notificationQueue.enqueue(.success("Ainda não amigo"))
         } label: {
           Label("Sobre o desenvolvedor", systemImage: "person")
@@ -86,11 +89,14 @@ public struct SettingsView: View {
           Label("Admin", systemImage: "fuelpump")
         }
 
-        if let version = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+        if
+          let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String,
+          let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String 
+        {
           HStack {
             Text("Versão")
             Spacer()
-            Text(version)
+            Text("\(version) (\(buildNumber))")
           }
         }
       }

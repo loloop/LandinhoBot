@@ -12,6 +12,7 @@ import Home
 @_spi(Internal) import NotificationsQueue
 import Settings
 import SwiftUI
+import Router
 
 @Reducer
 public struct Root {
@@ -21,20 +22,15 @@ public struct Root {
     public init() {}
 
     var isPresentingBetaSheet = false
-
-    var categoriesState = Categories.State()
-    var homeState = Home.State()
     var notificationQueueState = NotificationsQueue.State()
-    var settingsState = Settings.State()
+    var router = Router.State()
   }
 
   public enum Action: Equatable {
     case onAppear
-    case categories(Categories.Action)
-    case home(Home.Action)
     case notificationQueue(NotificationsQueue.Action)
-    case settings(Settings.Action)
     case setBetaSheet(Bool)
+    case router(Router.Action)
   }
 
   public var body: some ReducerOf<Self> {
@@ -45,11 +41,7 @@ public struct Root {
       switch action {
       case .onAppear:
         state.isPresentingBetaSheet = !UserDefaults.standard.bool(forKey: betaSheetKey)
-        return .merge(
-          .send(.notificationQueue(.observeNotifications)),
-          .send(.home(.scheduleList(.racesRequest(.request(.get))))),
-          .send(.categories(.categoriesRequest(.request(.get))))
-        )
+        return .send(.notificationQueue(.observeNotifications))
 
       case .setBetaSheet(let bool):
         if !bool {
@@ -58,25 +50,17 @@ public struct Root {
         state.isPresentingBetaSheet = bool
         return .none
 
-      case .home, .categories, .notificationQueue, .settings:
+      case .notificationQueue, .router:
         return .none
       }
-    }
-
-    Scope(state: \.homeState, action: \.home) {
-      Home()
-    }
-
-    Scope(state: \.categoriesState, action: \.categories) {
-      Categories()
     }
 
     Scope(state: \.notificationQueueState, action: \.notificationQueue) {
       NotificationsQueue()
     }
 
-    Scope(state: \.settingsState, action: \.settings) {
-      Settings()
+    Scope(state: \.router, action: \.router) {
+      Router()
     }
   }
 }

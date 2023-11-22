@@ -30,9 +30,7 @@ public struct NotificationsQueue {
       switch action {
       case .observeNotifications:
         return .run { send in
-          print("observing")
           for await notif in notificationQueue.observer {
-            print("presenting")
             await send(.presentNotification(notif))
           }
         }

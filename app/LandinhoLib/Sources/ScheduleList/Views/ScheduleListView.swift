@@ -30,6 +30,7 @@ public struct ScheduleListView: View {
         case .loading:
           ProgressView()
         case .reloading(let response), .finished(.success(let response)):
+          // TODO: Empty State
           ScrollView {
             VStack(spacing: 20) {
               VStack {

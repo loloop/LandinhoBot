@@ -38,6 +38,7 @@ public struct EventsAdmin {
     let id: String
     let title: String
 
+    var isSavingList = false
     var eventList = APIClient<[RaceEvent]>.State(endpoint: "events")
     @BindingState var events: [UploadRaceEvent] = []
 
@@ -98,6 +99,7 @@ public struct EventsAdmin {
         return .none
 
       case .saveList:
+        state.isSavingList = true
         let request = SaveEventListRequest(
           raceID: state.id,
           events: state.events)
@@ -107,7 +109,10 @@ public struct EventsAdmin {
         }
 
       case .eventListRequest(.response(.finished(.success(let events)))):
-        notificationQueue.enqueue(.success("Salvo com sucesso!"))
+        if state.isSavingList {
+          notificationQueue.enqueue(.success("Salvo com sucesso!"))
+          state.isSavingList = false
+        }
 
         state.events = events.map {
           UploadRaceEvent(

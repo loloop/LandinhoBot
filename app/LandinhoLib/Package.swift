@@ -24,6 +24,7 @@ let package = Package(
     .library(name: "Home", targets: ["Home"]),
     .library(name: "NotificationsQueue", targets: ["NotificationsQueue"]),
     .library(name: "RacesAdmin", targets: ["RacesAdmin"]),
+    .library(name: "Router", targets: ["Router"]),
     .library(name: "ScheduleList", targets: ["ScheduleList"]),
     .library(name: "Settings", targets: ["Settings"]),
     .library(name: "Sharing", targets: ["Sharing"]),
@@ -60,6 +61,8 @@ let package = Package(
         name: "Categories",
         dependencies: [
           "APIClient",
+          "NotificationsQueue",
+          "ScheduleList",
           composable
         ]),
 
@@ -114,6 +117,19 @@ let package = Package(
           "APIClient",
           "Common",
           "EventsAdmin",
+          "NotificationsQueue",
+          composable
+        ]),
+
+      .target(
+        name: "Router",
+        dependencies: [
+          "Home",
+          "Categories",
+          "EventDetail",
+          "ScheduleList",
+          "Settings",
+          "Sharing",
           composable
         ]),
 
@@ -140,6 +156,7 @@ let package = Package(
         name: "Sharing",
         dependencies: [
           "Common",
+          "NotificationsQueue",
           "WidgetUI",
           composable
         ]),

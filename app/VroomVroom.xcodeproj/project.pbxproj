@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B40A75222B0D793200CFB10E /* Router in Frameworks */ = {isa = PBXBuildFile; productRef = B40A75212B0D793200CFB10E /* Router */; };
 		B41F95A82B0D2FDE009B84F6 /* NotificationsQueue in Frameworks */ = {isa = PBXBuildFile; productRef = B41F95A72B0D2FDE009B84F6 /* NotificationsQueue */; };
 		B42CA9ED2AFE8B66009B3FFB /* VroomVroomApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42CA9EC2AFE8B66009B3FFB /* VroomVroomApp.swift */; };
 		B42CA9EF2AFE8B66009B3FFB /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42CA9EE2AFE8B66009B3FFB /* RootView.swift */; };
@@ -101,6 +102,7 @@
 				B41F95A82B0D2FDE009B84F6 /* NotificationsQueue in Frameworks */,
 				B453CE022B07B07F00B0CEA5 /* WidgetUI in Frameworks */,
 				B450025C2AFE91EF003CDE6A /* APIClient in Frameworks */,
+				B40A75222B0D793200CFB10E /* Router in Frameworks */,
 				B4D87C4E2B01B12B000EBEF9 /* EventDetail in Frameworks */,
 				B450025E2AFE91F1003CDE6A /* Common in Frameworks */,
 				B4CBD1652B0409FF00BF6776 /* Admin in Frameworks */,
@@ -232,6 +234,7 @@
 				B48E4FEB2B0BBCB0001457B2 /* Sharing */,
 				B47CAE6A2B0D29CE000164A0 /* BetaSheet */,
 				B41F95A72B0D2FDE009B84F6 /* NotificationsQueue */,
+				B40A75212B0D793200CFB10E /* Router */,
 			);
 			productName = VroomVroom;
 			productReference = B42CA9E92AFE8B66009B3FFB /* VroomVroom.app */;
@@ -624,6 +627,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B40A75212B0D793200CFB10E /* Router */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Router;
+		};
 		B41F95A72B0D2FDE009B84F6 /* NotificationsQueue */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NotificationsQueue;

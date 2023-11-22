@@ -9,6 +9,7 @@
 import ComposableArchitecture
 import Foundation
 import SwiftUI
+import NotificationsQueue
 
 public struct SharingView: View {
 
@@ -49,9 +50,19 @@ public struct SharingView: View {
     }
   }
 
+  @Dependency(\.notificationQueue) var notificationQueue
+
   @MainActor
   func dismissButton(_ viewStore: ViewStoreOf<Sharing>) -> some View {
     Button(action: {
+      // TODO: This could be an easter egg feature dependency thing!
+      let defaults = UserDefaults.standard
+      let key = "me.mauriciocardozo.chevron.right"
+      defaults.register(defaults: [key: false])
+      if !defaults.bool(forKey: key) {
+        notificationQueue.enqueue(.success("Ficou meio android né?"))
+        defaults.setValue(true, forKey: key)
+      }
       dismiss()
     }, label: {
       Image(systemName: "chevron.left")
@@ -60,7 +71,7 @@ public struct SharingView: View {
     .frame(width: 50, height: 50)
     .contentShape(Rectangle())
     .foregroundStyle(.white)
-    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
     .opacity(viewStore.hasTappedShare ? 0 : 1)
   }
 

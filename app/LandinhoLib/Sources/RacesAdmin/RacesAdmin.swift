@@ -72,6 +72,8 @@ public struct RacesAdmin {
     case destination(PresentationAction<Destination.Action>)
   }
 
+  @Dependency(\.notificationQueue) var notificationQueue
+
   public var body: some ReducerOf<Self> {
     Reduce { state, action in
       switch action {
@@ -110,7 +112,7 @@ public struct RacesAdmin {
         )
 
       case .destination(.presented(.raceEditor(.raceRequest(.response(.finished(.failure(let error))))))):
-        print(error)
+        notificationQueue.enqueue(.critical((error as NSError).localizedDescription))
         return .none
 
       case .removePastRacesRequest(.response(.finished(.success(let races)))):
