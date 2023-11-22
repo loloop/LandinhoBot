@@ -53,6 +53,7 @@ public struct ScheduleList: Reducer {
       switch action {
       case .onAppear:
         return .send(.racesRequest(.request(.get([
+          "category": state.categoryTag ?? "",
           "page": "0",
           "per": "5"
         ]))))

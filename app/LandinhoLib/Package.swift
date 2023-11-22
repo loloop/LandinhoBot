@@ -15,13 +15,16 @@ let package = Package(
   products: [
     .library(name: "Admin", targets: ["Admin"]),
     .library(name: "APIClient", targets: ["APIClient"]),
+    .library(name: "BetaSheet", targets: ["BetaSheet"]),
     .library(name: "Categories", targets: ["Categories"]),
     .library(name: "CategoriesAdmin", targets: ["CategoriesAdmin"]),
     .library(name: "Common", targets: ["Common"]),
     .library(name: "EventDetail", targets: ["EventDetail"]),
     .library(name: "EventsAdmin", targets: ["EventsAdmin"]),
     .library(name: "Home", targets: ["Home"]),
+    .library(name: "NotificationsQueue", targets: ["NotificationsQueue"]),
     .library(name: "RacesAdmin", targets: ["RacesAdmin"]),
+    .library(name: "Router", targets: ["Router"]),
     .library(name: "ScheduleList", targets: ["ScheduleList"]),
     .library(name: "Settings", targets: ["Settings"]),
     .library(name: "Sharing", targets: ["Sharing"]),
@@ -44,16 +47,22 @@ let package = Package(
       .target(
         name: "APIClient",
         dependencies: [
+          "NotificationsQueue",
           composable
         ]),
 
       .target(
-        name: "Common"),
+        name: "BetaSheet",
+        dependencies: [
+          composable
+        ]),
 
       .target(
         name: "Categories",
         dependencies: [
           "APIClient",
+          "NotificationsQueue",
+          "ScheduleList",
           composable
         ]),
 
@@ -65,6 +74,9 @@ let package = Package(
           "RacesAdmin",
           composable
         ]),
+
+      .target(
+        name: "Common"),
 
       .target(
         name: "EventDetail",
@@ -79,6 +91,7 @@ let package = Package(
         dependencies: [
           "APIClient",
           "Common",
+          "NotificationsQueue",
           composable
         ]),
 
@@ -93,11 +106,30 @@ let package = Package(
         ]),
 
       .target(
+        name: "NotificationsQueue",
+        dependencies: [
+          composable
+        ]),
+
+      .target(
         name: "RacesAdmin",
         dependencies: [
           "APIClient",
           "Common",
           "EventsAdmin",
+          "NotificationsQueue",
+          composable
+        ]),
+
+      .target(
+        name: "Router",
+        dependencies: [
+          "Home",
+          "Categories",
+          "EventDetail",
+          "ScheduleList",
+          "Settings",
+          "Sharing",
           composable
         ]),
 
@@ -115,6 +147,8 @@ let package = Package(
         dependencies: [
           "Admin",
           "APIClient",
+          "BetaSheet",
+          "NotificationsQueue",
           composable
         ]),
 
@@ -122,6 +156,7 @@ let package = Package(
         name: "Sharing",
         dependencies: [
           "Common",
+          "NotificationsQueue",
           "WidgetUI",
           composable
         ]),

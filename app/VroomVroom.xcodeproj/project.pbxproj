@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B40A75222B0D793200CFB10E /* Router in Frameworks */ = {isa = PBXBuildFile; productRef = B40A75212B0D793200CFB10E /* Router */; };
+		B41F95A82B0D2FDE009B84F6 /* NotificationsQueue in Frameworks */ = {isa = PBXBuildFile; productRef = B41F95A72B0D2FDE009B84F6 /* NotificationsQueue */; };
 		B42CA9ED2AFE8B66009B3FFB /* VroomVroomApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42CA9EC2AFE8B66009B3FFB /* VroomVroomApp.swift */; };
 		B42CA9EF2AFE8B66009B3FFB /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42CA9EE2AFE8B66009B3FFB /* RootView.swift */; };
 		B42CA9F12AFE8B67009B3FFB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B42CA9F02AFE8B67009B3FFB /* Assets.xcassets */; };
@@ -16,11 +18,12 @@
 		B453CE022B07B07F00B0CEA5 /* WidgetUI in Frameworks */ = {isa = PBXBuildFile; productRef = B453CE012B07B07F00B0CEA5 /* WidgetUI */; };
 		B453CE042B07B08700B0CEA5 /* WidgetUI in Frameworks */ = {isa = PBXBuildFile; productRef = B453CE032B07B08700B0CEA5 /* WidgetUI */; };
 		B453CE082B07DDBE00B0CEA5 /* Widgets in Frameworks */ = {isa = PBXBuildFile; productRef = B453CE072B07DDBE00B0CEA5 /* Widgets */; };
+		B47CAE6B2B0D29CE000164A0 /* BetaSheet in Frameworks */ = {isa = PBXBuildFile; productRef = B47CAE6A2B0D29CE000164A0 /* BetaSheet */; };
+		B47CAE6F2B0D2D3C000164A0 /* VroomSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47CAE6E2B0D2D3C000164A0 /* VroomSceneDelegate.swift */; };
 		B4877C272B0692F40009760C /* NextRaceTimelineProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C262B0692F40009760C /* NextRaceTimelineProvider.swift */; };
 		B4877C2A2B0694350009760C /* NextRaceEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C292B0694350009760C /* NextRaceEntry.swift */; };
 		B4877C342B06B4C60009760C /* NextRaceWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C332B06B4C60009760C /* NextRaceWidget.swift */; };
 		B48A501F2AFECEEB00A01B7E /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48A501E2AFECEEB00A01B7E /* Root.swift */; };
-		B48D11D62B080B86003A05B3 /* TODOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D11D52B080B86003A05B3 /* TODOs.swift */; };
 		B48E4FEC2B0BBCB0001457B2 /* Sharing in Frameworks */ = {isa = PBXBuildFile; productRef = B48E4FEB2B0BBCB0001457B2 /* Sharing */; };
 		B4CBD1632B0401C100BF6776 /* Home in Frameworks */ = {isa = PBXBuildFile; productRef = B4CBD1622B0401C100BF6776 /* Home */; };
 		B4CBD1652B0409FF00BF6776 /* Admin in Frameworks */ = {isa = PBXBuildFile; productRef = B4CBD1642B0409FF00BF6776 /* Admin */; };
@@ -70,11 +73,11 @@
 		B42CA9F02AFE8B67009B3FFB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B42CA9F32AFE8B67009B3FFB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B45002592AFE91A1003CDE6A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B47CAE6E2B0D2D3C000164A0 /* VroomSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VroomSceneDelegate.swift; sourceTree = "<group>"; };
 		B4877C262B0692F40009760C /* NextRaceTimelineProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextRaceTimelineProvider.swift; sourceTree = "<group>"; };
 		B4877C292B0694350009760C /* NextRaceEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextRaceEntry.swift; sourceTree = "<group>"; };
 		B4877C332B06B4C60009760C /* NextRaceWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextRaceWidget.swift; sourceTree = "<group>"; };
 		B48A501E2AFECEEB00A01B7E /* Root.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Root.swift; sourceTree = "<group>"; };
-		B48D11D52B080B86003A05B3 /* TODOs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TODOs.swift; sourceTree = "<group>"; };
 		B4CBD16C2B05570F00BF6776 /* WidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4CBD16D2B05570F00BF6776 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		B4CBD16F2B05570F00BF6776 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -96,12 +99,15 @@
 				B4D87C482B01AF07000EBEF9 /* Categories in Frameworks */,
 				B4D87C4C2B01AF0B000EBEF9 /* Settings in Frameworks */,
 				B4D87C4A2B01AF09000EBEF9 /* ScheduleList in Frameworks */,
+				B41F95A82B0D2FDE009B84F6 /* NotificationsQueue in Frameworks */,
 				B453CE022B07B07F00B0CEA5 /* WidgetUI in Frameworks */,
 				B450025C2AFE91EF003CDE6A /* APIClient in Frameworks */,
+				B40A75222B0D793200CFB10E /* Router in Frameworks */,
 				B4D87C4E2B01B12B000EBEF9 /* EventDetail in Frameworks */,
 				B450025E2AFE91F1003CDE6A /* Common in Frameworks */,
 				B4CBD1652B0409FF00BF6776 /* Admin in Frameworks */,
 				B48E4FEC2B0BBCB0001457B2 /* Sharing in Frameworks */,
+				B47CAE6B2B0D29CE000164A0 /* BetaSheet in Frameworks */,
 				B4CBD1632B0401C100BF6776 /* Home in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -147,9 +153,9 @@
 			children = (
 				B45002592AFE91A1003CDE6A /* Info.plist */,
 				B42CA9EC2AFE8B66009B3FFB /* VroomVroomApp.swift */,
+				B47CAE6E2B0D2D3C000164A0 /* VroomSceneDelegate.swift */,
 				B42CA9EE2AFE8B66009B3FFB /* RootView.swift */,
 				B48A501E2AFECEEB00A01B7E /* Root.swift */,
-				B48D11D52B080B86003A05B3 /* TODOs.swift */,
 				B42CA9F02AFE8B67009B3FFB /* Assets.xcassets */,
 				B42CA9F22AFE8B67009B3FFB /* Preview Content */,
 			);
@@ -226,6 +232,9 @@
 				B4CBD1662B040A0300BF6776 /* CategoriesAdmin */,
 				B453CE012B07B07F00B0CEA5 /* WidgetUI */,
 				B48E4FEB2B0BBCB0001457B2 /* Sharing */,
+				B47CAE6A2B0D29CE000164A0 /* BetaSheet */,
+				B41F95A72B0D2FDE009B84F6 /* NotificationsQueue */,
+				B40A75212B0D793200CFB10E /* Router */,
 			);
 			productName = VroomVroom;
 			productReference = B42CA9E92AFE8B66009B3FFB /* VroomVroom.app */;
@@ -318,7 +327,7 @@
 				B42CA9EF2AFE8B66009B3FFB /* RootView.swift in Sources */,
 				B42CA9ED2AFE8B66009B3FFB /* VroomVroomApp.swift in Sources */,
 				B48A501F2AFECEEB00A01B7E /* Root.swift in Sources */,
-				B48D11D62B080B86003A05B3 /* TODOs.swift in Sources */,
+				B47CAE6F2B0D2D3C000164A0 /* VroomSceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -618,6 +627,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B40A75212B0D793200CFB10E /* Router */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Router;
+		};
+		B41F95A72B0D2FDE009B84F6 /* NotificationsQueue */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NotificationsQueue;
+		};
 		B450025B2AFE91EF003CDE6A /* APIClient */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = APIClient;
@@ -637,6 +654,10 @@
 		B453CE072B07DDBE00B0CEA5 /* Widgets */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Widgets;
+		};
+		B47CAE6A2B0D29CE000164A0 /* BetaSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BetaSheet;
 		};
 		B48E4FEB2B0BBCB0001457B2 /* Sharing */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -9,6 +9,7 @@ import APIClient
 import Common
 import ComposableArchitecture
 import Foundation
+import NotificationsQueue
 import SwiftUI
 
 public struct UploadRaceRequest: Codable, Equatable {
@@ -37,6 +38,7 @@ public struct EventsAdmin {
     let id: String
     let title: String
 
+    var isSavingList = false
     var eventList = APIClient<[RaceEvent]>.State(endpoint: "events")
     @BindingState var events: [UploadRaceEvent] = []
 
@@ -63,6 +65,8 @@ public struct EventsAdmin {
     case eventListRequest(APIClient<[RaceEvent]>.Action)
     case binding(BindingAction<State>)
   }
+
+  @Dependency(\.notificationQueue) var notificationQueue
 
   public var body: some ReducerOf<Self> {
     BindingReducer()
@@ -95,6 +99,7 @@ public struct EventsAdmin {
         return .none
 
       case .saveList:
+        state.isSavingList = true
         let request = SaveEventListRequest(
           raceID: state.id,
           events: state.events)
@@ -104,6 +109,11 @@ public struct EventsAdmin {
         }
 
       case .eventListRequest(.response(.finished(.success(let events)))):
+        if state.isSavingList {
+          notificationQueue.enqueue(.success("Salvo com sucesso!"))
+          state.isSavingList = false
+        }
+
         state.events = events.map {
           UploadRaceEvent(
             id: $0.id,

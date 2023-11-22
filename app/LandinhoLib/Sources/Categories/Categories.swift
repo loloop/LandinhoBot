@@ -9,11 +9,13 @@ import APIClient
 import Common
 import Foundation
 import ComposableArchitecture
+import ScheduleList
 import SwiftUI
 
 // TODO: On tap of a category, @PresentationState present a ScheduleList
 
-public struct Categories: Reducer {
+@Reducer
+public struct Categories {
   public init() {}
 
   public struct State: Equatable {
@@ -24,20 +26,27 @@ public struct Categories: Reducer {
 
   public enum Action: Equatable {
     case onAppear
+    case onCategoryTap(String)
     case categoriesRequest(APIClient<[RaceCategory]>.Action)
   }
+
+
 
   public var body: some ReducerOf<Self> {
     Reduce { state, action in
       switch action {
       case .onAppear:
         return .none
+
+      // TODO: DelegateAction
+      case .onCategoryTap:
+        return .none
       case .categoriesRequest:
         return .none
       }
     }
 
-    Scope(state: \.categoriesState, action: /Action.categoriesRequest) {
+    Scope(state: \.categoriesState, action: \.categoriesRequest) {
       APIClient()
     }
   }
@@ -50,6 +59,8 @@ public struct CategoriesView: View {
 
   let store: StoreOf<Categories>
 
+  @Dependency(\.notificationQueue) var notificationQueue
+
   public var body: some View {
     WithViewStore(store, observe: { $0 }) { viewStore in
       switch viewStore.categoriesState.response {
@@ -59,23 +70,33 @@ public struct CategoriesView: View {
         ProgressView()
       case .reloading(let categories), .finished(.success(let categories)):
         List(categories) { category in
-          HStack {
-            VStack(alignment: .leading) {
-              Text(category.title)
-                .font(.headline)
-              // TODO: Request next race for a given category and display it here
-              Text("We should show what's the next race here, and its time")
-                .font(.caption)
+          Button {
+            viewStore.send(.onCategoryTap(category.tag))
+          } label: {
+            HStack {
+              VStack(alignment: .leading) {
+                Text(category.title)
+                  .font(.headline)
+                // TODO: Request next race for a given category and display it here
+                Text("TODO: Mostrar a próxima corrida da categoria aqui")
+                  .font(.caption)
+              }
+              Spacer()
+
+              Image(systemName: "heart")
+                .onTapGesture {
+                  // TODO: Add a way to favorite categories
+                  notificationQueue.enqueue(.testflight("Ainda não fiz essa funcionalidade, desculpa!"))
+                }
             }
-            Spacer()
-            // TODO: Add a way to favorite categories
-            Image(systemName: "heart")
           }
+          .buttonStyle(.plain)
         }
       case .finished(.failure(let error)):
         APIErrorView(error: error)
       }
     }
+
   }
 }
 

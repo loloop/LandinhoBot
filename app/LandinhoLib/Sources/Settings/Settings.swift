@@ -6,8 +6,10 @@
 //
 
 import Admin
+import BetaSheet
 import Foundation
 import ComposableArchitecture
+import NotificationsQueue
 import SwiftUI
 
 @Reducer
@@ -42,9 +44,6 @@ public struct Settings {
   }
 }
 
-// TODO: Sobre o desenvolvedor
-// TODO: Compartilhar
-
 public struct SettingsView: View {
   public init(store: StoreOf<Settings>) {
     self.store = store
@@ -52,23 +51,53 @@ public struct SettingsView: View {
 
   let store: StoreOf<Settings>
 
+  @Dependency(\.notificationQueue) var notificationQueue
+
   public var body: some View {
     NavigationStack {
       List {
-        Button {
-
+        NavigationLink {
+          BetaSheet()
         } label: {
-          Label("Changelog", systemImage: "")
+          Label("Changelog", systemImage: "tree")
         }
-        Button {
 
+        Button {
+          // TODO: Link terms of service
+          notificationQueue.enqueue(.critical("Ainda não amigo"))
         } label: {
-          Label("Termos de Serviço", systemImage: "")
+          Label("Termos de Serviço", systemImage: "book.closed")
         }
+
+        Button {
+          // TODO: Link privacy policy
+          notificationQueue.enqueue(.warning("Ainda não amigo"))
+        } label: {
+          Label("Política de privacidade", systemImage: "lock")
+        }
+
+        Button {
+          // TODO: Create developer page
+          notificationQueue.enqueue(.success("Ainda não amigo"))
+        } label: {
+          Label("Sobre o desenvolvedor", systemImage: "person")
+        }
+
         Button {
           store.send(.showAdmin)
         } label: {
           Label("Admin", systemImage: "fuelpump")
+        }
+
+        if
+          let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String,
+          let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String 
+        {
+          HStack {
+            Text("Versão")
+            Spacer()
+            Text("\(version) (\(buildNumber))")
+          }
         }
       }
       .navigationTitle("Ajustes")
@@ -80,4 +109,10 @@ public struct SettingsView: View {
       }
     }
   }
+}
+
+#Preview {
+  SettingsView(store: .init(initialState: .init(), reducer: {
+    Settings()
+  }))
 }
