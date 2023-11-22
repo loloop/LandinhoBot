@@ -90,10 +90,7 @@ public struct BetaSheet: View {
   • Notificações de erro - Clica em "Termos de Serviço", "Sobre o Desenvolvedor" ou "Política de Privacidade" nos Ajustes pra testar
   • Ícone novo
   • Número da versão nos ajustes
-
-  warning("TODO remover sessões de treino do widget pequeno")
-  warning("TODO categorias funcionam na tela de categorias - sem favorito")
-  warning("TODO [settings] número da versão")
+  • A tela de categorias agora funciona! Não, ainda não dá pra favoritar.
 
   20/11
   • WIP: É possível compartilhar uma imagem que tem os horários de uma corrida
@@ -111,6 +108,7 @@ public struct BetaSheet: View {
   • Ícone de verdade desenhado por um ser humano e não a aberração atual
   • Compartilhar uma corrida direto da Home
   • Imagem de fundo ao compartilhar uma corrida por imagem
+  • Opção de remover sessões de treino de um Widget pequeno
   • Compartilhar texto de uma corrida -> Estilo o bot
   • Botão de voltar tela será reposicionado na tela de compartilhar corrida
   • Parte de administração das categorias será escondida e protegida por senha
