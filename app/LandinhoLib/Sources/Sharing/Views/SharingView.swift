@@ -29,10 +29,10 @@ public struct SharingView: View {
         Color.black
           .ignoresSafeArea()
 
-        dismissButton(viewStore)
-
         SharingRenderableView(store: store)
           .frame(height: viewStore.isSquareAspectRatio ? 360 : 640)
+
+        dismissButton(viewStore)
 
         shareButton(viewStore)
       }

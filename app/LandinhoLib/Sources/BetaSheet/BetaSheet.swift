@@ -85,6 +85,10 @@ public struct BetaSheet: View {
   """
 
   let latestRelease: LocalizedStringKey = """
+  22/11
+  • Corrige um crash quando o app troca de telas
+  • Corrige um problema onde o botão de voltar na tela de compartilhar não aparece em iPhones de tela pequena
+
   21/11
   • Essa tela!
   • Notificações de erro - Clica em "Termos de Serviço", "Sobre o Desenvolvedor" ou "Política de Privacidade" nos Ajustes pra testar

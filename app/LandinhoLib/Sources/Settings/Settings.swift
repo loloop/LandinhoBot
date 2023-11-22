@@ -54,59 +54,57 @@ public struct SettingsView: View {
   @Dependency(\.notificationQueue) var notificationQueue
 
   public var body: some View {
-    NavigationStack {
-      List {
-        NavigationLink {
-          BetaSheet()
-        } label: {
-          Label("Changelog", systemImage: "tree")
-        }
+    List {
+      NavigationLink {
+        BetaSheet()
+      } label: {
+        Label("Changelog", systemImage: "tree")
+      }
 
-        Button {
-          // TODO: Link terms of service
-          notificationQueue.enqueue(.critical("Ainda não amigo"))
-        } label: {
-          Label("Termos de Serviço", systemImage: "book.closed")
-        }
+      Button {
+        // TODO: Link terms of service
+        notificationQueue.enqueue(.critical("Ainda não amigo"))
+      } label: {
+        Label("Termos de Serviço", systemImage: "book.closed")
+      }
 
-        Button {
-          // TODO: Link privacy policy
-          notificationQueue.enqueue(.warning("Ainda não amigo"))
-        } label: {
-          Label("Política de privacidade", systemImage: "lock")
-        }
+      Button {
+        // TODO: Link privacy policy
+        notificationQueue.enqueue(.warning("Ainda não amigo"))
+      } label: {
+        Label("Política de privacidade", systemImage: "lock")
+      }
 
-        Button {
-          // TODO: Create developer page
-          notificationQueue.enqueue(.success("Ainda não amigo"))
-        } label: {
-          Label("Sobre o desenvolvedor", systemImage: "person")
-        }
+      Button {
+        // TODO: Create developer page
+        notificationQueue.enqueue(.success("Ainda não amigo"))
+      } label: {
+        Label("Sobre o desenvolvedor", systemImage: "person")
+      }
 
-        Button {
-          store.send(.showAdmin)
-        } label: {
-          Label("Admin", systemImage: "fuelpump")
-        }
+      Button {
+        store.send(.showAdmin)
+      } label: {
+        Label("Admin", systemImage: "fuelpump")
+      }
 
-        if
-          let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String,
-          let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String 
-        {
-          HStack {
-            Text("Versão")
-            Spacer()
-            Text("\(version) (\(buildNumber))")
-          }
+      if
+        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String,
+        let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
+      {
+        HStack {
+          Text("Versão")
+          Spacer()
+          Text("\(version) (\(buildNumber))")
         }
       }
-      .navigationTitle("Ajustes")
-      .navigationDestination(store: store.scope(
-        state: \.$adminState,
-        action: { .admin($0) } )
-      ) { store in
-        AdminView(store: store)
-      }
+    }
+    .navigationTitle("Ajustes")
+    .navigationDestination(store: store.scope(
+      state: \.$adminState,
+      action: { .admin($0) } )
+    ) { store in
+      AdminView(store: store)
     }
   }
 }
