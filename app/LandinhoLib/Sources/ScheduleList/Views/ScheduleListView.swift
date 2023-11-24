@@ -32,71 +32,18 @@ public struct ScheduleListView: View {
         case .reloading(let response), .finished(.success(let response)):
           // TODO: Empty State
           ScrollView {
-            VStack(spacing: 20) {
-              VStack {
-                Text("Ainda não tem nada por aqui, mas se você quiser ver, esse são os Widgets do app por enquanto:")
-                  .frame(maxWidth: .infinity, alignment: .leading)
-                Text("*Toca neles pra ir pra tela da corrida*")
-                  .font(.caption)
-                  .foregroundStyle(.secondary)
-                  .frame(maxWidth: .infinity, alignment: .leading)
-              }
-              .padding(.horizontal)
-
-              ScrollView(.horizontal) {
-                HStack {
-                  Spacer().padding(.leading, 5)
-                  ForEach(response.items) { item in
-                    NextRaceSmallWidgetView(bundle: item.bundled, lastUpdatedDate: Date())
-                      .widgetBackground()
-                      .widgetFrame(family: .systemSmall)
-                      .onTapAnimate {
-                        viewStore.send(.delegate(.onWidgetTap(item)))
-                      }
+            LazyVStack(spacing: 20) {
+              ForEach(response.items) { item in
+                NextRaceMediumWidgetView(bundle: item.bundled, lastUpdatedDate: Date())
+                  .widgetBackground()
+                  .widgetFrame(family: .systemMedium)
+                  .onTapAnimate {
+                    viewStore.send(.delegate(.onWidgetTap(item)))
                   }
-                  Spacer().padding(.trailing, 5)
-                }
               }
-              .scrollClipDisabled()
-              .scrollIndicators(.hidden)
-
-              ScrollView(.horizontal) {
-                HStack {
-                  Spacer().padding(.leading, 5)
-                  ForEach(response.items) { item in
-                    NextRaceMediumWidgetView(bundle: item.bundled, lastUpdatedDate: Date())
-                      .widgetBackground()
-                      .widgetFrame(family: .systemMedium)
-                      .onTapAnimate {
-                        viewStore.send(.delegate(.onWidgetTap(item)))
-                      }
-                  }
-                  Spacer().padding(.trailing, 5)
-                }
-              }
-              .scrollClipDisabled()
-              .scrollIndicators(.hidden)
-
-              ScrollView(.horizontal) {
-                HStack {
-                  Spacer().padding(.leading, 5)
-                  ForEach(response.items) { item in
-                    NextRaceLargeWidgetView(bundle: item.bundled, lastUpdatedDate: Date())
-                      .widgetBackground()
-                      .widgetFrame(family: .systemLarge)
-                      .onTapAnimate {
-                        viewStore.send(.delegate(.onWidgetTap(item)))
-                      }
-                  }
-                  Spacer().padding(.trailing, 5)
-                }
-              }
-              .scrollClipDisabled()
-              .scrollIndicators(.hidden)
-
-              Spacer().frame(height: 50)
             }
           }
+          .frame(maxWidth: .infinity)
           .background(
             .background.secondary
           )
