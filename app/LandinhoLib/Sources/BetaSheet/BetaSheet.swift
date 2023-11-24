@@ -76,15 +76,17 @@ public struct BetaSheet: View {
   let issues: LocalizedStringKey = """
   • Design obviamente não está nem um pouco próximo de estar pronto
   • App não tem cache em nada. Tudo vai ser recarregado quando o app inicia
-  • A tela de categorias não tem função alguma. Quer ver as corridas de alguma categoria específica? Entra na tela de Admin pra ver
   • Eventos principais na tela de detalhe não tem informação da data
-  • Quando existem apenas dois eventos principais na tela de detalhe, o layout é meio esquisito
   • O botão de um Widget pequeno não está funcionando quando colocado na Home
   • Na home provisória, passar para o próximo evento de um widget pequeno afeta TODOS os widgets pequenos
-  • Erros atualmente mostram o payload completo do erro
+  • Erros atualmente mostram o payload completo do erro (Intencional, por enquanto)
   """
 
   let latestRelease: LocalizedStringKey = """
+  24/11
+  • Melhora o layout quando existe mais de um evento principal em uma corrida
+  • Remove aquele monte de widgets da home por uma lista que faz um pouco mais de sentido
+
   22/11
   • Corrige um crash quando o app troca de telas
   • Corrige um problema onde o botão de voltar na tela de compartilhar não aparece em iPhones de tela pequena

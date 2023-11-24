@@ -168,7 +168,7 @@ struct MainEventsView: View {
   let events: [RaceEvent]
 
   var body: some View {
-    if events.count == 1 {
+    if events.count <= 2 {
       singleEventView
     } else {
       multipleEventsView
@@ -176,19 +176,26 @@ struct MainEventsView: View {
   }
 
   var singleEventView: some View {
-    VStack {
+    VStack(alignment: .leading) {
       ForEach(events) { event in
         HStack {
           Text(event.title)
             .font(.title)
+            .scaledToFit()
+            .minimumScaleFactor(0.01)
+
           Spacer()
-          Text(event.date.formatted(.dateTime.hour().minute()))
-            .font(.title)
+
+          VStack(alignment: .trailing) {
+            Text(event.date.formatted(.dateTime.day().weekday()))
+              .font(.caption)
+            Text(event.date.formatted(.dateTime.hour().minute()))
+              .font(.title)
+          }
         }
         .padding()
-        .padding(.horizontal)
         .background(Color(.systemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 25.0, style: .continuous))
+        .clipShape(RoundedRectangle(cornerRadius: 15.0, style: .continuous))
         .shadow(color: .black.opacity(0.1), radius: 1)
       }
     }
@@ -202,6 +209,9 @@ struct MainEventsView: View {
             Text(event.title)
               .font(.title2)
             Spacer()
+
+            Text(event.date.formatted(.dateTime.day().weekday()))
+              .font(.caption)
             Text(event.date.formatted(.dateTime.hour().minute()))
               .font(.title)
           }
