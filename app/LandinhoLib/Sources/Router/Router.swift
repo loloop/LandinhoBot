@@ -46,8 +46,11 @@ public struct Router {
         state.path.append(.eventDetail(.init(race: race)))
         return .none
 
-      case .path(.element(id: _, action: .eventDetail(.delegate(.onShareTap(let race, let isSquareAspectRatio))))):
-        state.path.append(.sharing(.init(race: race, isSquareAspectRatio: isSquareAspectRatio)))
+      case 
+          .home(.scheduleList(.delegate(.onShareTap(let race)))),
+          .path(.element(id: _, action: .eventDetail(.delegate(.onShareTap(let race))))),
+          .path(.element(id: _, action: .scheduleList(.delegate(.onShareTap(let race))))):
+        state.path.append(.sharing(.init(race: race)))
         return .none
 
       case .onAppear:

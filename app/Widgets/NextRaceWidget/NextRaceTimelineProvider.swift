@@ -37,7 +37,7 @@ struct NextRaceTimelineProvider: AppIntentTimelineProvider {
     let viewStore = ViewStore(store, observe: { $0 })
     await viewStore.send(.racesRequest(.request(.get))).finish()
 
-    guard let nextRace = viewStore.racesState.response.value else {
+    guard var nextRace = viewStore.racesState.response.value else {
       return Timeline(
         entries: [
           .init(
@@ -48,11 +48,9 @@ struct NextRaceTimelineProvider: AppIntentTimelineProvider {
         policy: .atEnd)
     }
 
-    let entries: [NextRaceEntry] = [
-      .init(
-        date: Date(),
-        response: nextRace)
-    ]
+    if !configuration.showNonMainEventSessions {
+      nextRace.nextRace.events = nextRace.nextRace.events.filter { $0.isMainEvent }
+    }
 
     // TODO: Fetch more than just the single next race to create a timeline
     // Generate a timeline consisting of five entries an hour apart, starting from the current date.
@@ -62,6 +60,12 @@ struct NextRaceTimelineProvider: AppIntentTimelineProvider {
 //      let entry = NextRaceEntry(date: entryDate)
 //      entries.append(entry)
 //    }
+
+    let entries: [NextRaceEntry] = [
+      .init(
+        date: Date(),
+        response: nextRace)
+    ]
 
     return Timeline(entries: entries, policy: .atEnd)
   }

@@ -76,15 +76,20 @@ public struct BetaSheet: View {
   let issues: LocalizedStringKey = """
   • Design obviamente não está nem um pouco próximo de estar pronto
   • App não tem cache em nada. Tudo vai ser recarregado quando o app inicia
-  • A tela de categorias não tem função alguma. Quer ver as corridas de alguma categoria específica? Entra na tela de Admin pra ver
   • Eventos principais na tela de detalhe não tem informação da data
-  • Quando existem apenas dois eventos principais na tela de detalhe, o layout é meio esquisito
   • O botão de um Widget pequeno não está funcionando quando colocado na Home
   • Na home provisória, passar para o próximo evento de um widget pequeno afeta TODOS os widgets pequenos
-  • Erros atualmente mostram o payload completo do erro
+  • Erros atualmente mostram o payload completo do erro (Intencional, por enquanto)
   """
 
   let latestRelease: LocalizedStringKey = """
+  24/11
+  • Melhora o layout quando existe mais de um evento principal em uma corrida
+  • Remove aquele monte de widgets da home por uma lista que faz um pouco mais de sentido
+  • É possível compartilhar uma corrida a partir da Home agora
+  • Simplifica o fluxo de compartilhar uma corrida
+  • Adiciona a opção de remover sessões de treino de um Widget
+
   22/11
   • Corrige um crash quando o app troca de telas
   • Corrige um problema onde o botão de voltar na tela de compartilhar não aparece em iPhones de tela pequena
@@ -107,25 +112,22 @@ public struct BetaSheet: View {
   """
 
   let nextSteps: LocalizedStringKey = """
-  Esta lista será completamente limpa antes do lançamento público do aplicativo
+  Esta lista será completamente limpa antes do lançamento público do aplicativo (em ordem de prioridade)
 
-  • Ícone de verdade desenhado por um ser humano e não a aberração atual
-  • Compartilhar uma corrida direto da Home
+  • Os widgets deixarão de mostrar os horários de eventos que já se passaram (ex.: deixa de mostrar o treino livre se é a hora da classificação)
+  • Tela Sobre o desenvolvedor
   • Imagem de fundo ao compartilhar uma corrida por imagem
-  • Opção de remover sessões de treino de um Widget pequeno
-  • Compartilhar texto de uma corrida -> Estilo o bot
-  • Botão de voltar tela será reposicionado na tela de compartilhar corrida
+  • App Clip
+    • Botão de compartilhar o app em Ajustes -> App Clip ou Link
   • Parte de administração das categorias será escondida e protegida por senha
   • Adicionar cores para as categorias
-  • O widget pequeno deixará de mostrar os horários de eventos que já se passaram (ex.: deixa de mostrar o treino livre se é a hora da classificação)
   • Categorias terão uma "accent color"
   • Home de verdade, com os horários de todas as categorias, categorias favoritas aparecendo primeiro e paginação
-  • App Clip
-  • Botão de compartilhar o app em Ajustes -> App Clip ou Link
-  • Tela sobre o desenvolvedor
   • Ações rápidas no ícone do aplicativo
   • Design final da Home, Tela de Corrida, Categorias, Ajustes, Compartilhar, etc para iOS e iPadOS
   • Widget extra-largo para iPads
+  • Ícone de verdade desenhado por um ser humano e não a aberração atual
+  • Compartilhar texto de uma corrida -> Estilo o bot
 
   Para o futuro:
   • Notificações quando eventos específicos forem começar

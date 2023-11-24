@@ -15,16 +15,12 @@ public struct Sharing {
   public init() {}
 
   public struct State: Equatable {
-    public init(
-      race: MegaRace,
-      isSquareAspectRatio: Bool
-    ) {
+    public init(race: MegaRace) {
       self.race = race
-      self.isSquareAspectRatio = isSquareAspectRatio
     }
 
     let race: MegaRace
-    let isSquareAspectRatio: Bool
+    var isSquareAspectRatio: Bool = true
     var currentWidgetType: ShareableWidgetType = .systemMedium
     var hasTappedShare: Bool = false
     var renderedImage: UIImage? = nil
@@ -36,6 +32,7 @@ public struct Sharing {
     case onWidgetTap
     case onShareTap
     case onDismissShare
+    case toggleAspectRatio
     case onRender(UIImage)
     case binding(BindingAction<State>)
   }
@@ -53,6 +50,9 @@ public struct Sharing {
         return .none
       case .onWidgetTap:
         state.currentWidgetType = ShareableWidgetType.allCases.next(element: state.currentWidgetType)
+        return .none
+      case .toggleAspectRatio:
+        state.isSquareAspectRatio.toggle()
         return .none
       case .onRender(let image):
         state.renderedImage = image

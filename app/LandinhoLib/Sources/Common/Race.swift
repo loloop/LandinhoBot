@@ -18,7 +18,7 @@ public struct Race: Codable, Equatable, Identifiable, Hashable {
   public let id: UUID
   public let title: String
   public let shortTitle: String
-  public let events: [RaceEvent]
+  public var events: [RaceEvent]
 }
 
 // TODO: Consolidate this into Race instead

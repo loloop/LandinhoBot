@@ -46,6 +46,7 @@ public struct ScheduleList: Reducer {
 
   public enum DelegateAction: Equatable {
     case onWidgetTap(MegaRace)
+    case onShareTap(MegaRace)
   }
 
   public var body: some ReducerOf<Self> {

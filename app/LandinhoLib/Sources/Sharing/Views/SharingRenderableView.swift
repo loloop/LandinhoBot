@@ -36,8 +36,8 @@ struct SharingRenderableView: View {
   }
 }
 
-#Preview("Instagram Renderable") {
-  var state = Sharing.State(race: .mock, isSquareAspectRatio: true)
+#Preview("16/9 Renderable") {
+  var state = Sharing.State(race: .mock)
   state.hasTappedShare = true
   let store = Store(initialState: state) {
     Sharing()
@@ -49,7 +49,7 @@ struct SharingRenderableView: View {
 }
 
 #Preview("Square Renderable", traits: .fixedLayout(width: 360, height: 360)) {
-  var state = Sharing.State(race: .mock, isSquareAspectRatio: true)
+  var state = Sharing.State(race: .mock)
   state.hasTappedShare = true
   let store = Store(initialState: state) {
     Sharing()

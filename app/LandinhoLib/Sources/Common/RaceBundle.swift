@@ -30,6 +30,6 @@ public struct RaceBundle: Codable, Equatable, Identifiable {
   }
 
   public let category: RaceCategory
-  public let nextRace: Race
+  public var nextRace: Race
   public var id: UUID { nextRace.id }
 }
