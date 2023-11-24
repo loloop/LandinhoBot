@@ -86,6 +86,7 @@ public struct BetaSheet: View {
   24/11
   • Melhora o layout quando existe mais de um evento principal em uma corrida
   • Remove aquele monte de widgets da home por uma lista que faz um pouco mais de sentido
+  • É possível compartilhar uma corrida a partir da Home agora
 
   22/11
   • Corrige um crash quando o app troca de telas
@@ -112,7 +113,6 @@ public struct BetaSheet: View {
   Esta lista será completamente limpa antes do lançamento público do aplicativo
 
   • Ícone de verdade desenhado por um ser humano e não a aberração atual
-  • Compartilhar uma corrida direto da Home
   • Imagem de fundo ao compartilhar uma corrida por imagem
   • Opção de remover sessões de treino de um Widget pequeno
   • Compartilhar texto de uma corrida -> Estilo o bot

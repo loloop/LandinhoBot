@@ -40,6 +40,15 @@ public struct ScheduleListView: View {
                   .onTapAnimate {
                     viewStore.send(.delegate(.onWidgetTap(item)))
                   }
+                  .contextMenu {
+                    Button("Instagram", systemImage: "photo") {
+                      viewStore.send(.delegate(.onInstaShareTap(item)))
+                    }
+
+                    Button("Quadrado", systemImage: "crop") {
+                      viewStore.send(.delegate(.onSquareShareTap(item)))
+                    }
+                  }
               }
             }
           }

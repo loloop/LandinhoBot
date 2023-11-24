@@ -17,6 +17,7 @@ public struct Sharing {
   public struct State: Equatable {
     public init(
       race: MegaRace,
+      // TODO: Add a button in the view itself to change this. Sharing flow feels a bit awkward in some places rn
       isSquareAspectRatio: Bool
     ) {
       self.race = race
