@@ -90,7 +90,7 @@ public struct CategoriesView: View {
                 }
             }
           }
-          .buttonStyle(.plain)
+          .foregroundStyle(.primary)
         }
       case .finished(.failure(let error)):
         APIErrorView(error: error)
