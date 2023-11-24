@@ -30,7 +30,6 @@ public struct ScheduleListView: View {
         case .loading:
           ProgressView()
         case .reloading(let response), .finished(.success(let response)):
-          // TODO: Empty State
           ScrollView {
             LazyVStack(spacing: 20) {
               ForEach(response.items) { item in
@@ -41,12 +40,8 @@ public struct ScheduleListView: View {
                     viewStore.send(.delegate(.onWidgetTap(item)))
                   }
                   .contextMenu {
-                    Button("Instagram", systemImage: "photo") {
-                      viewStore.send(.delegate(.onInstaShareTap(item)))
-                    }
-
-                    Button("Quadrado", systemImage: "crop") {
-                      viewStore.send(.delegate(.onSquareShareTap(item)))
+                    Button("Compartilhar", systemImage: "square.and.arrow.up") {
+                      viewStore.send(.delegate(.onShareTap(item)))
                     }
                   }
               }

@@ -47,19 +47,10 @@ public struct Router {
         return .none
 
       case 
-          .home(.scheduleList(.delegate(.onInstaShareTap(let race)))),
-          .path(.element(id: _, action: .scheduleList(.delegate(.onInstaShareTap(let race))))):
-        state.path.append(.sharing(.init(race: race, isSquareAspectRatio: false)))
-        return .none
-
-      case 
-          .home(.scheduleList(.delegate(.onSquareShareTap(let race)))),
-          .path(.element(id: _, action: .scheduleList(.delegate(.onSquareShareTap(let race))))):
-        state.path.append(.sharing(.init(race: race, isSquareAspectRatio: true)))
-        return .none
-
-      case .path(.element(id: _, action: .eventDetail(.delegate(.onShareTap(let race, let isSquareAspectRatio))))):
-        state.path.append(.sharing(.init(race: race, isSquareAspectRatio: isSquareAspectRatio)))
+          .home(.scheduleList(.delegate(.onShareTap(let race)))),
+          .path(.element(id: _, action: .eventDetail(.delegate(.onShareTap(let race))))),
+          .path(.element(id: _, action: .scheduleList(.delegate(.onShareTap(let race))))):
+        state.path.append(.sharing(.init(race: race)))
         return .none
 
       case .onAppear:

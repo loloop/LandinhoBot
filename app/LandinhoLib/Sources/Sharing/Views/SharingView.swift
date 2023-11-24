@@ -33,7 +33,7 @@ public struct SharingView: View {
           .frame(height: viewStore.isSquareAspectRatio ? 360 : 640)
 
         dismissButton(viewStore)
-
+        cropButton(viewStore)
         shareButton(viewStore)
       }
       .sheet(isPresented: viewStore.$isSharing, onDismiss: {
@@ -107,6 +107,23 @@ public struct SharingView: View {
   }
 
   @MainActor
+  func cropButton(_ viewStore: ViewStoreOf<Sharing>) -> some View {
+    Button(action: {
+      withAnimation {
+        _ = viewStore.send(.toggleAspectRatio)
+      }
+    }, label: {
+      Image(systemName: "crop")
+        .bold()
+    })
+    .frame(width: 50, height: 50)
+    .contentShape(Rectangle())
+    .foregroundStyle(.white)
+    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
+    .opacity(viewStore.hasTappedShare ? 0 : 1)
+  }
+
+  @MainActor
   func render(isSquareAspectRatio: Bool) {
     let renderer = ImageRenderer(content: SharingRenderableView(store: store))
     if isSquareAspectRatio {
@@ -123,26 +140,11 @@ public struct SharingView: View {
   }
 }
 
-#Preview("Instagram Ratio") {
-  NavigationStack {
-    NavigationLink {
-      SharingView(store: .init(initialState: .init(race: .mock, isSquareAspectRatio: false), reducer: {
-        Sharing()
-      }))
-    } label: {
-      Text("push")
-    }
-    .navigationTitle("push")
-    .navigationBarTitleDisplayMode(.large)
-  }
-}
-
-#Preview("Square Ratio") {
-  SharingView(store: .init(initialState: .init(race: .mock, isSquareAspectRatio: true), reducer: {
+#Preview {
+  SharingView(store: .init(initialState: .init(race: .mock), reducer: {
     Sharing()
   }))
 }
-
 
 private struct ActivityView: UIViewControllerRepresentable {
   var activityItems: [Any]

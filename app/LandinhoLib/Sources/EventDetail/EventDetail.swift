@@ -34,7 +34,7 @@ public struct EventDetail: Reducer {
   }
 
   public enum DelegateAction: Equatable {
-    case onShareTap(race: MegaRace, isSquareAspectRatio: Bool)
+    case onShareTap(race: MegaRace)
   }
 
   public var body: some ReducerOf<Self> {
@@ -140,15 +140,8 @@ struct InnerEventDetailView: View {
     .navigationTitle(race.shortTitle)
     .toolbar {
       ToolbarItem {
-        Menu {
-          Button("Instagram", systemImage: "photo") {
-            store.send(.delegate(.onShareTap(race: race, isSquareAspectRatio: false)))
-          }
-          Button("Quadrado", systemImage: "crop") {
-            store.send(.delegate(.onShareTap(race: race, isSquareAspectRatio: true)))
-          }
-        } label: {
-          Image(systemName: "square.and.arrow.up")
+        Button("Compartilhar", systemImage: "square.and.arrow.up") {
+          store.send(.delegate(.onShareTap(race: race)))
         }
       }
     }
