@@ -87,6 +87,7 @@ public struct BetaSheet: View {
   • Melhora o layout quando existe mais de um evento principal em uma corrida
   • Remove aquele monte de widgets da home por uma lista que faz um pouco mais de sentido
   • É possível compartilhar uma corrida a partir da Home agora
+  • Simplifica o fluxo de compartilhar uma corrida
 
   22/11
   • Corrige um crash quando o app troca de telas
@@ -110,24 +111,23 @@ public struct BetaSheet: View {
   """
 
   let nextSteps: LocalizedStringKey = """
-  Esta lista será completamente limpa antes do lançamento público do aplicativo
+  Esta lista será completamente limpa antes do lançamento público do aplicativo (em ordem de prioridade)
 
-  • Ícone de verdade desenhado por um ser humano e não a aberração atual
-  • Imagem de fundo ao compartilhar uma corrida por imagem
   • Opção de remover sessões de treino de um Widget pequeno
-  • Compartilhar texto de uma corrida -> Estilo o bot
-  • Botão de voltar tela será reposicionado na tela de compartilhar corrida
+  • Imagem de fundo ao compartilhar uma corrida por imagem
+  • Tela sobre o desenvolvedor
+  • App Clip
+    • Botão de compartilhar o app em Ajustes -> App Clip ou Link
   • Parte de administração das categorias será escondida e protegida por senha
   • Adicionar cores para as categorias
   • O widget pequeno deixará de mostrar os horários de eventos que já se passaram (ex.: deixa de mostrar o treino livre se é a hora da classificação)
   • Categorias terão uma "accent color"
   • Home de verdade, com os horários de todas as categorias, categorias favoritas aparecendo primeiro e paginação
-  • App Clip
-  • Botão de compartilhar o app em Ajustes -> App Clip ou Link
-  • Tela sobre o desenvolvedor
   • Ações rápidas no ícone do aplicativo
   • Design final da Home, Tela de Corrida, Categorias, Ajustes, Compartilhar, etc para iOS e iPadOS
   • Widget extra-largo para iPads
+  • Ícone de verdade desenhado por um ser humano e não a aberração atual
+  • Compartilhar texto de uma corrida -> Estilo o bot
 
   Para o futuro:
   • Notificações quando eventos específicos forem começar
