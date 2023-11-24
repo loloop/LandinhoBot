@@ -88,6 +88,7 @@ public struct BetaSheet: View {
   • Remove aquele monte de widgets da home por uma lista que faz um pouco mais de sentido
   • É possível compartilhar uma corrida a partir da Home agora
   • Simplifica o fluxo de compartilhar uma corrida
+  • Adiciona a opção de remover sessões de treino de um Widget
 
   22/11
   • Corrige um crash quando o app troca de telas
@@ -113,7 +114,7 @@ public struct BetaSheet: View {
   let nextSteps: LocalizedStringKey = """
   Esta lista será completamente limpa antes do lançamento público do aplicativo (em ordem de prioridade)
 
-  • Opção de remover sessões de treino de um Widget pequeno
+
   • Imagem de fundo ao compartilhar uma corrida por imagem
   • Tela sobre o desenvolvedor
   • App Clip
