@@ -16,7 +16,7 @@ struct NextRaceTimelineProvider: AppIntentTimelineProvider {
     case failure
   }
 
-  let store = Store(initialState: Widgets.State(shouldFilterNonMainEvents: false, categoryTag: nil)) {
+  let store = Store(initialState: Widgets.State(categoryTag: nil)) {
     Widgets()
   }
 
@@ -49,7 +49,7 @@ struct NextRaceTimelineProvider: AppIntentTimelineProvider {
     }
 
     if !configuration.showNonMainEventSessions {
-      nextRace.nextRace.events = nextRace.nextRace.events.filter { $0.isMainEvent }
+      nextRace.events = nextRace.events.filter { $0.isMainEvent }
     }
 
     // TODO: Fetch more than just the single next race to create a timeline

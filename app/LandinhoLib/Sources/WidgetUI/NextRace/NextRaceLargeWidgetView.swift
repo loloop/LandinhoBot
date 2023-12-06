@@ -11,20 +11,20 @@ import SwiftUI
 
 public struct NextRaceLargeWidgetView: View {
 
-  public init(bundle: RaceBundle, lastUpdatedDate: Date?) {
-    self.bundle = bundle
+  public init(race: Race, lastUpdatedDate: Date?) {
+    self.race = race
     self.lastUpdatedDate = lastUpdatedDate
   }
 
-  let bundle: RaceBundle
+  let race: Race
   let lastUpdatedDate: Date?
 
   public var body: some View {
     VStack {
       VStack(alignment: .leading) {
-        Text(bundle.category.title)
+        Text(race.category.title)
           .font(.callout)
-         Text(bundle.nextRace.title)
+         Text(race.title)
           .font(.title3)
       }
       .frame(maxWidth: .infinity, alignment: .leading)
@@ -69,6 +69,6 @@ public struct NextRaceLargeWidgetView: View {
   }
 
   var eventsByDate: [EventByDate] {
-    EventByDateFactory.convert(events: bundle.nextRace.events)
+    EventByDateFactory.convert(events: race.events)
   }
 }

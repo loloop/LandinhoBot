@@ -33,7 +33,7 @@ public struct ScheduleListView: View {
           ScrollView {
             LazyVStack(spacing: 20) {
               ForEach(response.items) { item in
-                NextRaceMediumWidgetView(bundle: item.bundled, lastUpdatedDate: Date())
+                NextRaceMediumWidgetView(race: item, lastUpdatedDate: Date())
                   .widgetBackground()
                   .widgetFrame(family: .systemMedium)
                   .onTapAnimate {

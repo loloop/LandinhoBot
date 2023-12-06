@@ -21,11 +21,11 @@ struct NextRaceWidget: Widget {
         Group {
           if entry.error == nil {
             NextRaceWidgetView(
-              bundle: entry.response,
+              race: entry.response,
               lastUpdatedDate: entry.date)
           } else {
             NextRaceWidgetView(
-              bundle: .init(),
+              race: .init(),
               lastUpdatedDate: entry.date)
             .redacted(reason: .placeholder)
           }
@@ -41,22 +41,22 @@ struct NextRaceWidget: Widget {
 struct NextRaceWidgetView: View {
 
   @Environment(\.widgetFamily) var family
-  let bundle: RaceBundle
+  let race: Race
   let lastUpdatedDate: Date
 
   var body: some View {
     switch family {
     case .systemSmall:
       NextRaceSmallWidgetView(
-        bundle: bundle,
+        race: race,
         lastUpdatedDate: lastUpdatedDate)
     case .systemMedium:
       NextRaceMediumWidgetView(
-        bundle: bundle,
+        race: race,
         lastUpdatedDate: lastUpdatedDate)
     case .systemLarge:
       NextRaceLargeWidgetView(
-        bundle: bundle,
+        race: race,
         lastUpdatedDate: lastUpdatedDate)
     case .systemExtraLarge, .accessoryCircular, .accessoryRectangular, .accessoryInline:
       // TODO: Accessory Widgets

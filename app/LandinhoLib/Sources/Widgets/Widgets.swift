@@ -14,19 +14,16 @@ public struct Widgets: Reducer {
   public init() {}
 
   public struct State: Equatable {
-    public init(shouldFilterNonMainEvents: Bool, categoryTag: String?) {
-      self.shouldFilterNonMainEvents = shouldFilterNonMainEvents
+    public init(categoryTag: String?) {
       self.categoryTag = categoryTag
     }
 
     let categoryTag: String?
-    // TODO: Filter non-main events
-    let shouldFilterNonMainEvents: Bool
-    public var racesState = APIClient<RaceBundle>.State(endpoint: "next-race")
+    public var racesState = APIClient<Race>.State(endpoint: "next-race")
   }
 
   public enum Action: Equatable {
-    case racesRequest(APIClient<RaceBundle>.Action)
+    case racesRequest(APIClient<Race>.Action)
   }
 
   public var body: some ReducerOf<Self> {

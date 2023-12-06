@@ -25,12 +25,12 @@ public struct WidgetSelectorView: View {
         switch viewStore.currentWidgetType {
         case .systemMedium:
           NextRaceMediumWidgetView(
-            bundle: viewStore.race.bundled,
+            race: viewStore.race,
             lastUpdatedDate: nil)
           .matchedAnimation(in: animation)
         case .systemLarge:
           NextRaceLargeWidgetView(
-            bundle: viewStore.race.bundled,
+            race: viewStore.race,
             lastUpdatedDate: nil)
           .matchedAnimation(in: animation)
         }

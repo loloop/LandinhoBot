@@ -35,18 +35,18 @@ public struct ScheduleList: Reducer {
     }
 
     let categoryTag: String?
-    public var racesState = APIClient<Page<MegaRace>>.State(endpoint: "next-races")
+    public var racesState = APIClient<Page<Race>>.State(endpoint: "next-races")
   }
 
   public enum Action: Equatable {
     case onAppear
     case delegate(DelegateAction)
-    case racesRequest(APIClient<Page<MegaRace>>.Action)
+    case racesRequest(APIClient<Page<Race>>.Action)
   }
 
   public enum DelegateAction: Equatable {
-    case onWidgetTap(MegaRace)
-    case onShareTap(MegaRace)
+    case onWidgetTap(Race)
+    case onShareTap(Race)
   }
 
   public var body: some ReducerOf<Self> {

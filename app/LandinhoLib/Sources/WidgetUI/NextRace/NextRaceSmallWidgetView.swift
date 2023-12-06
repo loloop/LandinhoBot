@@ -12,20 +12,22 @@ import WidgetKit
 
 public struct NextRaceSmallWidgetView: View {
 
-  public init(bundle: RaceBundle, lastUpdatedDate: Date) {
-    self.bundle = bundle
+  public init(race: Race, lastUpdatedDate: Date) {
+    self.race = race
     self.lastUpdatedDate = lastUpdatedDate
   }
 
-  @ObservedObject var positionManager = WidgetPositionManager.live
-  let bundle: RaceBundle
+  @State var positionManager = WidgetPositionManager.live
+  let race: Race
   let lastUpdatedDate: Date
 
   public var body: some View {
-    VStack(alignment: .leading) {
-      Text(bundle.category.title)
+    Self._printChanges()
+
+    return VStack(alignment: .leading) {
+      Text(race.category.title)
         .font(.callout)
-      Text(bundle.nextRace.shortTitle)
+      Text(race.shortTitle)
         .font(.title3)
       Spacer()
 
@@ -38,7 +40,7 @@ public struct NextRaceSmallWidgetView: View {
         }
         .frame(maxWidth: .infinity, alignment: .trailing)
         HStack {
-          Button(intent: NextEventIntent(race: bundle.nextRace)) {
+          Button(intent: NextEventIntent(race: race)) {
             Image(systemName: "chevron.right")
           }
           Spacer()
@@ -52,16 +54,17 @@ public struct NextRaceSmallWidgetView: View {
           .frame(maxWidth: .infinity)
       }
       .font(.caption)
+      .invalidatableContent()
     }
   }
 
   // TODO: Bring this to `EventByDate` to standardize date formatting
   var currentEvent: RaceEvent? {
-    guard bundle.nextRace.events.indices.contains(positionManager.currentPosition) else {
+    guard race.events.indices.contains(positionManager.currentPosition) else {
       return nil
     }
 
-    return bundle.nextRace.events[positionManager.currentPosition]
+    return race.events[positionManager.currentPosition]
   }
 
   var currentEventDate: String {

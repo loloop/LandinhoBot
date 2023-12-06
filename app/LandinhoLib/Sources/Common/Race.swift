@@ -8,21 +8,6 @@
 import Foundation
 
 public struct Race: Codable, Equatable, Identifiable, Hashable {
-  public init(id: UUID, title: String, shortTitle: String, events: [RaceEvent]) {
-    self.id = id
-    self.title = title
-    self.shortTitle = shortTitle
-    self.events = events
-  }
-
-  public let id: UUID
-  public let title: String
-  public let shortTitle: String
-  public var events: [RaceEvent]
-}
-
-// TODO: Consolidate this into Race instead
-public struct MegaRace: Codable, Equatable, Identifiable, Hashable {
   public init(id: UUID, title: String, shortTitle: String, events: [RaceEvent], category: RaceCategory) {
     self.id = id
     self.title = title
@@ -31,25 +16,23 @@ public struct MegaRace: Codable, Equatable, Identifiable, Hashable {
     self.category = category
   }
 
+  public init() {
+    id = UUID()
+    title = ""
+    shortTitle = ""
+    events = []
+    category = .init(id: "", title: "", tag: "")
+  }
+
   public let id: UUID
   public let title: String
   public let shortTitle: String
-  public let events: [RaceEvent]
+  public var events: [RaceEvent]
   public let category: RaceCategory
-
-  public var bundled: RaceBundle {
-    .init(
-      category: category,
-      nextRace: .init(
-        id: id,
-        title: title,
-        shortTitle: shortTitle,
-        events: events))
-  }
 }
 
-@_spi(Mock) public extension MegaRace {
-  static var mock: MegaRace {
+@_spi(Mock) public extension Race {
+  static var mock: Race {
     .init(
       id: UUID(),
       title: "Fórmula 1 Heineken Grande Prêmio de São Paulo 2021",

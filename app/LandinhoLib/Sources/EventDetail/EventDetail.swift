@@ -19,13 +19,13 @@ public struct EventDetail: Reducer {
       self.race = nil
     }
 
-    public init(race: MegaRace) {
+    public init(race: Race) {
       self.raceID = nil
       self.race = race
     }
 
     let raceID: UUID?
-    let race: MegaRace?
+    let race: Race?
   }
 
   public enum Action: Equatable {
@@ -34,7 +34,7 @@ public struct EventDetail: Reducer {
   }
 
   public enum DelegateAction: Equatable {
-    case onShareTap(race: MegaRace)
+    case onShareTap(race: Race)
   }
 
   public var body: some ReducerOf<Self> {
@@ -79,7 +79,7 @@ public struct EventDetailView: View {
 
 struct InnerEventDetailView: View {
   let store: StoreOf<EventDetail>
-  let race: MegaRace
+  let race: Race
 
   var body: some View {
     ScrollView {
