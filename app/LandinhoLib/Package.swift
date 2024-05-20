@@ -15,6 +15,10 @@ let foundation = Target.Dependency.product(
   name: "LandinhoFoundation",
   package: "LandinhoFoundation")
 
+let widgetUI = Target.Dependency.product(
+  name: "WidgetUI",
+  package: "LandinhoCoreUI")
+
 let package = Package(
   name: "LandinhoLib",
   platforms: [
@@ -34,12 +38,11 @@ let package = Package(
     .library(name: "Settings", targets: ["Settings"]),
     .library(name: "Sharing", targets: ["Sharing"]),
     .library(name: "Widgets", targets: ["Widgets"]),
-    .library(name: "WidgetUI", targets: ["WidgetUI"]),
   ],
   dependencies: [
-    .package(name: "LandinhoCore", path: "LandinhoCore"),
-    .package(name: "LandinhoCoreUI", path: "LandinhoCoreUI"),
-    .package(name: "LandinhoFoundation", path: "LandinhoFoundation"),
+    .package(path: "LandinhoCore"),
+    .package(path: "LandinhoCoreUI"),
+    .package(path: "LandinhoFoundation"),
     .package(
       url: "https://github.com/pointfreeco/swift-composable-architecture",
       from: Version(1, 5, 0)),
@@ -80,7 +83,7 @@ let package = Package(
         name: "EventDetail",
         dependencies: [
           apiClient,
-          "WidgetUI",
+          widgetUI,
           composable
         ]),
 
@@ -130,7 +133,7 @@ let package = Package(
         dependencies: [
           foundation,
           "EventDetail",
-          "WidgetUI",
+          widgetUI,
           composable
         ]),
 
@@ -149,7 +152,7 @@ let package = Package(
         dependencies: [
           foundation,
           .product(name: "NotificationsQueue", package: "LandinhoCoreUI"),
-          "WidgetUI",
+          widgetUI,
           composable
         ]),
 
@@ -159,12 +162,6 @@ let package = Package(
           foundation,
           apiClient,
           composable
-        ]),
-
-      .target(
-        name: "WidgetUI",
-        dependencies: [
-          foundation,
         ]),
   ]
 )

@@ -8,13 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		B40A75222B0D793200CFB10E /* Router in Frameworks */ = {isa = PBXBuildFile; productRef = B40A75212B0D793200CFB10E /* Router */; };
+		B41E56A42BFB800500020994 /* WidgetUI in Frameworks */ = {isa = PBXBuildFile; productRef = B41E56A32BFB800500020994 /* WidgetUI */; };
 		B42CA9ED2AFE8B66009B3FFB /* VroomVroomApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42CA9EC2AFE8B66009B3FFB /* VroomVroomApp.swift */; };
 		B42CA9EF2AFE8B66009B3FFB /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42CA9EE2AFE8B66009B3FFB /* RootView.swift */; };
 		B42CA9F12AFE8B67009B3FFB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B42CA9F02AFE8B67009B3FFB /* Assets.xcassets */; };
 		B42CA9F42AFE8B67009B3FFB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B42CA9F32AFE8B67009B3FFB /* Preview Assets.xcassets */; };
 		B450025C2AFE91EF003CDE6A /* APIClient in Frameworks */ = {isa = PBXBuildFile; productRef = B450025B2AFE91EF003CDE6A /* APIClient */; };
-		B453CE022B07B07F00B0CEA5 /* WidgetUI in Frameworks */ = {isa = PBXBuildFile; productRef = B453CE012B07B07F00B0CEA5 /* WidgetUI */; };
-		B453CE042B07B08700B0CEA5 /* WidgetUI in Frameworks */ = {isa = PBXBuildFile; productRef = B453CE032B07B08700B0CEA5 /* WidgetUI */; };
 		B453CE082B07DDBE00B0CEA5 /* Widgets in Frameworks */ = {isa = PBXBuildFile; productRef = B453CE072B07DDBE00B0CEA5 /* Widgets */; };
 		B47CAE6B2B0D29CE000164A0 /* BetaSheet in Frameworks */ = {isa = PBXBuildFile; productRef = B47CAE6A2B0D29CE000164A0 /* BetaSheet */; };
 		B47CAE6F2B0D2D3C000164A0 /* VroomSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47CAE6E2B0D2D3C000164A0 /* VroomSceneDelegate.swift */; };
@@ -110,7 +109,6 @@
 				B4D87C482B01AF07000EBEF9 /* Categories in Frameworks */,
 				B4D87C4C2B01AF0B000EBEF9 /* Settings in Frameworks */,
 				B4D87C4A2B01AF09000EBEF9 /* ScheduleList in Frameworks */,
-				B453CE022B07B07F00B0CEA5 /* WidgetUI in Frameworks */,
 				B450025C2AFE91EF003CDE6A /* APIClient in Frameworks */,
 				B40A75222B0D793200CFB10E /* Router in Frameworks */,
 				B4D87C4E2B01B12B000EBEF9 /* EventDetail in Frameworks */,
@@ -136,8 +134,8 @@
 			files = (
 				B4CBD1702B05570F00BF6776 /* SwiftUI.framework in Frameworks */,
 				B4CBD16E2B05570F00BF6776 /* WidgetKit.framework in Frameworks */,
+				B41E56A42BFB800500020994 /* WidgetUI in Frameworks */,
 				B453CE082B07DDBE00B0CEA5 /* Widgets in Frameworks */,
-				B453CE042B07B08700B0CEA5 /* WidgetUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,7 +268,6 @@
 				B4CBD1622B0401C100BF6776 /* Home */,
 				B4CBD1642B0409FF00BF6776 /* Admin */,
 				B4CBD1662B040A0300BF6776 /* CategoriesAdmin */,
-				B453CE012B07B07F00B0CEA5 /* WidgetUI */,
 				B48E4FEB2B0BBCB0001457B2 /* Sharing */,
 				B47CAE6A2B0D29CE000164A0 /* BetaSheet */,
 				B40A75212B0D793200CFB10E /* Router */,
@@ -314,8 +311,8 @@
 			);
 			name = WidgetsExtension;
 			packageProductDependencies = (
-				B453CE032B07B08700B0CEA5 /* WidgetUI */,
 				B453CE072B07DDBE00B0CEA5 /* Widgets */,
+				B41E56A32BFB800500020994 /* WidgetUI */,
 			);
 			productName = WidgetsExtension;
 			productReference = B4CBD16C2B05570F00BF6776 /* WidgetsExtension.appex */;
@@ -785,17 +782,13 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Router;
 		};
+		B41E56A32BFB800500020994 /* WidgetUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WidgetUI;
+		};
 		B450025B2AFE91EF003CDE6A /* APIClient */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = APIClient;
-		};
-		B453CE012B07B07F00B0CEA5 /* WidgetUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = WidgetUI;
-		};
-		B453CE032B07B08700B0CEA5 /* WidgetUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = WidgetUI;
 		};
 		B453CE072B07DDBE00B0CEA5 /* Widgets */ = {
 			isa = XCSwiftPackageProductDependency;

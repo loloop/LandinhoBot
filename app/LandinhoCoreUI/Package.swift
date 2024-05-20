@@ -7,6 +7,10 @@ let composable = Target.Dependency.product(
   name: "ComposableArchitecture",
   package: "swift-composable-architecture")
 
+let foundation = Target.Dependency.product(
+  name: "LandinhoFoundation",
+  package: "LandinhoFoundation")
+
 let package = Package(
     name: "LandinhoCoreUI",
     platforms: [
@@ -18,6 +22,7 @@ let package = Package(
     ],
     products: [
       .library(name: "NotificationsQueue", targets: ["NotificationsQueue"]),
+      .library(name: "WidgetUI", targets: ["WidgetUI"]),
     ],
     dependencies: [
       .package(
@@ -31,5 +36,11 @@ let package = Package(
         dependencies: [
           composable
         ]),
+
+        .target(
+          name: "WidgetUI",
+          dependencies: [
+            foundation,
+          ]),
     ]
 )
