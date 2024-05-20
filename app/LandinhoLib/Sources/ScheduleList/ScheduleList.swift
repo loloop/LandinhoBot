@@ -6,7 +6,7 @@
 //
 
 import APIClient
-import Common
+import LandinhoFoundation
 import Foundation
 import ComposableArchitecture
 import SwiftUI

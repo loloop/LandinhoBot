@@ -5,7 +5,7 @@
 //  Created by Mauricio Cardozo on 17/11/23.
 //
 
-import Common
+import LandinhoFoundation
 import Foundation
 import SwiftUI
 

@@ -18,7 +18,6 @@ let package = Package(
     ],
     products: [
       .library(name: "APIClient", targets: ["APIClient"]),
-      .library(name: "Common", targets: ["Common"]),
     ],
     dependencies: [
       .package(name: "LandinhoCoreUI", path: "LandinhoCoreUI"),
@@ -33,8 +32,5 @@ let package = Package(
           .product(name: "NotificationsQueue", package: "LandinhoCoreUI"),
           composable
         ]),
-
-      .target(
-        name: "Common"),
     ]
 )

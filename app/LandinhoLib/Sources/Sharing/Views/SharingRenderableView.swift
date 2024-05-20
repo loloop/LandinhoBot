@@ -5,7 +5,7 @@
 //  Created by Mauricio Cardozo on 20/11/23.
 //
 
-@_spi(Mock) import Common
+@_spi(Mock) import LandinhoFoundation
 import ComposableArchitecture
 import Foundation
 import SwiftUI
