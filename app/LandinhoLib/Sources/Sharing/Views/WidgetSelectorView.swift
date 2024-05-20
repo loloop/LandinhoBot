@@ -54,7 +54,7 @@ private extension View {
 }
 
 #Preview {
-  var state = Sharing.State(race: .mock)
+  let state = Sharing.State(race: .mock)
   let store = Store(initialState: state) {
     Sharing()
   }

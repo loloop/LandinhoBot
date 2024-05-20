@@ -45,6 +45,15 @@ struct NotificationContainerView: View {
   }
 
   var dismissGesture: some Gesture {
+    #if (os(tvOS))
+    // TODO: Add a dismiss timer for notifications when handling tvOS
+    // currently this TapGesture won't work as I haven't found the correct way to make
+    // the notification focusable by the remote, so we can't interact with it.
+    TapGesture()
+      .onEnded {
+        onDragEnd()
+      }
+    #else
     DragGesture(
       minimumDistance: 0,
       coordinateSpace: .local)
@@ -73,6 +82,7 @@ struct NotificationContainerView: View {
           onDragEnd()
         }
       }
+    #endif
   }
 
   struct SwitchView: View {

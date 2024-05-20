@@ -18,11 +18,9 @@ let package = Package(
     .library(name: "BetaSheet", targets: ["BetaSheet"]),
     .library(name: "Categories", targets: ["Categories"]),
     .library(name: "CategoriesAdmin", targets: ["CategoriesAdmin"]),
-    .library(name: "Common", targets: ["Common"]),
     .library(name: "EventDetail", targets: ["EventDetail"]),
     .library(name: "EventsAdmin", targets: ["EventsAdmin"]),
     .library(name: "Home", targets: ["Home"]),
-    .library(name: "NotificationsQueue", targets: ["NotificationsQueue"]),
     .library(name: "RacesAdmin", targets: ["RacesAdmin"]),
     .library(name: "Router", targets: ["Router"]),
     .library(name: "ScheduleList", targets: ["ScheduleList"]),
@@ -32,9 +30,12 @@ let package = Package(
     .library(name: "WidgetUI", targets: ["WidgetUI"]),
   ],
   dependencies: [
+    .package(name: "LandinhoCore", path: "LandinhoCore"),
+    .package(name: "LandinhoCoreUI", path: "LandinhoCoreUI"),
     .package(
       url: "https://github.com/pointfreeco/swift-composable-architecture",
       from: Version(1, 5, 0)),
+
   ],
   targets: [
     .target(
@@ -47,7 +48,7 @@ let package = Package(
       .target(
         name: "APIClient",
         dependencies: [
-          "NotificationsQueue",
+          .product(name: "NotificationsQueue", package: "LandinhoCoreUI"),
           composable
         ]),
 
@@ -61,7 +62,7 @@ let package = Package(
         name: "Categories",
         dependencies: [
           "APIClient",
-          "NotificationsQueue",
+          .product(name: "NotificationsQueue", package: "LandinhoCoreUI"),
           "ScheduleList",
           composable
         ]),
@@ -70,13 +71,10 @@ let package = Package(
         name: "CategoriesAdmin",
         dependencies: [
           "APIClient",
-          "Common",
+          .product(name: "Common", package: "LandinhoCore"),
           "RacesAdmin",
           composable
         ]),
-
-      .target(
-        name: "Common"),
 
       .target(
         name: "EventDetail",
@@ -90,15 +88,15 @@ let package = Package(
         name: "EventsAdmin",
         dependencies: [
           "APIClient",
-          "Common",
-          "NotificationsQueue",
+          .product(name: "Common", package: "LandinhoCore"),
+          .product(name: "NotificationsQueue", package: "LandinhoCoreUI"),
           composable
         ]),
 
       .target(
         name: "Home",
         dependencies: [
-          "Common",
+          .product(name: "Common", package: "LandinhoCore"),
           "ScheduleList",
           "EventDetail",
           "Sharing",
@@ -106,18 +104,12 @@ let package = Package(
         ]),
 
       .target(
-        name: "NotificationsQueue",
-        dependencies: [
-          composable
-        ]),
-
-      .target(
         name: "RacesAdmin",
         dependencies: [
           "APIClient",
-          "Common",
+          .product(name: "Common", package: "LandinhoCore"),
           "EventsAdmin",
-          "NotificationsQueue",
+          .product(name: "NotificationsQueue", package: "LandinhoCoreUI"),
           composable
         ]),
 
@@ -136,7 +128,7 @@ let package = Package(
       .target(
         name: "ScheduleList",
         dependencies: [
-          "Common",
+          .product(name: "Common", package: "LandinhoCore"),
           "EventDetail",
           "WidgetUI",
           composable
@@ -148,15 +140,15 @@ let package = Package(
           "Admin",
           "APIClient",
           "BetaSheet",
-          "NotificationsQueue",
+          .product(name: "NotificationsQueue", package: "LandinhoCoreUI"),
           composable
         ]),
 
       .target(
         name: "Sharing",
         dependencies: [
-          "Common",
-          "NotificationsQueue",
+          .product(name: "Common", package: "LandinhoCore"),
+          .product(name: "NotificationsQueue", package: "LandinhoCoreUI"),
           "WidgetUI",
           composable
         ]),
@@ -164,7 +156,7 @@ let package = Package(
       .target(
         name: "Widgets",
         dependencies: [
-          "Common",
+          .product(name: "Common", package: "LandinhoCore"),
           "APIClient",
           composable
         ]),
@@ -172,7 +164,7 @@ let package = Package(
       .target(
         name: "WidgetUI",
         dependencies: [
-          "Common"
+          .product(name: "Common", package: "LandinhoCore")
         ]),
   ]
 )

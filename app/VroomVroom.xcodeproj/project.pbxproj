@@ -8,13 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		B40A75222B0D793200CFB10E /* Router in Frameworks */ = {isa = PBXBuildFile; productRef = B40A75212B0D793200CFB10E /* Router */; };
-		B41F95A82B0D2FDE009B84F6 /* NotificationsQueue in Frameworks */ = {isa = PBXBuildFile; productRef = B41F95A72B0D2FDE009B84F6 /* NotificationsQueue */; };
 		B42CA9ED2AFE8B66009B3FFB /* VroomVroomApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42CA9EC2AFE8B66009B3FFB /* VroomVroomApp.swift */; };
 		B42CA9EF2AFE8B66009B3FFB /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42CA9EE2AFE8B66009B3FFB /* RootView.swift */; };
 		B42CA9F12AFE8B67009B3FFB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B42CA9F02AFE8B67009B3FFB /* Assets.xcassets */; };
 		B42CA9F42AFE8B67009B3FFB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B42CA9F32AFE8B67009B3FFB /* Preview Assets.xcassets */; };
 		B450025C2AFE91EF003CDE6A /* APIClient in Frameworks */ = {isa = PBXBuildFile; productRef = B450025B2AFE91EF003CDE6A /* APIClient */; };
-		B450025E2AFE91F1003CDE6A /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = B450025D2AFE91F1003CDE6A /* Common */; };
 		B453CE022B07B07F00B0CEA5 /* WidgetUI in Frameworks */ = {isa = PBXBuildFile; productRef = B453CE012B07B07F00B0CEA5 /* WidgetUI */; };
 		B453CE042B07B08700B0CEA5 /* WidgetUI in Frameworks */ = {isa = PBXBuildFile; productRef = B453CE032B07B08700B0CEA5 /* WidgetUI */; };
 		B453CE082B07DDBE00B0CEA5 /* Widgets in Frameworks */ = {isa = PBXBuildFile; productRef = B453CE072B07DDBE00B0CEA5 /* Widgets */; };
@@ -25,6 +23,12 @@
 		B4877C342B06B4C60009760C /* NextRaceWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C332B06B4C60009760C /* NextRaceWidget.swift */; };
 		B48A501F2AFECEEB00A01B7E /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48A501E2AFECEEB00A01B7E /* Root.swift */; };
 		B48E4FEC2B0BBCB0001457B2 /* Sharing in Frameworks */ = {isa = PBXBuildFile; productRef = B48E4FEB2B0BBCB0001457B2 /* Sharing */; };
+		B49637EC2BFB12850070AFD9 /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = B49637EB2BFB12850070AFD9 /* Common */; };
+		B49637EE2BFB12AC0070AFD9 /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = B49637ED2BFB12AC0070AFD9 /* Common */; };
+		B4B8ECFD2BFB0767001D5A6B /* VroomVroomTVApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B8ECFC2BFB0767001D5A6B /* VroomVroomTVApp.swift */; };
+		B4B8ECFF2BFB0767001D5A6B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B8ECFE2BFB0767001D5A6B /* ContentView.swift */; };
+		B4B8ED012BFB0768001D5A6B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4B8ED002BFB0768001D5A6B /* Assets.xcassets */; };
+		B4B8ED042BFB0768001D5A6B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4B8ED032BFB0768001D5A6B /* Preview Assets.xcassets */; };
 		B4CBD1632B0401C100BF6776 /* Home in Frameworks */ = {isa = PBXBuildFile; productRef = B4CBD1622B0401C100BF6776 /* Home */; };
 		B4CBD1652B0409FF00BF6776 /* Admin in Frameworks */ = {isa = PBXBuildFile; productRef = B4CBD1642B0409FF00BF6776 /* Admin */; };
 		B4CBD1672B040A0300BF6776 /* CategoriesAdmin in Frameworks */ = {isa = PBXBuildFile; productRef = B4CBD1662B040A0300BF6776 /* CategoriesAdmin */; };
@@ -35,11 +39,12 @@
 		B4CBD1792B05570F00BF6776 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CBD1782B05570F00BF6776 /* AppIntent.swift */; };
 		B4CBD17B2B05571100BF6776 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4CBD17A2B05571100BF6776 /* Assets.xcassets */; };
 		B4CBD17F2B05571100BF6776 /* WidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B4CBD16C2B05570F00BF6776 /* WidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		B4CBD1AB2B05582000BF6776 /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = B4CBD1AA2B05582000BF6776 /* Common */; };
 		B4D87C482B01AF07000EBEF9 /* Categories in Frameworks */ = {isa = PBXBuildFile; productRef = B4D87C472B01AF07000EBEF9 /* Categories */; };
 		B4D87C4A2B01AF09000EBEF9 /* ScheduleList in Frameworks */ = {isa = PBXBuildFile; productRef = B4D87C492B01AF09000EBEF9 /* ScheduleList */; };
 		B4D87C4C2B01AF0B000EBEF9 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = B4D87C4B2B01AF0B000EBEF9 /* Settings */; };
 		B4D87C4E2B01B12B000EBEF9 /* EventDetail in Frameworks */ = {isa = PBXBuildFile; productRef = B4D87C4D2B01B12B000EBEF9 /* EventDetail */; };
+		B4E510372BFB14990050C6CD /* NotificationsQueue in Frameworks */ = {isa = PBXBuildFile; productRef = B4E510362BFB14990050C6CD /* NotificationsQueue */; };
+		B4E510392BFB149C0050C6CD /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = B4E510382BFB149C0050C6CD /* Common */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,12 +77,19 @@
 		B42CA9EE2AFE8B66009B3FFB /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		B42CA9F02AFE8B67009B3FFB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B42CA9F32AFE8B67009B3FFB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B43E98712BFB063900EC08F5 /* LandinhoCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LandinhoCore; sourceTree = "<group>"; };
 		B45002592AFE91A1003CDE6A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B47CAE6E2B0D2D3C000164A0 /* VroomSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VroomSceneDelegate.swift; sourceTree = "<group>"; };
 		B4877C262B0692F40009760C /* NextRaceTimelineProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextRaceTimelineProvider.swift; sourceTree = "<group>"; };
 		B4877C292B0694350009760C /* NextRaceEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextRaceEntry.swift; sourceTree = "<group>"; };
 		B4877C332B06B4C60009760C /* NextRaceWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextRaceWidget.swift; sourceTree = "<group>"; };
 		B48A501E2AFECEEB00A01B7E /* Root.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Root.swift; sourceTree = "<group>"; };
+		B4B8ECFA2BFB0767001D5A6B /* VroomVroomTV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VroomVroomTV.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4B8ECFC2BFB0767001D5A6B /* VroomVroomTVApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VroomVroomTVApp.swift; sourceTree = "<group>"; };
+		B4B8ECFE2BFB0767001D5A6B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		B4B8ED002BFB0768001D5A6B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B4B8ED032BFB0768001D5A6B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B4B8ED082BFB095D001D5A6B /* LandinhoCoreUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LandinhoCoreUI; sourceTree = "<group>"; };
 		B4CBD16C2B05570F00BF6776 /* WidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = WidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4CBD16D2B05570F00BF6776 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		B4CBD16F2B05570F00BF6776 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -99,16 +111,24 @@
 				B4D87C482B01AF07000EBEF9 /* Categories in Frameworks */,
 				B4D87C4C2B01AF0B000EBEF9 /* Settings in Frameworks */,
 				B4D87C4A2B01AF09000EBEF9 /* ScheduleList in Frameworks */,
-				B41F95A82B0D2FDE009B84F6 /* NotificationsQueue in Frameworks */,
 				B453CE022B07B07F00B0CEA5 /* WidgetUI in Frameworks */,
 				B450025C2AFE91EF003CDE6A /* APIClient in Frameworks */,
 				B40A75222B0D793200CFB10E /* Router in Frameworks */,
 				B4D87C4E2B01B12B000EBEF9 /* EventDetail in Frameworks */,
-				B450025E2AFE91F1003CDE6A /* Common in Frameworks */,
 				B4CBD1652B0409FF00BF6776 /* Admin in Frameworks */,
 				B48E4FEC2B0BBCB0001457B2 /* Sharing in Frameworks */,
+				B49637EC2BFB12850070AFD9 /* Common in Frameworks */,
 				B47CAE6B2B0D29CE000164A0 /* BetaSheet in Frameworks */,
 				B4CBD1632B0401C100BF6776 /* Home in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B4B8ECF72BFB0767001D5A6B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B4E510372BFB14990050C6CD /* NotificationsQueue in Frameworks */,
+				B4E510392BFB149C0050C6CD /* Common in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,10 +136,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B49637EE2BFB12AC0070AFD9 /* Common in Frameworks */,
 				B4CBD1702B05570F00BF6776 /* SwiftUI.framework in Frameworks */,
 				B4CBD16E2B05570F00BF6776 /* WidgetKit.framework in Frameworks */,
 				B453CE082B07DDBE00B0CEA5 /* Widgets in Frameworks */,
-				B4CBD1AB2B05582000BF6776 /* Common in Frameworks */,
 				B453CE042B07B08700B0CEA5 /* WidgetUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -130,9 +150,12 @@
 		B42CA9E02AFE8B66009B3FFB = {
 			isa = PBXGroup;
 			children = (
+				B4B8ED082BFB095D001D5A6B /* LandinhoCoreUI */,
+				B43E98712BFB063900EC08F5 /* LandinhoCore */,
 				B4D9A1C02AFE8B9A008E3EB6 /* LandinhoLib */,
 				B42CA9EB2AFE8B66009B3FFB /* VroomVroom */,
 				B4CBD1712B05570F00BF6776 /* Widgets */,
+				B4B8ECFB2BFB0767001D5A6B /* VroomVroomTV */,
 				B42CA9EA2AFE8B66009B3FFB /* Products */,
 				B450025A2AFE91EF003CDE6A /* Frameworks */,
 				B4CBD1A92B05574100BF6776 /* VroomVroom copy-Info.plist */,
@@ -144,6 +167,7 @@
 			children = (
 				B42CA9E92AFE8B66009B3FFB /* VroomVroom.app */,
 				B4CBD16C2B05570F00BF6776 /* WidgetsExtension.appex */,
+				B4B8ECFA2BFB0767001D5A6B /* VroomVroomTV.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -189,6 +213,25 @@
 			path = NextRaceWidget;
 			sourceTree = "<group>";
 		};
+		B4B8ECFB2BFB0767001D5A6B /* VroomVroomTV */ = {
+			isa = PBXGroup;
+			children = (
+				B4B8ECFC2BFB0767001D5A6B /* VroomVroomTVApp.swift */,
+				B4B8ECFE2BFB0767001D5A6B /* ContentView.swift */,
+				B4B8ED002BFB0768001D5A6B /* Assets.xcassets */,
+				B4B8ED022BFB0768001D5A6B /* Preview Content */,
+			);
+			path = VroomVroomTV;
+			sourceTree = "<group>";
+		};
+		B4B8ED022BFB0768001D5A6B /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				B4B8ED032BFB0768001D5A6B /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
 		B4CBD1712B05570F00BF6776 /* Widgets */ = {
 			isa = PBXGroup;
 			children = (
@@ -222,7 +265,6 @@
 			name = VroomVroom;
 			packageProductDependencies = (
 				B450025B2AFE91EF003CDE6A /* APIClient */,
-				B450025D2AFE91F1003CDE6A /* Common */,
 				B4D87C472B01AF07000EBEF9 /* Categories */,
 				B4D87C492B01AF09000EBEF9 /* ScheduleList */,
 				B4D87C4B2B01AF0B000EBEF9 /* Settings */,
@@ -233,11 +275,32 @@
 				B453CE012B07B07F00B0CEA5 /* WidgetUI */,
 				B48E4FEB2B0BBCB0001457B2 /* Sharing */,
 				B47CAE6A2B0D29CE000164A0 /* BetaSheet */,
-				B41F95A72B0D2FDE009B84F6 /* NotificationsQueue */,
 				B40A75212B0D793200CFB10E /* Router */,
+				B49637EB2BFB12850070AFD9 /* Common */,
 			);
 			productName = VroomVroom;
 			productReference = B42CA9E92AFE8B66009B3FFB /* VroomVroom.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B4B8ECF92BFB0767001D5A6B /* VroomVroomTV */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B4B8ED052BFB0768001D5A6B /* Build configuration list for PBXNativeTarget "VroomVroomTV" */;
+			buildPhases = (
+				B4B8ECF62BFB0767001D5A6B /* Sources */,
+				B4B8ECF72BFB0767001D5A6B /* Frameworks */,
+				B4B8ECF82BFB0767001D5A6B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VroomVroomTV;
+			packageProductDependencies = (
+				B4E510362BFB14990050C6CD /* NotificationsQueue */,
+				B4E510382BFB149C0050C6CD /* Common */,
+			);
+			productName = VroomVroomTV;
+			productReference = B4B8ECFA2BFB0767001D5A6B /* VroomVroomTV.app */;
 			productType = "com.apple.product-type.application";
 		};
 		B4CBD16B2B05570F00BF6776 /* WidgetsExtension */ = {
@@ -254,9 +317,9 @@
 			);
 			name = WidgetsExtension;
 			packageProductDependencies = (
-				B4CBD1AA2B05582000BF6776 /* Common */,
 				B453CE032B07B08700B0CEA5 /* WidgetUI */,
 				B453CE072B07DDBE00B0CEA5 /* Widgets */,
+				B49637ED2BFB12AC0070AFD9 /* Common */,
 			);
 			productName = WidgetsExtension;
 			productReference = B4CBD16C2B05570F00BF6776 /* WidgetsExtension.appex */;
@@ -269,11 +332,14 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
+				LastSwiftUpdateCheck = 1520;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					B42CA9E82AFE8B66009B3FFB = {
 						CreatedOnToolsVersion = 15.0;
+					};
+					B4B8ECF92BFB0767001D5A6B = {
+						CreatedOnToolsVersion = 15.2;
 					};
 					B4CBD16B2B05570F00BF6776 = {
 						CreatedOnToolsVersion = 15.0;
@@ -295,6 +361,7 @@
 			targets = (
 				B42CA9E82AFE8B66009B3FFB /* VroomVroom */,
 				B4CBD16B2B05570F00BF6776 /* WidgetsExtension */,
+				B4B8ECF92BFB0767001D5A6B /* VroomVroomTV */,
 			);
 		};
 /* End PBXProject section */
@@ -306,6 +373,15 @@
 			files = (
 				B42CA9F42AFE8B67009B3FFB /* Preview Assets.xcassets in Resources */,
 				B42CA9F12AFE8B67009B3FFB /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B4B8ECF82BFB0767001D5A6B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B4B8ED042BFB0768001D5A6B /* Preview Assets.xcassets in Resources */,
+				B4B8ED012BFB0768001D5A6B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +404,15 @@
 				B42CA9ED2AFE8B66009B3FFB /* VroomVroomApp.swift in Sources */,
 				B48A501F2AFECEEB00A01B7E /* Root.swift in Sources */,
 				B47CAE6F2B0D2D3C000164A0 /* VroomSceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B4B8ECF62BFB0767001D5A6B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B4B8ECFF2BFB0767001D5A6B /* ContentView.swift in Sources */,
+				B4B8ECFD2BFB0767001D5A6B /* VroomVroomTVApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -500,6 +585,8 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.mauriciocardozo.racing.vroomvroom;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -532,9 +619,67 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = me.mauriciocardozo.racing.vroomvroom;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B4B8ED062BFB0768001D5A6B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"VroomVroomTV/Preview Content\"";
+				DEVELOPMENT_TEAM = UQCQ667RNK;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = me.mauriciocardozo.VroomVroom;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 17.2;
+			};
+			name = Debug;
+		};
+		B4B8ED072BFB0768001D5A6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"VroomVroomTV/Preview Content\"";
+				DEVELOPMENT_TEAM = UQCQ667RNK;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Automatic;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = me.mauriciocardozo.VroomVroom;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 17.2;
 			};
 			name = Release;
 		};
@@ -560,6 +705,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = me.mauriciocardozo.racing.vroomvroom.Widgets;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -588,6 +735,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = me.mauriciocardozo.racing.vroomvroom.Widgets;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -615,6 +764,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		B4B8ED052BFB0768001D5A6B /* Build configuration list for PBXNativeTarget "VroomVroomTV" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B4B8ED062BFB0768001D5A6B /* Debug */,
+				B4B8ED072BFB0768001D5A6B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B4CBD1802B05571100BF6776 /* Build configuration list for PBXNativeTarget "WidgetsExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -631,17 +789,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Router;
 		};
-		B41F95A72B0D2FDE009B84F6 /* NotificationsQueue */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = NotificationsQueue;
-		};
 		B450025B2AFE91EF003CDE6A /* APIClient */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = APIClient;
-		};
-		B450025D2AFE91F1003CDE6A /* Common */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Common;
 		};
 		B453CE012B07B07F00B0CEA5 /* WidgetUI */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -663,6 +813,14 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Sharing;
 		};
+		B49637EB2BFB12850070AFD9 /* Common */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Common;
+		};
+		B49637ED2BFB12AC0070AFD9 /* Common */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Common;
+		};
 		B4CBD1622B0401C100BF6776 /* Home */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Home;
@@ -674,10 +832,6 @@
 		B4CBD1662B040A0300BF6776 /* CategoriesAdmin */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = CategoriesAdmin;
-		};
-		B4CBD1AA2B05582000BF6776 /* Common */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Common;
 		};
 		B4D87C472B01AF07000EBEF9 /* Categories */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -694,6 +848,14 @@
 		B4D87C4D2B01B12B000EBEF9 /* EventDetail */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = EventDetail;
+		};
+		B4E510362BFB14990050C6CD /* NotificationsQueue */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NotificationsQueue;
+		};
+		B4E510382BFB149C0050C6CD /* Common */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Common;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
