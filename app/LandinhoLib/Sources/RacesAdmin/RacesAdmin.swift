@@ -6,7 +6,7 @@
 //
 
 import APIClient
-import Common
+import LandinhoFoundation
 import ComposableArchitecture
 import EventsAdmin
 import Foundation
@@ -75,6 +75,7 @@ public struct RacesAdmin {
   @Dependency(\.notificationQueue) var notificationQueue
 
   public var body: some ReducerOf<Self> {
+    // TODO: Update earliestDate for a race if it has been edited
     Reduce { state, action in
       switch action {
       case .onPlusTap:

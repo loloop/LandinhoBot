@@ -5,14 +5,14 @@
 //  Created by Mauricio Cardozo on 16/11/23.
 //
 
-import Common
+import LandinhoFoundation
 import Foundation
 import WidgetKit
 import Widgets
 
 struct NextRaceEntry: TimelineEntry {
   var date: Date
-  var response: RaceBundle
+  var response: Race
   var error: Error?
 }
 
@@ -21,8 +21,6 @@ extension NextRaceEntry {
     NextRaceEntry(
       date: Date(),
       response: .init(
-        category: .init(id: "", title: "Formula 1", tag: "f1", comment: "Event data by CalendarioF1.com"),
-        nextRace: .init(
           id: UUID(),
           title: "Fórmula 1 Heineken Grande Prêmio de São Paulo 2021", shortTitle: "São Paulo",
           events: [
@@ -51,19 +49,27 @@ extension NextRaceEntry {
               title: "Corrida",
               date: Date().advanced(by: 200000), 
               isMainEvent: false)
-          ])))
+          ], 
+          category:  .init(
+            id: "",
+            title: "Formula 1",
+            tag: "f1",
+            comment: "Event data by CalendarioF1.com")))
   }
 
   static var empty: NextRaceEntry {
     NextRaceEntry(
       date: Date(),
       response: .init(
-        category: .init(id: "", title: "Formula 1", tag: "f1", comment: "Event data by CalendarioF1.com"),
-        nextRace: .init(
-          id: UUID(),
-          title: "FORMULA 1 HEINEKEN SILVER LAS VEGAS GRAND PRIX 2023", shortTitle: "Circuit of the Americas",
-          events: [
-          ]))
+        id: UUID(),
+        title: "FORMULA 1 HEINEKEN SILVER LAS VEGAS GRAND PRIX 2023", shortTitle: "Circuit of the Americas",
+        events: [],
+        category: .init(
+          id: "",
+          title: "Formula 1",
+          tag: "f1",
+          comment: "Event data by CalendarioF1.com")
+        )
     )
   }
 }

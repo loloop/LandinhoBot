@@ -38,9 +38,7 @@ struct NextRaceHandler: AsyncRequestHandler {
       throw Abort(.notFound)
     }
 
-    return NextRaceResponse(
-      nextRace: nextRace,
-      category: nextRace.category)
+    return nextRace
   }
 
 }
@@ -50,10 +48,5 @@ struct NextRaceHandler: AsyncRequestHandler {
 extension NextRaceHandler {
   struct NextRaceRequest: Content {
     let argument: String
-  }
-
-  struct NextRaceResponse: Content {
-    let nextRace: Race
-    let category: Category
   }
 }

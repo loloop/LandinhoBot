@@ -3,9 +3,33 @@
 
 import PackageDescription
 
+let apiClient = Target.Dependency.product(
+  name: "APIClient",
+  package: "LandinhoCore")
+
 let composable = Target.Dependency.product(
   name: "ComposableArchitecture",
   package: "swift-composable-architecture")
+
+let eventDetail = Target.Dependency.product(
+  name: "EventDetail",
+  package: "LandinhoCore")
+
+let foundation = Target.Dependency.product(
+  name: "LandinhoFoundation",
+  package: "LandinhoFoundation")
+
+let notifications = Target.Dependency.product(
+  name: "NotificationsQueue",
+  package: "LandinhoCoreUI")
+
+let scheduleList = Target.Dependency.product(
+  name: "ScheduleList",
+  package: "LandinhoCore")
+
+let widgetUI = Target.Dependency.product(
+  name: "WidgetUI",
+  package: "LandinhoCoreUI")
 
 let package = Package(
   name: "LandinhoLib",
@@ -14,27 +38,24 @@ let package = Package(
   ],
   products: [
     .library(name: "Admin", targets: ["Admin"]),
-    .library(name: "APIClient", targets: ["APIClient"]),
     .library(name: "BetaSheet", targets: ["BetaSheet"]),
     .library(name: "Categories", targets: ["Categories"]),
     .library(name: "CategoriesAdmin", targets: ["CategoriesAdmin"]),
-    .library(name: "Common", targets: ["Common"]),
-    .library(name: "EventDetail", targets: ["EventDetail"]),
     .library(name: "EventsAdmin", targets: ["EventsAdmin"]),
     .library(name: "Home", targets: ["Home"]),
-    .library(name: "NotificationsQueue", targets: ["NotificationsQueue"]),
     .library(name: "RacesAdmin", targets: ["RacesAdmin"]),
     .library(name: "Router", targets: ["Router"]),
-    .library(name: "ScheduleList", targets: ["ScheduleList"]),
     .library(name: "Settings", targets: ["Settings"]),
     .library(name: "Sharing", targets: ["Sharing"]),
     .library(name: "Widgets", targets: ["Widgets"]),
-    .library(name: "WidgetUI", targets: ["WidgetUI"]),
   ],
   dependencies: [
+    .package(path: "LandinhoCore"),
+    .package(path: "LandinhoCoreUI"),
+    .package(path: "LandinhoFoundation"),
     .package(
       url: "https://github.com/pointfreeco/swift-composable-architecture",
-      from: Version(1, 4, 2)),
+      from: Version(1, 5, 0)),
   ],
   targets: [
     .target(
@@ -45,13 +66,6 @@ let package = Package(
       ]),
 
       .target(
-        name: "APIClient",
-        dependencies: [
-          "NotificationsQueue",
-          composable
-        ]),
-
-      .target(
         name: "BetaSheet",
         dependencies: [
           composable
@@ -60,64 +74,47 @@ let package = Package(
       .target(
         name: "Categories",
         dependencies: [
-          "APIClient",
-          "NotificationsQueue",
-          "ScheduleList",
+          apiClient,
+          notifications,
+          scheduleList,
           composable
         ]),
 
       .target(
         name: "CategoriesAdmin",
         dependencies: [
-          "APIClient",
-          "Common",
+          apiClient,
+          foundation,
           "RacesAdmin",
-          composable
-        ]),
-
-      .target(
-        name: "Common"),
-
-      .target(
-        name: "EventDetail",
-        dependencies: [
-          "APIClient",
-          "WidgetUI",
           composable
         ]),
 
       .target(
         name: "EventsAdmin",
         dependencies: [
-          "APIClient",
-          "Common",
-          "NotificationsQueue",
+          apiClient,
+          foundation,
+          notifications,
           composable
         ]),
 
       .target(
         name: "Home",
         dependencies: [
-          "Common",
-          "ScheduleList",
-          "EventDetail",
+          foundation,
+          scheduleList,
+          eventDetail,
           "Sharing",
-          composable
-        ]),
-
-      .target(
-        name: "NotificationsQueue",
-        dependencies: [
           composable
         ]),
 
       .target(
         name: "RacesAdmin",
         dependencies: [
-          "APIClient",
-          "Common",
+          apiClient,
+          foundation,
           "EventsAdmin",
-          "NotificationsQueue",
+          notifications,
           composable
         ]),
 
@@ -126,19 +123,10 @@ let package = Package(
         dependencies: [
           "Home",
           "Categories",
-          "EventDetail",
-          "ScheduleList",
+          eventDetail,
+          scheduleList,
           "Settings",
           "Sharing",
-          composable
-        ]),
-
-      .target(
-        name: "ScheduleList",
-        dependencies: [
-          "Common",
-          "EventDetail",
-          "WidgetUI",
           composable
         ]),
 
@@ -146,33 +134,27 @@ let package = Package(
         name: "Settings",
         dependencies: [
           "Admin",
-          "APIClient",
+          apiClient,
           "BetaSheet",
-          "NotificationsQueue",
+          notifications,
           composable
         ]),
 
       .target(
         name: "Sharing",
         dependencies: [
-          "Common",
-          "NotificationsQueue",
-          "WidgetUI",
+          foundation,
+          notifications,
+          widgetUI,
           composable
         ]),
 
       .target(
         name: "Widgets",
         dependencies: [
-          "Common",
-          "APIClient",
+          foundation,
+          apiClient,
           composable
-        ]),
-
-      .target(
-        name: "WidgetUI",
-        dependencies: [
-          "Common"
         ]),
   ]
 )

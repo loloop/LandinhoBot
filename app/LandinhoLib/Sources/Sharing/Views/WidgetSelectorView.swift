@@ -5,7 +5,7 @@
 //  Created by Mauricio Cardozo on 20/11/23.
 //
 
-@_spi(Mock) import Common
+@_spi(Mock) import LandinhoFoundation
 import ComposableArchitecture
 import Foundation
 import SwiftUI
@@ -25,12 +25,12 @@ public struct WidgetSelectorView: View {
         switch viewStore.currentWidgetType {
         case .systemMedium:
           NextRaceMediumWidgetView(
-            bundle: viewStore.race.bundled,
+            race: viewStore.race,
             lastUpdatedDate: nil)
           .matchedAnimation(in: animation)
         case .systemLarge:
           NextRaceLargeWidgetView(
-            bundle: viewStore.race.bundled,
+            race: viewStore.race,
             lastUpdatedDate: nil)
           .matchedAnimation(in: animation)
         }
@@ -54,7 +54,7 @@ private extension View {
 }
 
 #Preview {
-  var state = Sharing.State(race: .mock)
+  let state = Sharing.State(race: .mock)
   let store = Store(initialState: state) {
     Sharing()
   }

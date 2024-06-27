@@ -5,7 +5,7 @@
 //  Created by Mauricio Cardozo on 20/11/23.
 //
 
-import Common
+import LandinhoFoundation
 import ComposableArchitecture
 import Foundation
 import UIKit
@@ -15,11 +15,11 @@ public struct Sharing {
   public init() {}
 
   public struct State: Equatable {
-    public init(race: MegaRace) {
+    public init(race: Race) {
       self.race = race
     }
 
-    let race: MegaRace
+    let race: Race
     var isSquareAspectRatio: Bool = true
     var currentWidgetType: ShareableWidgetType = .systemMedium
     var hasTappedShare: Bool = false
