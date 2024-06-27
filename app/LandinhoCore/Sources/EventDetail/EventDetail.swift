@@ -187,6 +187,7 @@ struct MainEventsView: View {
           }
         }
         .padding()
+        // FIXME: Color not available on tvOS
         .background(Color(.systemBackground))
         .clipShape(RoundedRectangle(cornerRadius: 15.0, style: .continuous))
         .shadow(color: .black.opacity(0.1), radius: 1)
@@ -210,6 +211,7 @@ struct MainEventsView: View {
           }
           .padding()
           .padding(.horizontal)
+          // FIXME: Color not available on tvOS
           .background(Color(.systemBackground))
           .clipShape(RoundedRectangle(cornerRadius: 10.0, style: .continuous))
           .shadow(color: .black.opacity(0.1), radius: 1)

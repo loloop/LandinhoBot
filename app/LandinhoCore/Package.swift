@@ -7,7 +7,13 @@ let composable = Target.Dependency.product(
   name: "ComposableArchitecture",
   package: "swift-composable-architecture")
 
+let widgetUI = Target.Dependency.product(
+  name: "WidgetUI",
+  package: "LandinhoCoreUI")
 
+let foundation = Target.Dependency.product(
+  name: "LandinhoFoundation",
+  package: "LandinhoFoundation")
 
 let package = Package(
     name: "LandinhoCore",
@@ -20,9 +26,12 @@ let package = Package(
     ],
     products: [
       .library(name: "APIClient", targets: ["APIClient"]),
+      .library(name: "EventDetail", targets: ["EventDetail"]),
+      .library(name: "ScheduleList", targets: ["ScheduleList"]),
     ],
     dependencies: [
-      .package(name: "LandinhoCoreUI", path: "LandinhoCoreUI"),
+      .package(path: "LandinhoCoreUI"),
+      .package(path: "LandinhoFoundation"),
       .package(
         url: "https://github.com/pointfreeco/swift-composable-architecture",
         from: Version(1, 5, 0)),
@@ -34,5 +43,22 @@ let package = Package(
           .product(name: "NotificationsQueue", package: "LandinhoCoreUI"),
           composable
         ]),
+
+        .target(
+          name: "EventDetail",
+          dependencies: [
+            "APIClient",
+            widgetUI,
+            composable
+          ]),
+
+        .target(
+          name: "ScheduleList",
+          dependencies: [
+            foundation,
+            "EventDetail",
+            widgetUI,
+            composable
+          ]),
     ]
 )

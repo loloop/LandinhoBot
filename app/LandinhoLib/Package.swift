@@ -3,17 +3,29 @@
 
 import PackageDescription
 
+let apiClient = Target.Dependency.product(
+  name: "APIClient",
+  package: "LandinhoCore")
+
 let composable = Target.Dependency.product(
   name: "ComposableArchitecture",
   package: "swift-composable-architecture")
 
-let apiClient = Target.Dependency.product(
-  name: "APIClient",
+let eventDetail = Target.Dependency.product(
+  name: "EventDetail",
   package: "LandinhoCore")
 
 let foundation = Target.Dependency.product(
   name: "LandinhoFoundation",
   package: "LandinhoFoundation")
+
+let notifications = Target.Dependency.product(
+  name: "NotificationsQueue",
+  package: "LandinhoCoreUI")
+
+let scheduleList = Target.Dependency.product(
+  name: "ScheduleList",
+  package: "LandinhoCore")
 
 let widgetUI = Target.Dependency.product(
   name: "WidgetUI",
@@ -29,12 +41,10 @@ let package = Package(
     .library(name: "BetaSheet", targets: ["BetaSheet"]),
     .library(name: "Categories", targets: ["Categories"]),
     .library(name: "CategoriesAdmin", targets: ["CategoriesAdmin"]),
-    .library(name: "EventDetail", targets: ["EventDetail"]),
     .library(name: "EventsAdmin", targets: ["EventsAdmin"]),
     .library(name: "Home", targets: ["Home"]),
     .library(name: "RacesAdmin", targets: ["RacesAdmin"]),
     .library(name: "Router", targets: ["Router"]),
-    .library(name: "ScheduleList", targets: ["ScheduleList"]),
     .library(name: "Settings", targets: ["Settings"]),
     .library(name: "Sharing", targets: ["Sharing"]),
     .library(name: "Widgets", targets: ["Widgets"]),
@@ -65,8 +75,8 @@ let package = Package(
         name: "Categories",
         dependencies: [
           apiClient,
-          .product(name: "NotificationsQueue", package: "LandinhoCoreUI"),
-          "ScheduleList",
+          notifications,
+          scheduleList,
           composable
         ]),
 
@@ -80,19 +90,11 @@ let package = Package(
         ]),
 
       .target(
-        name: "EventDetail",
-        dependencies: [
-          apiClient,
-          widgetUI,
-          composable
-        ]),
-
-      .target(
         name: "EventsAdmin",
         dependencies: [
           apiClient,
           foundation,
-          .product(name: "NotificationsQueue", package: "LandinhoCoreUI"),
+          notifications,
           composable
         ]),
 
@@ -100,8 +102,8 @@ let package = Package(
         name: "Home",
         dependencies: [
           foundation,
-          "ScheduleList",
-          "EventDetail",
+          scheduleList,
+          eventDetail,
           "Sharing",
           composable
         ]),
@@ -112,7 +114,7 @@ let package = Package(
           apiClient,
           foundation,
           "EventsAdmin",
-          .product(name: "NotificationsQueue", package: "LandinhoCoreUI"),
+          notifications,
           composable
         ]),
 
@@ -121,19 +123,10 @@ let package = Package(
         dependencies: [
           "Home",
           "Categories",
-          "EventDetail",
-          "ScheduleList",
+          eventDetail,
+          scheduleList,
           "Settings",
           "Sharing",
-          composable
-        ]),
-
-      .target(
-        name: "ScheduleList",
-        dependencies: [
-          foundation,
-          "EventDetail",
-          widgetUI,
           composable
         ]),
 
@@ -143,7 +136,7 @@ let package = Package(
           "Admin",
           apiClient,
           "BetaSheet",
-          .product(name: "NotificationsQueue", package: "LandinhoCoreUI"),
+          notifications,
           composable
         ]),
 
@@ -151,7 +144,7 @@ let package = Package(
         name: "Sharing",
         dependencies: [
           foundation,
-          .product(name: "NotificationsQueue", package: "LandinhoCoreUI"),
+          notifications,
           widgetUI,
           composable
         ]),

@@ -22,6 +22,7 @@
 		B4877C342B06B4C60009760C /* NextRaceWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C332B06B4C60009760C /* NextRaceWidget.swift */; };
 		B48A501F2AFECEEB00A01B7E /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48A501E2AFECEEB00A01B7E /* Root.swift */; };
 		B48E4FEC2B0BBCB0001457B2 /* Sharing in Frameworks */ = {isa = PBXBuildFile; productRef = B48E4FEB2B0BBCB0001457B2 /* Sharing */; };
+		B4AC4CF42BFB83A300CEF1AA /* ScheduleList in Frameworks */ = {isa = PBXBuildFile; productRef = B4AC4CF32BFB83A300CEF1AA /* ScheduleList */; };
 		B4B8ECFD2BFB0767001D5A6B /* VroomVroomTVApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B8ECFC2BFB0767001D5A6B /* VroomVroomTVApp.swift */; };
 		B4B8ECFF2BFB0767001D5A6B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B8ECFE2BFB0767001D5A6B /* ContentView.swift */; };
 		B4B8ED012BFB0768001D5A6B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4B8ED002BFB0768001D5A6B /* Assets.xcassets */; };
@@ -41,7 +42,6 @@
 		B4D87C4C2B01AF0B000EBEF9 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = B4D87C4B2B01AF0B000EBEF9 /* Settings */; };
 		B4D87C4E2B01B12B000EBEF9 /* EventDetail in Frameworks */ = {isa = PBXBuildFile; productRef = B4D87C4D2B01B12B000EBEF9 /* EventDetail */; };
 		B4E510372BFB14990050C6CD /* NotificationsQueue in Frameworks */ = {isa = PBXBuildFile; productRef = B4E510362BFB14990050C6CD /* NotificationsQueue */; };
-		B4E510392BFB149C0050C6CD /* Common in Frameworks */ = {isa = PBXBuildFile; productRef = B4E510382BFB149C0050C6CD /* Common */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,7 +124,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4E510372BFB14990050C6CD /* NotificationsQueue in Frameworks */,
-				B4E510392BFB149C0050C6CD /* Common in Frameworks */,
+				B4AC4CF42BFB83A300CEF1AA /* ScheduleList in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,7 +291,7 @@
 			name = VroomVroomTV;
 			packageProductDependencies = (
 				B4E510362BFB14990050C6CD /* NotificationsQueue */,
-				B4E510382BFB149C0050C6CD /* Common */,
+				B4AC4CF32BFB83A300CEF1AA /* ScheduleList */,
 			);
 			productName = VroomVroomTV;
 			productReference = B4B8ECFA2BFB0767001D5A6B /* VroomVroomTV.app */;
@@ -802,6 +802,10 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Sharing;
 		};
+		B4AC4CF32BFB83A300CEF1AA /* ScheduleList */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ScheduleList;
+		};
 		B4CBD1622B0401C100BF6776 /* Home */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Home;
@@ -833,10 +837,6 @@
 		B4E510362BFB14990050C6CD /* NotificationsQueue */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NotificationsQueue;
-		};
-		B4E510382BFB149C0050C6CD /* Common */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Common;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

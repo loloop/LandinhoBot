@@ -20,7 +20,7 @@ public extension View {
   func widgetBackground() -> some View {
     self
       .padding()
-      .background(Color(.systemBackground))
+      .background(Color.systemBackground)
       .clipShape(RoundedRectangle(cornerRadius: 25.0, style: .continuous))
       .shadow(color: .black.opacity(0.1), radius: 1)
   }
@@ -34,5 +34,15 @@ public extension View {
     case .systemLarge:
       return self.frame(width: 364, height: 384)
     }
+  }
+}
+
+extension Color {
+  static var systemBackground: Color {
+    #if(os(tvOS))
+    return Color(.clear)
+    #else
+    return Color(.systemBackground)
+    #endif
   }
 }

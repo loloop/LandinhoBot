@@ -21,42 +21,50 @@ public struct ScheduleListView: View {
 
   public var body: some View {
     WithViewStore(store, observe: { $0 }) { viewStore in
-        switch viewStore.racesState.response {
-        case .idle:
-          Color(.systemBackground)
+      switch viewStore.racesState.response {
+      case .idle:
+        // FIXME: Color not available on tvOS
+        //Color(.systemBackground)
+        Color.clear
           .task {
             viewStore.send(.onAppear)
           }
-        case .loading:
-          ProgressView()
-        case .reloading(let response), .finished(.success(let response)):
-          ScrollView {
-            LazyVStack(spacing: 20) {
-              ForEach(response.items) { item in
+      case .loading:
+        ProgressView()
+      case .reloading(let response), .finished(.success(let response)):
+        ScrollView {
+          LazyVStack(spacing: 20) {
+            ForEach(response.items) { item in
+              Button(action: {
+                viewStore.send(.delegate(.onWidgetTap(item)))
+              }, label: {
                 NextRaceMediumWidgetView(race: item, lastUpdatedDate: Date())
                   .widgetBackground()
                   .widgetFrame(family: .systemMedium)
-                  .onTapAnimate {
-                    viewStore.send(.delegate(.onWidgetTap(item)))
-                  }
+                // FIXME: Fix animation
+//                  .onTapAnimate {
+//                    viewStore.send(.delegate(.onWidgetTap(item)))
+//                  }
                   .contextMenu {
                     Button("Compartilhar", systemImage: "square.and.arrow.up") {
                       viewStore.send(.delegate(.onShareTap(item)))
                     }
                   }
-              }
+              })
+              .buttonStyle(PlainButtonStyle())
             }
           }
-          .frame(maxWidth: .infinity)
-          .background(
-            .background.secondary
-          )
-          .refreshable {
-            viewStore.send(.onAppear)
-          }
-        case .finished(.failure(let error)):
-          APIErrorView(error: error)
         }
+        .frame(maxWidth: .infinity)
+        .background(
+          .background.secondary
+        )
+        .refreshable {
+          viewStore.send(.onAppear)
+        }
+      case .finished(.failure(let error)):
+        APIErrorView(error: error)
+      }
     }
   }
 }
@@ -85,35 +93,35 @@ public struct ScheduleListView: View {
 
   return NavigationStack {
     ScheduleListView(store: store)
-    .navigationTitle("ScheduleList")
+      .navigationTitle("ScheduleList")
   }
 }
 
 // TODO: Move to a new module, CommonUI or whatever
 struct TapAnimationModifier: ViewModifier {
-    @State private var isTapped = false
-    var completion: () -> Void
-    var delay: TimeInterval = 0.2
+  @State private var isTapped = false
+  var completion: () -> Void
+  var delay: TimeInterval = 0.2
 
-    func body(content: Content) -> some View {
-        content
-        .scaleEffect(isTapped ? 0.95 : 1.0)
-        .onTapGesture {
+  func body(content: Content) -> some View {
+    content
+      .scaleEffect(isTapped ? 0.95 : 1.0)
+      .onTapGesture {
+        withAnimation(.spring(duration: delay)) {
+          isTapped = true
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+          completion()
           withAnimation(.spring(duration: delay)) {
-            isTapped = true
+            isTapped = false
           }
-          DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-            completion()
-            withAnimation(.spring(duration: delay)) {
-              isTapped = false
-            }
-          }
+        }
       }
-    }
+  }
 }
 
 extension View {
-    func onTapAnimate(delay: TimeInterval = 0.2, completion: @escaping () -> Void) -> some View {
-        self.modifier(TapAnimationModifier(completion: completion, delay: delay))
-    }
+  func onTapAnimate(delay: TimeInterval = 0.2, completion: @escaping () -> Void) -> some View {
+    self.modifier(TapAnimationModifier(completion: completion, delay: delay))
+  }
 }

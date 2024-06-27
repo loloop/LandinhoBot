@@ -8,7 +8,6 @@
 import LandinhoFoundation
 import Foundation
 import SwiftUI
-import WidgetKit
 
 public struct NextRaceSmallWidgetView: View {
 
@@ -40,9 +39,10 @@ public struct NextRaceSmallWidgetView: View {
         }
         .frame(maxWidth: .infinity, alignment: .trailing)
         HStack {
-          Button(intent: NextEventIntent(race: race)) {
-            Image(systemName: "chevron.right")
-          }
+          // FIXME: Not available on visionOS!
+//          Button(intent: NextEventIntent(race: race)) {
+//            Image(systemName: "chevron.right")
+//          }
           Spacer()
           Text(currentEventTime)
             .font(.title2)

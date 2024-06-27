@@ -8,6 +8,9 @@
 import ComposableArchitecture
 import SwiftUI
 @_spi(Internal) import NotificationsQueue
+import ScheduleList
+
+// TODO: Actually make this usable
 
 struct ContentView: View {
 
@@ -16,6 +19,7 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
+          ScheduleListView(store: store.scope(state: \.scheduleListState, action: \.scheduleList))
           Button(action: {
             store.send(.onTap)
           }, label: {
@@ -39,6 +43,7 @@ struct Root {
 
   struct State: Equatable {
     var notificationQueueState = NotificationsQueue.State()
+    var scheduleListState = ScheduleList.State(categoryTag: nil)
   }
 
   enum Action: Equatable {
@@ -46,6 +51,7 @@ struct Root {
     case onTap
 
     case notificationQueue(NotificationsQueue.Action)
+    case scheduleList(ScheduleList.Action)
   }
 
   @Dependency(\.notificationQueue) var notificationQueue
@@ -61,13 +67,17 @@ struct Root {
         notificationQueue.enqueue(.success("lmao"))
         return .none
 
-      case .notificationQueue:
+      case .notificationQueue, .scheduleList:
         return .none
       }
     }
 
     Scope(state: \.notificationQueueState, action: \.notificationQueue) {
       NotificationsQueue()
+    }
+
+    Scope(state: \.scheduleListState, action: \.scheduleList) {
+      ScheduleList()
     }
   }
 }
