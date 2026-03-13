@@ -42,7 +42,15 @@ public func configure(_ app: Application) async throws {
 
     // events
     EventListHandler(),
-    UpdateEventsHandler()
+    UpdateEventsHandler(),
+
+    // subscriptions
+    SubscribeHandler(),
+    UnsubscribeHandler(),
+    ChatSubscriptionsHandler(),
+
+    // alerts
+    UpcomingAlertsHandler()
   ].register(in: app)
 
    try await app.autoMigrate()

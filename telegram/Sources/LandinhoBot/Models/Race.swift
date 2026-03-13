@@ -26,3 +26,23 @@ struct RaceEvent: Codable, Equatable, Identifiable {
   let title: String
   let date: Date
 }
+
+struct SubscriptionResponse: Codable {
+  let chatID: String
+  let subscribedCategories: [String]
+}
+
+struct SubscriptionRequest: Codable {
+  let chatID: String
+  let categoryTag: String
+}
+
+struct AlertItem: Codable {
+  let chatIDs: [String]
+  let categoryTag: String
+  let categoryTitle: String
+  let raceTitle: String
+  let raceShortTitle: String
+  let eventTitle: String
+  let eventDate: Date
+}

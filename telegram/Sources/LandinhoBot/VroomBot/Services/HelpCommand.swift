@@ -25,5 +25,14 @@ Lista a próxima corrida que vai acontecer. Passe uma categoria para que ele lis
 
 /categories
 Lista as categorias disponíveis
+
+/subscribe <categoria>
+Inscreve este chat para receber alertas de corrida de uma categoria. Ex: /subscribe f1
+
+/unsubscribe <categoria>
+Cancela a inscrição de alertas de uma categoria. Ex: /unsubscribe f1
+
+/mysubscriptions
+Lista as categorias que este chat acompanha
 """
 }

@@ -32,13 +32,44 @@ struct APIClient<T: Decodable> {
     }
 
     let data = try await URLSession.shared.data(from: url)
+    return try decode(data)
+  }
+
+  func post<U: Encodable>(body: U) async throws -> T {
+    guard let url = buildURL(path: endpoint, args: [:]) else {
+      throw APIClientError(message: "Couldn't build URL")
+    }
+
+    var request = URLRequest(url: url)
+    request.httpMethod = "POST"
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.httpBody = try JSONEncoder().encode(body)
+
+    let (data, _) = try await URLSession.shared.data(for: request)
+    return try decode(data)
+  }
+
+  func delete<U: Encodable>(body: U) async throws -> T {
+    guard let url = buildURL(path: endpoint, args: [:]) else {
+      throw APIClientError(message: "Couldn't build URL")
+    }
+
+    var request = URLRequest(url: url)
+    request.httpMethod = "DELETE"
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.httpBody = try JSONEncoder().encode(body)
+
+    let (data, _) = try await URLSession.shared.data(for: request)
+    return try decode(data)
+  }
+
+  private func decode(_ data: Data) throws -> T {
     let decoder = JSONDecoder()
     decoder.dateDecodingStrategy = .iso8601
 
     do {
-      let response = try decoder.decode(T.self, from: data)
-      return response
-    } catch (let error) {
+      return try decoder.decode(T.self, from: data)
+    } catch let error {
       let result = String(data: data, encoding: .utf8) ?? "Couldn't decode JSON"
       throw APIClientError(message: """
 
