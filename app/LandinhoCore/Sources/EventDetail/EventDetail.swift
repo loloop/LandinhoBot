@@ -6,8 +6,10 @@
 //
 
 @_spi(Mock) import LandinhoFoundation
+import CategoryUI
 import Foundation
 import ComposableArchitecture
+@_spi(Internal) import APIClient
 import SwiftUI
 
 public struct EventDetail: Reducer {
@@ -24,14 +26,27 @@ public struct EventDetail: Reducer {
       self.race = race
     }
 
-    let raceID: UUID?
-    let race: Race?
+    public let raceID: UUID?
+    public var race: Race?
+    public var isLoading = false
+    public var loadFailure: LoadFailure?
   }
 
   public enum Action: Equatable {
     case onAppear
+    case retry
+    case onDisappear
+    case response(TaskResult<Race>)
     case delegate(DelegateAction)
   }
+
+  public enum LoadFailure: Equatable {
+    case notFound
+    case unavailable
+  }
+
+  @Dependency(\.apiRequester) var apiRequester
+  private enum CancelID { case roundRequest }
 
   public enum DelegateAction: Equatable {
     case onShareTap(race: Race)
@@ -40,8 +55,44 @@ public struct EventDetail: Reducer {
   public var body: some ReducerOf<Self> {
     Reduce { state, action in
       switch action {
-      case .onAppear:
-        // TODO: Fetch from raceID if race is nil
+      case .onAppear, .retry:
+        guard let id = state.raceID, state.race == nil, !state.isLoading else { return .none }
+        if action == .onAppear, state.loadFailure != nil { return .none }
+        state.isLoading = true
+        state.loadFailure = nil
+        return .run { send in
+          do {
+            let race = try await apiRequester.request(Race.self,
+              endpoint: "rounds/\(id.uuidString.lowercased())", method: "GET", data: nil,
+              queryItems: [], headers: [:])
+            try Task.checkCancellation()
+            await send(.response(.success(race)))
+          } catch {
+            guard !Task.isCancelled, !(error is CancellationError) else { return }
+            await send(.response(.failure(error)))
+          }
+        }
+        .cancellable(id: CancelID.roundRequest, cancelInFlight: true)
+
+      case .onDisappear:
+        state.isLoading = false
+        return .cancel(id: CancelID.roundRequest)
+
+      case .response(.success(let race)):
+        guard state.isLoading else { return .none }
+        state.isLoading = false
+        guard race.id == state.raceID else {
+          state.loadFailure = .unavailable
+          return .none
+        }
+        state.race = race
+        return .none
+
+      case .response(.failure(let error)):
+        guard state.isLoading else { return .none }
+        state.isLoading = false
+        let error = error as NSError
+        state.loadFailure = error.domain == "LandinhoAPI" && error.code == 404 ? .notFound : .unavailable
         return .none
       case .delegate:
         return .none
@@ -62,11 +113,18 @@ public struct EventDetailView: View {
       WithViewStore(store, observe: { $0 }) { viewStore in
         if let race = viewStore.race {
           InnerEventDetailView(store: store, race: race)
+        } else if let failure = viewStore.loadFailure {
+          ContentUnavailableView {
+            Label(failure == .notFound ? "Rodada não encontrada" : "Não foi possível carregar a rodada",
+              systemImage: "flag.slash")
+          } description: {
+            Text(failure == .notFound ? "O link pode apontar para uma rodada removida." : "Confira sua conexão e tente novamente.")
+          } actions: {
+            Button("Tentar novamente") { viewStore.send(.retry) }
+              .buttonStyle(.bordered)
+          }
         } else {
-          ContentUnavailableView(
-            "Algo de errado aconteceu",
-            systemImage: "xmark.octagon",
-            description: Text("Tipo deu ruim MESMO porque ainda não tá pronto"))
+          ProgressView("Carregando rodada…")
         }
       }
     }
@@ -74,6 +132,8 @@ public struct EventDetailView: View {
     .background(
       .background.secondary
     )
+    .task { store.send(.onAppear) }
+    .onDisappear { store.send(.onDisappear) }
   }
 }
 
@@ -84,6 +144,8 @@ struct InnerEventDetailView: View {
   var body: some View {
     ScrollView {
       VStack(alignment: .leading, spacing: 20) {
+        CategoryNameLabel(category: race.category)
+          .font(.headline)
 
         if race.events.isEmpty || race.events.contains(where: { $0.date == nil && !$0.isCancelled }) {
           Text("Ainda não conseguimos obter todos os horários. Consulte a fonte oficial para confirmar a programação.")
@@ -149,11 +211,19 @@ struct InnerEventDetailView: View {
     .navigationTitle(race.shortTitle)
     .toolbar {
       ToolbarItem {
-        Button("Compartilhar", systemImage: "square.and.arrow.up") {
-          store.send(.delegate(.onShareTap(race: race)))
+        Menu {
+          ShareLink(item: race.roundLinkShareText) {
+            Label("Compartilhar link", systemImage: "link")
+          }
+          Button("Compartilhar imagem", systemImage: "photo") {
+            store.send(.delegate(.onShareTap(race: race)))
+          }
+        } label: {
+          Label("Compartilhar", systemImage: "square.and.arrow.up")
         }
       }
     }
+    .categoryAccent(race.category.resolvedColor)
   }
 
   var mainEvents: [RaceEvent] {

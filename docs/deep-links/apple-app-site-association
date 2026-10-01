@@ -1,0 +1,16 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["UQCQ667RNK.me.mauriciocardozo.racing.vroomvroom"],
+        "components": [
+          {"/": "/home"},
+          {"/": "/categories"},
+          {"/": "/categories/*"},
+          {"/": "/settings"},
+          {"/": "/rounds/*"}
+        ]
+      }
+    ]
+  }
+}

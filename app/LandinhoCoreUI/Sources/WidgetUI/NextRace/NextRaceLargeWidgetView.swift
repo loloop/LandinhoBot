@@ -6,6 +6,7 @@
 //
 
 import LandinhoFoundation
+import CategoryUI
 import Foundation
 import SwiftUI
 
@@ -26,7 +27,7 @@ public struct NextRaceLargeWidgetView: View {
   public var body: some View {
     VStack {
       VStack(alignment: .leading) {
-        Text(race.category.title)
+        CategoryNameLabel(category: race.category)
           .font(.callout)
          Text(race.title)
           .font(.title3)

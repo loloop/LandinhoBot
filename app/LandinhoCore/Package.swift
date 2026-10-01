@@ -61,7 +61,9 @@ let package = Package(
         .target(
           name: "EventDetail",
           dependencies: [
+            foundation,
             "APIClient",
+            .product(name: "CategoryUI", package: "LandinhoCoreUI"),
             widgetUI,
             composable
           ]),
@@ -77,5 +79,6 @@ let package = Package(
             composable
           ]),
       .testTarget(name: "ScheduleListTests", dependencies: ["ScheduleList", "CategoryFavorites", foundation, composable]),
+      .testTarget(name: "EventDetailTests", dependencies: ["EventDetail", "APIClient", foundation, composable]),
     ]
 )

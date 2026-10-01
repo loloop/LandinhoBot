@@ -36,7 +36,7 @@ struct AdminPasswordMiddleware: AsyncMiddleware {
 /// Keep this partition explicit: schedule reads and Telegram subscriptions remain public.
 func registerRoutes(in app: Application, adminPassword: String? = Environment.get("LANDINHO_ADMIN_PASSWORD")) {
   let publicHandlers: [any AsyncRequestHandler] = [
-    CategoryListHandler(), NextRaceHandler(), NextRacesHandler(), RaceListHandler(), EventListHandler(),
+    CategoryListHandler(), NextRaceHandler(), NextRacesHandler(), RoundDetailHandler(), RaceListHandler(), EventListHandler(),
     SubscribeHandler(), UnsubscribeHandler(), ChatSubscriptionsHandler(), UpcomingAlertsHandler()
   ]
   publicHandlers.register(in: app)

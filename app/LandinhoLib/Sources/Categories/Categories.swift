@@ -107,12 +107,14 @@ public struct CategoriesView: View {
               viewStore.send(.favoriteTapped(category.tag))
             } label: {
               Image(systemName: viewStore.favoriteTags.contains(category.tag) ? "heart.fill" : "heart")
+                .foregroundStyle(.tint)
                 .frame(minWidth: 44, minHeight: 44)
             }
             .buttonStyle(.borderless)
             .accessibilityLabel(viewStore.favoriteTags.contains(category.tag) ? "Remover \(category.title) dos favoritos" : "Favoritar \(category.title)")
           }
           .foregroundStyle(.primary)
+          .categoryAccent(category.resolvedColor)
         }
       case .finished(.failure(let error)):
         APIErrorView(error: error)
