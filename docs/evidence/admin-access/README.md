@@ -34,3 +34,25 @@ DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild \
 DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcrun simctl io \
   7FFA0FA6-466B-44D5-A752-7DA7A2147FD6 screenshot /tmp/capture.png
 ```
+
+## Merge with main on 01/10/2026
+
+The resolution preserves the offline `VroomVroomMock` target from main and the Home/favorites work already merged into this PR. Both `MockAPIClient` and `CategoryFavorites` remain exported package products. The mock integration test now follows the current paginated `ScheduleList` actions. Admin verification resolves the injected `apiRequester`; the separate mock service handles `admin-session` in memory and accepts any nonempty password without contacting the hosted API.
+
+A fresh `LandinhoCore-Package` run on the task-owned iPhone 17 simulator (`B741BA8C-47CD-4105-A6E6-98ADF0946FEF`, iOS 27.0) passed 18 tests with zero failures: 9 mock integration tests, 6 Home tests, and 3 credential-store tests. This includes `testAdminVerificationUsesTheInjectedMock` and `testScheduleReducerLoadsThroughTheInjectedMock`. The tracked Core lockfile from main retains the app's TCA 1.11.2 / Collections 1.1.1 pins.
+
+```sh
+cd app/LandinhoCore
+DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild \
+  -skipMacroValidation -disableAutomaticPackageResolution \
+  -scheme LandinhoCore-Package \
+  -destination 'platform=iOS Simulator,id=B741BA8C-47CD-4105-A6E6-98ADF0946FEF' \
+  -derivedDataPath /tmp/landinho-admin-access-derived \
+  -clonedSourcePackagesDirPath /tmp/landinho-admin-source-packages \
+  -parallel-testing-enabled NO -jobs 2 \
+  ARCHS=arm64 ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=NO test
+```
+
+Fresh simulator builds of both `VroomVroomMock` and the normal `VroomVroom` app (including its widget extension) passed after the merge. Builds used the project/scheme, the same derived-data and package-cache paths above, `-destination 'generic/platform=iOS Simulator'`, `-jobs 2`, `ARCHS=arm64`, `ONLY_ACTIVE_ARCH=YES`, and `CODE_SIGNING_ALLOWED=NO`.
+
+The existing screenshots above document the unchanged admin flow; this merge resolution did not recapture them.
