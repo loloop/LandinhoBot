@@ -11,6 +11,7 @@ import BetaSheet
 import Foundation
 import ComposableArchitecture
 import NotificationsQueue
+import LandinhoFoundation
 import SwiftUI
 
 @Reducer
@@ -115,6 +116,14 @@ public struct SettingsView: View {
   public var body: some View {
     WithViewStore(store, observe: { $0 }) { viewStore in
       List {
+        Section {
+          ShareLink(item: AppSharing(bundle: .main).shareText) {
+            Label("Compartilhar o app", systemImage: "square.and.arrow.up")
+          }
+        } footer: {
+          Text(AppSharing(bundle: .main).explanation)
+        }
+
         NavigationLink {
           BetaSheet()
         } label: {

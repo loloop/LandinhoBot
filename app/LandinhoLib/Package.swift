@@ -144,6 +144,7 @@ let package = Package(
       .target(
         name: "Settings",
         dependencies: [
+          foundation,
           "Admin",
           apiClient,
           "BetaSheet",
