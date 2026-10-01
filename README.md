@@ -31,6 +31,10 @@ The scheduler checks local due dates an hour apart, beginning ten seconds after 
 
 Open `app/VroomVroom.xcodeproj` in Xcode and select the `VroomVroom` scheme. In the scheme's Run environment, set `LANDINHO_API_URL=http://127.0.0.1:8080` for the simulator. Without that override, the app uses the hosted API. The workspace uses sibling Swift packages within `app`.
 
+Select the shared `VroomVroomMock` scheme to run with in-memory networking. This builds a separate app, displayed as **VroomVroom Mock**, with bundle ID `me.mauriciocardozo.racing.vroomvroom.mock`. It includes sample F1 and Stock Car schedules with confirmed, pending, and cancelled sessions. Category, race, event, and import-settings edits stay in memory and reset on launch. Manual import refresh creates a simulated successful audit entry without downloading schedules. The hidden admin prompt accepts any nonempty password in this mock app, with verification handled in memory. No backend or `LANDINHO_API_URL` is needed; unsupported routes fail locally. The mock app does not embed the live widget extension.
+
+The mock implementation lives in the `MockAPIClient` Swift package target. Only the mock app target defines `MOCK_NETWORKING` and injects that service into its root store.
+
 In the app, hold the version row in Settings for 1.5 seconds (or use its VoiceOver “Abrir administração” action), then enter the server's admin password. Open Formula 1 → Importações. This screen controls automatic imports and the interval, starts a manual refresh, and shows import history, before/after changes, warnings, and ambiguous matches. Selecting an existing record for an ambiguous match triggers a new import using that identity.
 
 The password is verified by `GET /admin-session` before administration opens. The app keeps the credential only in memory, sends it only to administrative endpoints, and clears it when you choose **Bloquear**, leave administration, background the app, or receive an unauthorized administrative response. A canceled verification cannot restore a locked credential. No password is shipped in the app or saved in UserDefaults.
@@ -44,6 +48,7 @@ The API uses HTTP Basic authorization with username `admin` and the configured s
 Protected endpoints include `POST/PATCH /category`, `POST/PATCH /race`, `POST /events`, the existing destructive `GET /prune-race`, `GET /admin-session`, and every import endpoint below. `GET /category`, `GET /race`, `GET /events`, `GET /next-race`, `GET /next-races`, reminder reads, and Telegram subscription operations remain public.
 
 Public category JSON (including categories embedded in calendar responses) contains category identity, title, tag, and comment; import configuration is returned only by the protected import settings endpoint.
+
 
 ## Import behavior
 
@@ -72,6 +77,14 @@ curl --fail -H 'Content-Type: application/json' \
 ```
 
 ## Verify changes
+
+The mock networking tests cover schedule loading through the reducer, category filtering, pagination, pending and cancelled sessions, in-memory admin edits, simulated imports, and local request failures. Run them from the package directory using the full Xcode toolchain, replacing `SIMULATOR_ID` with an available iOS simulator ID from `xcrun simctl list devices`:
+
+```sh
+cd app/LandinhoCore
+xcodebuild -skipMacroValidation -scheme LandinhoCore-Package \
+  -destination 'platform=iOS Simulator,id=SIMULATOR_ID' CODE_SIGNING_ALLOWED=NO test
+```
 
 Parser tests run without a database:
 
