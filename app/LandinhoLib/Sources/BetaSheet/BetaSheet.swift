@@ -74,6 +74,7 @@ public struct BetaSheet: View {
   }
 
   let issues: LocalizedStringKey = """
+  • A API hospedada está inacessível: api.vroomvroom.racing retorna NXDOMAIN na consulta de DNS
   • Design obviamente não está nem um pouco próximo de estar pronto
   • App não tem cache em nada. Tudo vai ser recarregado quando o app inicia
   • Erros atualmente mostram o payload completo do erro (Intencional, por enquanto)
@@ -81,6 +82,7 @@ public struct BetaSheet: View {
 
   let latestRelease: LocalizedStringKey = """
   01/10/2026
+  • Manutenção: registra a pendência de verificar o domínio e o DNS da API hospedada
   • Protege a administração com senha do servidor; o acesso fica oculto no número da versão em Ajustes e é bloqueado ao sair ou colocar o app em segundo plano
   • Adiciona favoritos de categorias e uma Home com paginação, atualização e prioridade para categorias favoritas
   • Manutenção: mantém o acesso administrativo da versão Mock inteiramente em memória e adapta seus testes à nova Home
@@ -137,6 +139,7 @@ public struct BetaSheet: View {
   let nextSteps: LocalizedStringKey = """
   Esta lista será completamente limpa antes do lançamento público do aplicativo (em ordem de prioridade)
 
+  • Verificar o registro, a renovação e o DNS de vroomvroom.racing e confirmar o acesso à API
   • App Clip
     • Botão de compartilhar o app em Ajustes -> App Clip ou Link
   • Ações rápidas no ícone do aplicativo
