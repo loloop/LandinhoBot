@@ -36,7 +36,9 @@ public struct WidgetSelectorView: View {
         }
       }
       .widgetBackground()
-      .widgetFrame(family: viewStore.currentWidgetType.supportedFamily)
+      .frame(
+        width: viewStore.currentWidgetType.size.width,
+        height: viewStore.currentWidgetType.size.height)
       .onTapGesture {
         withAnimation {
           _ = viewStore.send(.onWidgetTap)

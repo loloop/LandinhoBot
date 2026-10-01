@@ -16,14 +16,28 @@ struct SharingRenderableView: View {
 
   var body: some View {
     WithViewStore(store, observe: { $0 }) { viewStore in
-      ZStack {
-        WidgetSelectorView(store: store)
-        AppWatermark()
-          .frame(maxHeight: .infinity, alignment: .bottom)
-          .padding(.bottom, 25)
+      GeometryReader { geometry in
+        let widgetSize = viewStore.currentWidgetType.size
+        // Reserve the watermark's 30-point height, spacing, and outer padding.
+        let widgetScale = max(0, min(
+          1,
+          (geometry.size.width - 32) / widgetSize.width,
+          (geometry.size.height - 83) / widgetSize.height))
 
+        VStack(spacing: 12) {
+          WidgetSelectorView(store: store)
+            .scaleEffect(widgetScale)
+            .frame(
+              width: widgetSize.width * widgetScale,
+              height: widgetSize.height * widgetScale)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+          AppWatermark()
+            .foregroundStyle(.white)
+        }
+        .padding(16)
+        .padding(.bottom, 9)
       }
-      .padding()
       .background {
         SharingBackground()
           .clipShape(RoundedRectangle(cornerRadius: viewStore.hasTappedShare ? 0.0 : 30.0, style: .continuous))
@@ -62,5 +76,4 @@ struct SharingRenderableView: View {
   }
 
 }
-
 

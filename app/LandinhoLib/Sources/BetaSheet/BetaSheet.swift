@@ -114,7 +114,6 @@ public struct BetaSheet: View {
   let nextSteps: LocalizedStringKey = """
   Esta lista será completamente limpa antes do lançamento público do aplicativo (em ordem de prioridade)
 
-  • Imagem de fundo ao compartilhar uma corrida por imagem
   • App Clip
     • Botão de compartilhar o app em Ajustes -> App Clip ou Link
   • Parte de administração das categorias será escondida e protegida por senha
