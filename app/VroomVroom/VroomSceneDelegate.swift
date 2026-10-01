@@ -59,7 +59,7 @@ final class VroomSceneDelegate: UIResponder, UIWindowSceneDelegate, ObservableOb
   }
 
   @discardableResult
-  private func handleQuickAction(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
+  func handleQuickAction(_ shortcutItem: UIApplicationShortcutItem) -> Bool {
     guard let action = HomeScreenQuickAction(rawValue: shortcutItem.type),
       let url = action.route.url else { return false }
 
