@@ -159,7 +159,10 @@ final class AppTests: XCTestCase {
     let request = UpdateEventsHandler.SaveEventListRequest(raceID: event.$race.id.uuidString, events: [
       .init(id: try event.requireID(), title: "Manual edit", date: nil, isMainEvent: false, isCancelled: false)
     ])
-    try app.test(.POST, "events", beforeRequest: { try $0.content.encode(request) }, afterResponse: { response in
+    try app.test(.POST, "events", beforeRequest: {
+      $0.headers.basicAuthorization = .init(username: "admin", password: "integration-test-only")
+      try $0.content.encode(request)
+    }, afterResponse: { response in
       XCTAssertEqual(response.status, .ok)
     })
     let saved = try await RaceEvent.find(event.id, on: app.db)
@@ -173,9 +176,11 @@ final class AppTests: XCTestCase {
     let meeting = sample()
     app.scheduleImporter = ScheduleImporter(providers: [StubProvider(snapshot: .init(meetings: [meeting], discoveredURLs: [meeting.sourceURL], issues: []))])
     try app.test(.PATCH, "import-settings", beforeRequest: {
+      $0.headers.basicAuthorization = .init(username: "admin", password: "integration-test-only")
       try $0.content.encode(UpdateImportSettingsHandler.Input(categoryTag: "f1", enabled: true, intervalDays: 7))
     }, afterResponse: { XCTAssertEqual($0.status, .ok) })
     try app.test(.POST, "import-refresh", beforeRequest: {
+      $0.headers.basicAuthorization = .init(username: "admin", password: "integration-test-only")
       try $0.content.encode(RefreshImportHandler.Input(categoryTag: "f1"))
     }, afterResponse: { response in
       XCTAssertEqual(response.status, .ok)
@@ -189,7 +194,9 @@ final class AppTests: XCTestCase {
       _ = try await app.scheduleImporter.refresh(tag: "f1", trigger: "scheduled", db: app.db, client: app.client)
       XCTFail("Scheduled import ran before its due date")
     } catch let error as AbortError { XCTAssertEqual(error.status, .conflict) }
-    try app.test(.GET, "imports?category=f1&per=1", afterResponse: { response in
+    try app.test(.GET, "imports?category=f1&per=1", beforeRequest: {
+      $0.headers.basicAuthorization = .init(username: "admin", password: "integration-test-only")
+    }, afterResponse: { response in
       XCTAssertEqual(response.status, .ok)
       XCTAssertEqual(try response.content.decode(Page<ImportRun>.self).items.count, 1)
     })
@@ -267,7 +274,10 @@ final class AppTests: XCTestCase {
     let index = try XCTUnwrap(run.issues.firstIndex { $0.sourceID == meeting.id })
     for (candidateIndex, expected) in [(0, HTTPStatus.ok), (1, .conflict)] {
       let input = ResolveImportMatchHandler.Input(runID: try run.requireID(), issueIndex: index, recordID: try candidates[candidateIndex].requireID())
-      try app.test(.POST, "import-match", beforeRequest: { try $0.content.encode(input) }, afterResponse: {
+      try app.test(.POST, "import-match", beforeRequest: {
+        $0.headers.basicAuthorization = .init(username: "admin", password: "integration-test-only")
+        try $0.content.encode(input)
+      }, afterResponse: {
         XCTAssertEqual($0.status, expected)
       })
     }
@@ -279,6 +289,72 @@ final class AppTests: XCTestCase {
     XCTAssertEqual(count, 2)
   }
 
+  func testProtectedCategoryRoundEditsPreservePublicSchedulesAndSubscriptions() async throws {
+    let app = try await makeApp(); defer { app.shutdown() }
+    let identity = UUID().uuidString
+    let input = UploadCategoryHandler.UploadCategoryRequest(title: "Access test \(identity)", categoryTag: "admin-access-\(identity)", comment: nil, color: nil)
+    let count = try await Category.query(on: app.db).count()
+    try app.test(.POST, "category", beforeRequest: { try $0.content.encode(input) }, afterResponse: {
+      XCTAssertEqual($0.status, .unauthorized)
+    })
+    let unauthorizedCount = try await Category.query(on: app.db).count()
+    XCTAssertEqual(unauthorizedCount, count)
+    try app.test(.POST, "category", beforeRequest: {
+      $0.headers.basicAuthorization = .init(username: "admin", password: "integration-test-only")
+      try $0.content.encode(input)
+    }, afterResponse: { XCTAssertEqual($0.status, .ok) })
+
+    let round = UploadRaceHandler.UploadRaceRequest(title: "Access test round", shortTitle: "Access test", categoryTag: input.categoryTag,
+      events: [.init(title: "Race", date: Date().addingTimeInterval(86400), isMainEvent: true)], earliestEventDate: nil)
+    try app.test(.POST, "race", beforeRequest: {
+      $0.headers.basicAuthorization = .init(username: "admin", password: "integration-test-only")
+      try $0.content.encode(round)
+    }, afterResponse: { XCTAssertEqual($0.status, .ok) })
+    let category = try await Category.query(on: app.db).filter(\.$tag == input.categoryTag).first()
+    let categoryID = try XCTUnwrap(category?.id)
+    let race = try await Race.query(on: app.db).filter(\.$category.$id == categoryID).first()
+    let raceID = try XCTUnwrap(race?.id)
+    let update = UpdateRaceHandler.UpdateRaceRequest(id: raceID.uuidString, title: "Corrected round", shortTitle: "Access test")
+    try app.test(.PATCH, "race", beforeRequest: { try $0.content.encode(update) }, afterResponse: {
+      XCTAssertEqual($0.status, .unauthorized)
+    })
+    let unchanged = try await Race.find(raceID, on: app.db)
+    XCTAssertEqual(unchanged?.title, round.title)
+    try app.test(.PATCH, "race", beforeRequest: {
+      $0.headers.basicAuthorization = .init(username: "admin", password: "integration-test-only")
+      try $0.content.encode(update)
+    }, afterResponse: { XCTAssertEqual($0.status, .ok) })
+
+    for path in ["category", "race?tag=\(input.categoryTag)", "events?id=\(raceID)",
+      "next-race?argument=\(input.categoryTag)", "next-races?category=\(input.categoryTag)", "upcoming-alerts"] {
+      try app.test(.GET, path, afterResponse: {
+        XCTAssertEqual($0.status, .ok, path)
+        for privateField in ["importProvider", "importIntervalDays", "importsEnabled", "nextImportAt", "lastImportAt"] {
+          XCTAssertFalse($0.body.string.contains("\"\(privateField)\""), "Private setting exposed by \(path)")
+        }
+      })
+    }
+    try app.test(.GET, "import-settings?category=f1", beforeRequest: {
+      $0.headers.basicAuthorization = .init(username: "admin", password: "integration-test-only")
+    }, afterResponse: {
+      XCTAssertEqual($0.status, .ok)
+      XCTAssertEqual(try $0.content.decode(ImportSettings.self).provider, "official-f1")
+      XCTAssertEqual(try $0.content.decode(ImportSettings.self).intervalDays, 7)
+    })
+    let subscription = SubscriptionRequest(chatID: "auth-public-test", categoryTag: input.categoryTag)
+    try app.test(.POST, "subscribe", beforeRequest: { try $0.content.encode(subscription) }, afterResponse: {
+      XCTAssertEqual($0.status, .ok)
+    })
+    try app.test(.GET, "subscriptions/auth-public-test", afterResponse: {
+      XCTAssertEqual($0.status, .ok)
+      XCTAssertEqual(try $0.content.decode(SubscriptionResponse.self).subscribedCategories, [input.categoryTag])
+    })
+    try app.test(.DELETE, "subscribe", beforeRequest: { try $0.content.encode(subscription) }, afterResponse: {
+      XCTAssertEqual($0.status, .ok)
+      XCTAssertEqual(try $0.content.decode(SubscriptionResponse.self).subscribedCategories, [])
+    })
+  }
+
   private func fixture(_ name: String) throws -> String {
     let url = try XCTUnwrap(Bundle.module.url(forResource: "f1-" + name, withExtension: "html", subdirectory: "Fixtures"))
     return try String(contentsOf: url)
@@ -288,7 +364,7 @@ final class AppTests: XCTestCase {
     guard Environment.get("LANDINHO_TEST_DATABASE") == "1" else { throw XCTSkip("Set LANDINHO_TEST_DATABASE=1 with a disposable PostgreSQL database") }
     let app = Application(.testing)
     do {
-      try await configure(app)
+      try await configure(app, adminPassword: "integration-test-only")
       let sql = try XCTUnwrap(app.db as? any SQLDatabase)
       try await sql.raw("TRUNCATE race_event, race, chat, schedule_import CASCADE").run()
       let category = try await f1(app)

@@ -73,6 +73,9 @@ import Foundation
       queryItems.first(where: { $0.name == name })?.value
     }
     switch (method, endpoint) {
+    case ("GET", "admin-session"):
+      // The separate mock app accepts any password without opening a connection.
+      return ["authorized": true]
     case ("GET", "category"):
       return categories
     case ("POST", "category"):

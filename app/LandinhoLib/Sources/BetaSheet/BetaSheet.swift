@@ -76,17 +76,18 @@ public struct BetaSheet: View {
   let issues: LocalizedStringKey = """
   • Design obviamente não está nem um pouco próximo de estar pronto
   • App não tem cache em nada. Tudo vai ser recarregado quando o app inicia
-  • O botão de um Widget pequeno não está funcionando quando colocado na Home
-  • Na home provisória, passar para o próximo evento de um widget pequeno afeta TODOS os widgets pequenos
   • Erros atualmente mostram o payload completo do erro (Intencional, por enquanto)
   """
 
   let latestRelease: LocalizedStringKey = """
   01/10/2026
+  • Protege a administração com senha do servidor; o acesso fica oculto no número da versão em Ajustes e é bloqueado ao sair ou colocar o app em segundo plano
+  • Adiciona favoritos de categorias e uma Home com paginação, atualização e prioridade para categorias favoritas
+  • Manutenção: mantém o acesso administrativo da versão Mock inteiramente em memória e adapta seus testes à nova Home
   • Manutenção: adiciona a versão VroomVroom Mock para testar o app sem servidor, com calendários de exemplo e alterações administrativas em memória
   • Manutenção: corrige a dependência de rede dos testes para impedir consultas à API real
   • Atualiza a programação da Fórmula 1 automaticamente a partir da fonte oficial, incluindo temporadas futuras já publicadas e testes de pré-temporada
-  • Adiciona a tela Importações em Ajustes → Admin → Fórmula 1 para configurar o intervalo de atualização e buscar a programação manualmente
+  • Adiciona a tela Importações na administração → Fórmula 1 para configurar o intervalo de atualização e buscar a programação manualmente
   • Permite consultar o histórico de importações, comparar alterações, ver avisos e relacionar registros existentes
   • Mostra horários pendentes nos detalhes da corrida, nos widgets e no bot do Telegram, com acesso à programação oficial nos detalhes e no bot
   • Mostra as datas dos eventos principais e os horários no fuso do dispositivo, com as sessões em ordem cronológica
@@ -138,9 +139,7 @@ public struct BetaSheet: View {
 
   • App Clip
     • Botão de compartilhar o app em Ajustes -> App Clip ou Link
-  • Parte de administração das categorias será escondida e protegida por senha
   • Categorias terão uma "accent color"
-  • Home de verdade, com os horários de todas as categorias, categorias favoritas aparecendo primeiro e paginação
   • Ações rápidas no ícone do aplicativo
   • Design final da Home, Tela de Corrida, Categorias, Ajustes, Compartilhar, etc para iOS e iPadOS
   • Widget extra-largo para iPads

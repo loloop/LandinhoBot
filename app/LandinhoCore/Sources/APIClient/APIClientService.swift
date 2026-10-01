@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import AdminSession
 import Foundation
 import NotificationsQueue
 
@@ -82,6 +83,11 @@ final class APIClientService: APIClientServiceProtocol {
       throw URLError(.badURL)
     }
 
+    if AdminSession.requiresAdmin(endpoint: endpoint, method: method), url.scheme != "https",
+      !["localhost", "127.0.0.1", "[::1]", "::1"].contains(url.host ?? "") {
+      throw URLError(.secureConnectionFailed)
+    }
+
     var request = URLRequest(url: url)
     // Manual imports can fetch several seasons of source pages before returning the audit run.
     if endpoint == "import-refresh" { request.timeoutInterval = 300 }
@@ -96,8 +102,16 @@ final class APIClientService: APIClientServiceProtocol {
       request.setValue(header.value, forHTTPHeaderField: header.key)
     }
 
+    if let authorization = liveAdminSession.header(endpoint: endpoint, method: method),
+      request.value(forHTTPHeaderField: "Authorization") == nil {
+      request.setValue(authorization, forHTTPHeaderField: "Authorization")
+    }
+
     let response = try await URLSession.shared.data(for: request)
     if let http = response.1 as? HTTPURLResponse, !(200..<300).contains(http.statusCode) {
+      if http.statusCode == 401, endpoint != "admin-session" {
+        lockLiveAdminSession()
+      }
       throw NSError(domain: "LandinhoAPI", code: http.statusCode,
         userInfo: [NSLocalizedDescriptionKey: "Falha na solicitação (\(http.statusCode)): \(String(data: response.0, encoding: .utf8) ?? "")"])
     }

@@ -19,9 +19,8 @@ public protocol AsyncRequestHandler {
 }
 
 extension AsyncRequestHandler {
-  public func register(in app: Application) {
-    app.logger.info("registering \(path.pathComponents) as \(method.string)")
-    app
+  public func register(in routes: any RoutesBuilder) {
+    routes
       .on(method, path.pathComponents) { [handle] req async throws in
         return try await handle(req)
       }
@@ -29,9 +28,9 @@ extension AsyncRequestHandler {
 }
 
 extension Array where Element == any AsyncRequestHandler {
-  func register(in app: Application) {
+  func register(in routes: any RoutesBuilder) {
     self.forEach {
-      $0.register(in: app)
+      $0.register(in: routes)
     }
   }
 }

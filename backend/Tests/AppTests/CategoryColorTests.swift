@@ -4,6 +4,12 @@ import SQLKit
 import XCTVapor
 
 final class CategoryColorTests: XCTestCase {
+  private let adminPassword = "category-color-test-only"
+  private struct PublicCategory: Content {
+    let id: UUID
+    let color: String?
+  }
+
   func testValidatesAndNormalizesOnlyOpaqueSixDigitHex() throws {
     XCTAssertNil(try validatedCategoryColor(nil))
     XCTAssertEqual(try validatedCategoryColor("#a1b2c3"), "#A1B2C3")
@@ -49,11 +55,12 @@ final class CategoryColorTests: XCTestCase {
     let title = "Color " + UUID().uuidString
     var id: UUID?
     try app.test(.POST, "category", beforeRequest: {
+      $0.headers.basicAuthorization = .init(username: "admin", password: self.adminPassword)
       $0.headers.contentType = .json
       $0.body = ByteBuffer(string: ##"{"title":"\##(title)","categoryTag":"\##(tag)","color":"#a1b2c3"}"##)
     }, afterResponse: {
       XCTAssertEqual($0.status, .ok)
-      let saved = try $0.content.decode(App.Category.self)
+      let saved = try $0.content.decode(PublicCategory.self)
       id = saved.id
       XCTAssertEqual(saved.color, "#A1B2C3")
     })
@@ -66,17 +73,19 @@ final class CategoryColorTests: XCTestCase {
       (#", "color":null"#, nil)
     ] {
       try app.test(.PATCH, "category", beforeRequest: {
+        $0.headers.basicAuthorization = .init(username: "admin", password: self.adminPassword)
         $0.headers.contentType = .json
         $0.body = ByteBuffer(string: ##"{"id":"\##(savedID)","title":"\##(title)","tag":"\##(tag)"\##(field)}"##)
       }, afterResponse: {
         XCTAssertEqual($0.status, .ok)
-        XCTAssertEqual(try $0.content.decode(App.Category.self).color, expected)
+        XCTAssertEqual(try $0.content.decode(PublicCategory.self).color, expected)
       })
       persisted = try await App.Category.find(savedID, on: app.db)
       XCTAssertEqual(persisted?.color, expected)
     }
     try app.test(.GET, "category", afterResponse: {
-      XCTAssertEqual(try $0.content.decode([App.Category].self).first { $0.id == savedID }?.color, nil)
+      let category = try XCTUnwrap($0.content.decode([PublicCategory].self).first { $0.id == savedID })
+      XCTAssertNil(category.color)
     })
     try await persisted?.delete(on: app.db)
   }
@@ -110,7 +119,7 @@ final class CategoryColorTests: XCTestCase {
       throw XCTSkip("Set LANDINHO_TEST_DATABASE=1 with a disposable PostgreSQL database")
     }
     let app = Application(.testing)
-    do { try await configure(app); return app }
+    do { try await configure(app, adminPassword: adminPassword); return app }
     catch { app.shutdown(); throw error }
   }
 }

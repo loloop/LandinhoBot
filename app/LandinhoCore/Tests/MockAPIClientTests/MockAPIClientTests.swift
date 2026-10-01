@@ -12,20 +12,35 @@ final class MockAPIClientTests: XCTestCase {
     let service = MockAPIClientService()
     let page = try await request(Page<Race>.self, from: service, endpoint: "next-races",
       query: ["category": "f1", "page": "0", "per": "5"])
+    let now = Date(timeIntervalSince1970: 2_000_000_000)
     let store = TestStore(initialState: ScheduleList.State(categoryTag: "f1")) {
       ScheduleList()
     } withDependencies: {
       $0.apiRequester = service
+      $0.scheduleClient = .liveValue
+      $0.date.now = now
     }
-    await store.send(.onAppear)
-    await store.receive { action in
-      if case .racesRequest(.request) = action { return true }
-      return false
-    } assert: {
-      $0.racesState.response = .loading
+    await store.send(.onAppear) {
+      $0.requestGeneration = 1
+      $0.inFlightPage = 1
     }
-    await store.receive(.racesRequest(.response(.finished(.success(page))))) {
-      $0.racesState.response = .finished(.success(page))
+    await store.receive(.pageResponse(generation: 1, page: 1, .success(page))) {
+      $0.inFlightPage = nil
+      $0.items = page.items
+      $0.currentPage = 1
+      $0.total = page.metadata.total
+      $0.hasLoaded = true
+      $0.lastUpdatedDate = now
+    }
+  }
+
+  func testAdminVerificationUsesTheInjectedMock() async throws {
+    try await withDependencies {
+      $0.apiRequester = MockAPIClientService()
+    } operation: {
+      let access = AdminAccessClient.liveValue
+      defer { access.lock() }
+      try await access.unlock("offline-demo")
     }
   }
 

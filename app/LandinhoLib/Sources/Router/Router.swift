@@ -54,10 +54,11 @@ public struct Router {
         return .none
 
       case .onAppear:
-        return .merge(
-          .send(.home(.scheduleList(.racesRequest(.request(.get))))),
-          .send(.categories(.categoriesRequest(.request(.get))))
-        )
+        guard state.categoriesState.categoriesState.response == .idle else { return .none }
+        return .send(.categories(.categoriesRequest(.request(.get))))
+
+      case .categories(.delegate(.favoritesChanged(let tags))):
+        return .send(.home(.scheduleList(.favoritesChanged(tags))))
 
       case .categories(.onCategoryTap(let tag)):
         state.path.append(.scheduleList(.init(categoryTag: tag)))
@@ -168,7 +169,7 @@ public struct InnerRouterView: View {
       HomeView(
         store: store.scope(state: \.homeState, action: Router.Action.home)
       )
-      .navigationTitle("Categorias")
+      .navigationTitle("Home")
       .tabItem {
         Label("Home", systemImage: "flag.checkered")
       }

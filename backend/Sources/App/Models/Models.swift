@@ -52,6 +52,19 @@ final class Category: Model, Content {
   @Field(key: "imports_enabled") var importsEnabled: Bool
   @OptionalField(key: "next_import_at") var nextImportAt: Date?
   @OptionalField(key: "last_import_at") var lastImportAt: Date?
+
+  // Categories also appear inside public calendar responses. Import configuration
+  // is returned only by the protected import-settings handler.
+  func encode(to encoder: any Encoder) throws {
+    var content = encoder.container(keyedBy: PublicCodingKeys.self)
+    try content.encodeIfPresent(id, forKey: .id)
+    try content.encodeIfPresent(title, forKey: .title)
+    try content.encodeIfPresent(tag, forKey: .tag)
+    try content.encodeIfPresent(comment, forKey: .comment)
+    try content.encodeIfPresent(color, forKey: .color)
+  }
+
+  private enum PublicCodingKeys: String, CodingKey { case id, title, tag, comment, color }
 }
 
 final class Race: Model, Content {
