@@ -24,8 +24,10 @@ The `sheet` scenario presents `UIActivityViewController(activityItems: [text])`
 with the same actual String. It proves the native system share sheet accepts the
 payload; it does not prove a tap on the production ShareLink or delivery into a
 destination app. No share destination is selected and no message is sent.
-The shipping detail toolbar uses `ShareLink(item: String)` through
-`RoundShareMenu`; the image navigation closure and link item are preserved.
+The shipping detail toolbar uses Apple's native
+[ShareLink](https://developer.apple.com/documentation/swiftui/sharelink)
+with a String through `RoundShareMenu`; the image navigation closure and link item
+are preserved.
 
 Native interaction is unavailable in this environment: T3 device access is
 disabled and Device Hub accessibility times out. No interaction bypass is used.
@@ -76,4 +78,27 @@ DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test \
   --scratch-path /tmp/landinho-text-sharing-foundation-tests --jobs 2
 ```
 
-The final shipping app/widget/embedded App Clip build is pending.
+The final shipping build passed after restacking on the completed quick-actions
+base `0c500ba`. It compiled the production `RoundShareMenu` with the normal app
+entry, and built the app, widget extension and embedded App Clip:
+
+```sh
+DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild \
+  -jobs 2 -skipMacroValidation -project app/VroomVroom.xcodeproj \
+  -scheme VroomVroom \
+  -destination 'platform=iOS Simulator,id=B741BA8C-47CD-4105-A6E6-98ADF0946FEF' \
+  -derivedDataPath /tmp/landinho-about-developer-derived \
+  CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+  'OTHER_SWIFT_FLAGS=$(inherited) -j2' build
+```
+
+This reused the app's pinned package cache with exclusive ownership. The build
+log includes a later generated `-j12` overriding the early Swift `-j2`; the
+command limits Xcode jobs, and does not demonstrate a Swift-driver concurrency
+cap. No successful build was rerun to change that setting.
+
+All three bundle executables were verified. The shipping app was installed in
+the assigned simulator, then the simulator was shut down. The harness never
+replaced a shipping source file, launched the Telegram bot, selected a share
+destination or wrote to the production API. Bash syntax and `git diff --check`
+also passed.
