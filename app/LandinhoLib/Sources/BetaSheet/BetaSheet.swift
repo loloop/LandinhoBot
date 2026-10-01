@@ -114,7 +114,6 @@ public struct BetaSheet: View {
   let nextSteps: LocalizedStringKey = """
   Esta lista será completamente limpa antes do lançamento público do aplicativo (em ordem de prioridade)
 
-  • Os widgets deixarão de mostrar os horários de eventos que já se passaram (ex.: deixa de mostrar o treino livre se é a hora da classificação)
   • Imagem de fundo ao compartilhar uma corrida por imagem
   • App Clip
     • Botão de compartilhar o app em Ajustes -> App Clip ou Link

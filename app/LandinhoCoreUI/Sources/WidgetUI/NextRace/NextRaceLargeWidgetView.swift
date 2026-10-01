@@ -11,13 +11,17 @@ import SwiftUI
 
 public struct NextRaceLargeWidgetView: View {
 
-  public init(race: Race, lastUpdatedDate: Date?) {
+  public init(race: Race, lastUpdatedDate: Date?, referenceDate: Date? = nil, showNonMainEventSessions: Bool = true) {
     self.race = race
     self.lastUpdatedDate = lastUpdatedDate
+    self.referenceDate = referenceDate
+    self.showNonMainEventSessions = showNonMainEventSessions
   }
 
   let race: Race
   let lastUpdatedDate: Date?
+  let referenceDate: Date?
+  let showNonMainEventSessions: Bool
 
   public var body: some View {
     VStack {
@@ -32,6 +36,11 @@ public struct NextRaceLargeWidgetView: View {
       Spacer()
 
       VStack(alignment: .leading, spacing: 5) {
+        if let message = content.emptyMessage {
+          Text(message)
+            .font(.caption)
+            .foregroundStyle(.secondary)
+        }
         ForEach(eventsByDate) { event in
           VStack(alignment: .leading) {
             Text(event.date)
@@ -65,10 +74,19 @@ public struct NextRaceLargeWidgetView: View {
           .foregroundStyle(.secondary)
           .frame(maxWidth: .infinity)
       }
+      if content.hasPendingTimes {
+        Text("Horários pendentes. Consulte a programação oficial.")
+          .font(.caption2)
+          .foregroundStyle(.secondary)
+      }
     }
   }
 
   var eventsByDate: [EventByDate] {
-    EventByDateFactory.convert(events: race.events)
+    EventByDateFactory.convert(events: content.events)
+  }
+
+  var content: WidgetScheduleContent {
+    WidgetScheduleContent(race: race, referenceDate: referenceDate, showNonMainEventSessions: showNonMainEventSessions)
   }
 }

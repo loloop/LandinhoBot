@@ -11,19 +11,20 @@ import SwiftUI
 
 public struct NextRaceSmallWidgetView: View {
 
-  public init(race: Race, lastUpdatedDate: Date) {
+  public init(race: Race, lastUpdatedDate: Date, referenceDate: Date? = nil, showNonMainEventSessions: Bool = true) {
     self.race = race
     self.lastUpdatedDate = lastUpdatedDate
+    self.referenceDate = referenceDate
+    self.showNonMainEventSessions = showNonMainEventSessions
   }
 
-  @State var positionManager = WidgetPositionManager.live
   let race: Race
   let lastUpdatedDate: Date
+  let referenceDate: Date?
+  let showNonMainEventSessions: Bool
 
   public var body: some View {
-    Self._printChanges()
-
-    return VStack(alignment: .leading) {
+    VStack(alignment: .leading) {
       Text(race.category.title)
         .font(.callout)
       Text(race.shortTitle)
@@ -31,21 +32,19 @@ public struct NextRaceSmallWidgetView: View {
       Spacer()
 
       VStack(alignment: .leading) {
-        Text(currentEventDate)
-          .frame(maxWidth: .infinity, alignment: .trailing)
-        HStack {
-          Text(currentEventTitle)
+        if let event = currentEvent {
+          Text(event.dayLabel)
+            .frame(maxWidth: .infinity, alignment: .trailing)
+          Text(event.title)
             .font(.headline)
-        }
-        .frame(maxWidth: .infinity, alignment: .trailing)
-        HStack {
-          // FIXME: Not available on visionOS!
-//          Button(intent: NextEventIntent(race: race)) {
-//            Image(systemName: "chevron.right")
-//          }
-          Spacer()
-          Text(currentEventTime)
+            .frame(maxWidth: .infinity, alignment: .trailing)
+          Text(event.timeLabel)
             .font(.title2)
+            .frame(maxWidth: .infinity, alignment: .trailing)
+        } else if let message = content.emptyMessage {
+          Text(message)
+            .foregroundStyle(.secondary)
+            .fixedSize(horizontal: false, vertical: true)
         }
 
         Text("Atualizado em: \(lastUpdatedDate.formatted(date: .omitted, time: .shortened))")
@@ -58,32 +57,11 @@ public struct NextRaceSmallWidgetView: View {
     }
   }
 
-  // TODO: Bring this to `EventByDate` to standardize date formatting
+  var content: WidgetScheduleContent {
+    WidgetScheduleContent(race: race, referenceDate: referenceDate, showNonMainEventSessions: showNonMainEventSessions)
+  }
+
   var currentEvent: RaceEvent? {
-    guard race.events.indices.contains(positionManager.currentPosition) else {
-      return nil
-    }
-
-    return race.events[positionManager.currentPosition]
-  }
-
-  var currentEventDate: String {
-    guard let event = currentEvent else {
-      return ""
-    }
-
-    return event.dayLabel
-  }
-
-  var currentEventTitle: String {
-    currentEvent?.title ?? ""
-  }
-
-  var currentEventTime: String {
-    guard let event = currentEvent else {
-      return ""
-    }
-
-    return event.timeLabel
+    content.events.first
   }
 }
