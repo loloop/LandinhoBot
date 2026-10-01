@@ -129,7 +129,6 @@ public struct BetaSheet: View {
   • Pedir horário da próxima corrida para a Siri
   • Busca de Categorias
   • Easter egg com Live Activity na busca de Categorias -> Você poderá criar um lembrete para a tela de notificações a partir de uma busca
-  • Suporte a Deep Links, para compartilhar o link de uma corrida - Leva para o CalendarioF1 se for F1
   • Suporte a mais de um fuso horário
   • App de visionOS
   • App de macOS
