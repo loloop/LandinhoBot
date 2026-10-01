@@ -54,6 +54,7 @@ let package = Package(
           dependencies: [
             foundation,
             "APIClient",
+            .product(name: "CategoryUI", package: "LandinhoCoreUI"),
             widgetUI,
             composable
           ]),

@@ -6,6 +6,7 @@
 //
 
 @_spi(Mock) import LandinhoFoundation
+import CategoryUI
 import Foundation
 import ComposableArchitecture
 @_spi(Internal) import APIClient
@@ -143,6 +144,8 @@ struct InnerEventDetailView: View {
   var body: some View {
     ScrollView {
       VStack(alignment: .leading, spacing: 20) {
+        CategoryNameLabel(category: race.category)
+          .font(.headline)
 
         if race.events.isEmpty || race.events.contains(where: { $0.date == nil && !$0.isCancelled }) {
           Text("Ainda não conseguimos obter todos os horários. Consulte a fonte oficial para confirmar a programação.")
@@ -220,6 +223,7 @@ struct InnerEventDetailView: View {
         }
       }
     }
+    .categoryAccent(race.category.resolvedColor)
   }
 
   var mainEvents: [RaceEvent] {

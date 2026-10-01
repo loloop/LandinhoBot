@@ -43,6 +43,7 @@ let package = Package(
           name: "WidgetUI",
           dependencies: [
             foundation,
+            "CategoryUI",
           ]),
     ]
 )

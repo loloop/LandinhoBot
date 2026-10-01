@@ -116,7 +116,6 @@ public struct BetaSheet: View {
 
   • App Clip
     • Botão de compartilhar o app em Ajustes -> App Clip ou Link
-  • Categorias terão uma "accent color"
   • Ações rápidas no ícone do aplicativo
   • Design final da Home, Tela de Corrida, Categorias, Ajustes, Compartilhar, etc para iOS e iPadOS
   • Widget extra-largo para iPads
