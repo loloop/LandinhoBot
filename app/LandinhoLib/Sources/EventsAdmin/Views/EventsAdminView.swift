@@ -80,7 +80,19 @@ public struct EventsAdminView: View {
                 Text("É evento principal?")
               })
             }
-            DatePicker("Data", selection: event.date)
+            Toggle("Cancelado", isOn: event.isCancelled)
+            Toggle("Horário confirmado", isOn: Binding(
+              get: { event.wrappedValue.date != nil },
+              set: { event.wrappedValue.date = $0 ? (event.wrappedValue.date ?? Date()) : nil }
+            ))
+            if event.wrappedValue.date != nil {
+              DatePicker("Data", selection: Binding(
+                get: { event.wrappedValue.date ?? Date() },
+                set: { event.wrappedValue.date = $0 }
+              ))
+            } else {
+              Text("Horário pendente").foregroundStyle(.secondary)
+            }
           }
         }
       } footer: {

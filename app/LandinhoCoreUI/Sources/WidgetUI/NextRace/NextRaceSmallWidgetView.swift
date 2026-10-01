@@ -72,11 +72,7 @@ public struct NextRaceSmallWidgetView: View {
       return ""
     }
 
-    return event.date.formatted(
-      .dateTime
-        .day(.twoDigits)
-        .month(.twoDigits)
-    )
+    return event.dayLabel
   }
 
   var currentEventTitle: String {
@@ -88,10 +84,6 @@ public struct NextRaceSmallWidgetView: View {
       return ""
     }
 
-    return event.date.formatted(
-      .dateTime
-      .hour(.twoDigits(amPM: .abbreviated))
-      .minute(.twoDigits)
-    )
+    return event.timeLabel
   }
 }

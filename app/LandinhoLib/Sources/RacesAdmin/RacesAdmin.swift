@@ -9,6 +9,7 @@ import APIClient
 import LandinhoFoundation
 import ComposableArchitecture
 import EventsAdmin
+import ImportsAdmin
 import Foundation
 import SwiftUI
 
@@ -20,11 +21,13 @@ extension RacesAdmin {
     public enum State: Equatable {
       case raceEditor(RaceEditor.State)
       case eventsAdmin(EventsAdmin.State)
+      case importsAdmin(ImportsAdmin.State)
     }
 
     public enum Action: Equatable {
       case raceEditor(RaceEditor.Action)
       case eventsAdmin(EventsAdmin.Action)
+      case importsAdmin(ImportsAdmin.Action)
     }
 
     public var body: some ReducerOf<Self> {
@@ -35,6 +38,7 @@ extension RacesAdmin {
       Scope(state: \.eventsAdmin, action: \.eventsAdmin) {
         EventsAdmin()
       }
+      Scope(state: \.importsAdmin, action: \.importsAdmin) { ImportsAdmin() }
     }
   }
 }
@@ -63,6 +67,7 @@ public struct RacesAdmin {
     case onAppear
     case onPlusTap
     case onPruneTap
+    case onImportsTap
     // TODO: Add a DelegateAction
     case onEditTap(Race)
     case onRaceTap(Race)
@@ -78,6 +83,9 @@ public struct RacesAdmin {
     // TODO: Update earliestDate for a race if it has been edited
     Reduce { state, action in
       switch action {
+      case .onImportsTap:
+        state.destination = .importsAdmin(.init(tag: state.tag, title: state.title))
+        return .none
       case .onPlusTap:
         state.destination = .raceEditor(.init(tag: state.tag))
         return .none
@@ -144,4 +152,3 @@ public struct RacesAdmin {
     public let earliestEventDate: Date?
   }
 }
-

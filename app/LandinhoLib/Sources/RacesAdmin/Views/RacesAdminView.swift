@@ -8,6 +8,7 @@
 import APIClient
 import ComposableArchitecture
 import EventsAdmin
+import ImportsAdmin
 import Foundation
 import SwiftUI
 
@@ -47,6 +48,9 @@ public struct RacesAdminView: View {
     .background(.background.secondary)
     .toolbar {
       ToolbarItem(placement: .secondaryAction) {
+        Button("Importações", systemImage: "arrow.down.circle") { store.send(.onImportsTap) }
+      }
+      ToolbarItem(placement: .secondaryAction) {
         Button(action: {
           store.send(.onPruneTap)
         }, label: {
@@ -76,6 +80,11 @@ public struct RacesAdminView: View {
     ) { store in
       EventsAdminView(store: store)
     }
+    .navigationDestination(
+      store: store.scope(state: \.$destination, action: { .destination($0) }),
+      state: \.importsAdmin,
+      action: { .importsAdmin($0) }
+    ) { store in ImportsAdminView(store: store) }
   }
 
   @MainActor

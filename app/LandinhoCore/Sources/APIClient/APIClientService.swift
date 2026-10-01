@@ -39,6 +39,12 @@ final class APIClientService: APIClientServiceProtocol {
   }()
 
   func makeURL(path: String, queryItems: [URLQueryItem]?) throws -> URL? {
+    if let override = ProcessInfo.processInfo.environment["LANDINHO_API_URL"],
+      var components = URLComponents(string: override) {
+      components.path = "/" + (components.path.trimmingCharacters(in: CharacterSet(charactersIn: "/")) + "/" + path).trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+      components.queryItems = queryItems
+      return components.url
+    }
     // TODO: make this configurable in the app itself, or add a separate target idk
     #if DEBUG
 //    let host: String = "localhost"
@@ -77,6 +83,8 @@ final class APIClientService: APIClientServiceProtocol {
     }
 
     var request = URLRequest(url: url)
+    // Manual imports can fetch several seasons of source pages before returning the audit run.
+    if endpoint == "import-refresh" { request.timeoutInterval = 300 }
     request.httpMethod = method
     request.httpBody = data
 
@@ -89,6 +97,10 @@ final class APIClientService: APIClientServiceProtocol {
     }
 
     let response = try await URLSession.shared.data(for: request)
+    if let http = response.1 as? HTTPURLResponse, !(200..<300).contains(http.statusCode) {
+      throw NSError(domain: "LandinhoAPI", code: http.statusCode,
+        userInfo: [NSLocalizedDescriptionKey: "Falha na solicitação (\(http.statusCode)): \(String(data: response.0, encoding: .utf8) ?? "")"])
+    }
     do {
       let decoded = try decoder.decode(T.self, from: response.0)
       return decoded

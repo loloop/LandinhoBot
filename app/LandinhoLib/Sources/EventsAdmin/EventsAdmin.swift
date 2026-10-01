@@ -21,8 +21,9 @@ public struct UploadRaceRequest: Codable, Equatable {
 public struct UploadRaceEvent: Codable, Equatable, Identifiable {
   public var id = UUID()
   var title: String
-  var date: Date
+  var date: Date?
   var isMainEvent: Bool
+  var isCancelled = false
 }
 
 @Reducer
@@ -48,7 +49,8 @@ public struct EventsAdmin {
           id: $0.id,
           title: $0.title,
           date: $0.date,
-          isMainEvent: $0.isMainEvent)
+          isMainEvent: $0.isMainEvent,
+          isCancelled: $0.isCancelled)
       } == events
     }
   }
@@ -119,7 +121,8 @@ public struct EventsAdmin {
             id: $0.id,
             title: $0.title,
             date: $0.date,
-            isMainEvent: $0.isMainEvent)
+            isMainEvent: $0.isMainEvent,
+            isCancelled: $0.isCancelled)
         }
         return .none
 
@@ -156,4 +159,3 @@ public struct EventsAdmin {
     let events: [UploadRaceEvent]
   }
 }
-

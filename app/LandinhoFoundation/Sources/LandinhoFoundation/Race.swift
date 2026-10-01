@@ -8,12 +8,14 @@
 import Foundation
 
 public struct Race: Codable, Equatable, Identifiable, Hashable {
-  public init(id: UUID, title: String, shortTitle: String, events: [RaceEvent], category: RaceCategory) {
+  public init(id: UUID, title: String, shortTitle: String, events: [RaceEvent], category: RaceCategory, sourceURL: String? = nil, isCancelled: Bool = false) {
     self.id = id
     self.title = title
     self.shortTitle = shortTitle
     self.events = events
     self.category = category
+    self.sourceURL = sourceURL
+    self.isCancelled = isCancelled
   }
 
   public init() {
@@ -22,6 +24,8 @@ public struct Race: Codable, Equatable, Identifiable, Hashable {
     shortTitle = ""
     events = []
     category = .init(id: "", title: "", tag: "")
+    sourceURL = nil
+    isCancelled = false
   }
 
   public let id: UUID
@@ -29,6 +33,21 @@ public struct Race: Codable, Equatable, Identifiable, Hashable {
   public let shortTitle: String
   public var events: [RaceEvent]
   public let category: RaceCategory
+  public let sourceURL: String?
+  public let isCancelled: Bool
+
+  enum CodingKeys: String, CodingKey { case id, title, shortTitle, events, category, sourceURL, isCancelled }
+
+  public init(from decoder: Decoder) throws {
+    let values = try decoder.container(keyedBy: CodingKeys.self)
+    id = try values.decode(UUID.self, forKey: .id)
+    title = try values.decode(String.self, forKey: .title)
+    shortTitle = try values.decode(String.self, forKey: .shortTitle)
+    events = try values.decode([RaceEvent].self, forKey: .events)
+    category = try values.decode(RaceCategory.self, forKey: .category)
+    sourceURL = try values.decodeIfPresent(String.self, forKey: .sourceURL)
+    isCancelled = try values.decodeIfPresent(Bool.self, forKey: .isCancelled) ?? false
+  }
 }
 
 @_spi(Mock) public extension Race {

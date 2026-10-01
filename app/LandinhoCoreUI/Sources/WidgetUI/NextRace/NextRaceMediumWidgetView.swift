@@ -55,6 +55,13 @@ public struct NextRaceMediumWidgetView: View {
           .foregroundStyle(.secondary)
           .frame(maxWidth: .infinity)
       }
+      if race.events.isEmpty || race.events.contains(where: { $0.date == nil && !$0.isCancelled }) {
+        Text("Horários pendentes. Consulte a programação oficial.")
+          .font(.caption2).foregroundStyle(.secondary)
+      }
+      if let source = race.sourceURL, let host = URL(string: source)?.host {
+        Text("Fonte: \(host)").font(.caption2).foregroundStyle(.secondary)
+      }
     }
   }
 
@@ -62,5 +69,3 @@ public struct NextRaceMediumWidgetView: View {
     EventByDateFactory.convert(events: race.events)
   }
 }
-
-

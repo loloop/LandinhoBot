@@ -1,3 +1,5 @@
 # LandinhoBot - A Formula One race schedule Telegram Bot
 
-This bot fetches the next Formula One races from the CalendarioF1.com database and posts them to a Telegram channel. Add it to your channel by adding  [@F1LandinhoBot](https://t.me/F1LandinhoBot)
+This bot reads upcoming races and reminders from the LandinhoBot Vapor API. The API imports the official F1 calendar and session times. Unconfirmed times are shown as pending, with a link to the official schedule.
+
+See the [development guide](../README.md) for backend setup, import behavior, and the current TelegramBotSDK build limitation.

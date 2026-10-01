@@ -19,6 +19,7 @@ public func configure(_ app: Application) async throws {
 
   app.migrations.add(v0_1Migration())
   app.migrations.add(v0_2Migration())
+  app.migrations.add(v0_3Migration())
 
   [
     // category
@@ -50,8 +51,30 @@ public func configure(_ app: Application) async throws {
     ChatSubscriptionsHandler(),
 
     // alerts
-    UpcomingAlertsHandler()
+    UpcomingAlertsHandler(),
+
+    ImportSettingsHandler(),
+    UpdateImportSettingsHandler(),
+    RefreshImportHandler(),
+    ImportHistoryHandler(),
+    ResolveImportMatchHandler()
   ].register(in: app)
 
    try await app.autoMigrate()
+
+  if let category = try await Category.query(on: app.db).filter(\.$tag == "f1").first() {
+    if category.importProvider == nil {
+      category.importProvider = "official-f1"
+      category.importsEnabled = true
+      category.nextImportAt = Date()
+      try await category.save(on: app.db)
+    }
+  } else {
+    let category = Category(title: "Formula 1", tag: "f1", comment: "Calendário oficial: https://www.formula1.com/en/racing")
+    category.importProvider = "official-f1"
+    category.importsEnabled = true
+    category.nextImportAt = Date()
+    try await category.create(on: app.db)
+  }
+  app.lifecycle.use(ImportScheduling())
 }

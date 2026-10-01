@@ -15,16 +15,13 @@ public struct EventByDate: Identifiable {
   public struct Event: Identifiable {
     init(raceEvent: RaceEvent) {
       title = raceEvent.title
-      time = raceEvent.date.formatted(
-        .dateTime
-          .hour(.twoDigits(amPM: .abbreviated))
-          .minute(.twoDigits)
-      )
+      time = raceEvent.timeLabel
+      id = raceEvent.id
     }
 
     public let title: String
     public let time: String
-    public var id: String { title }
+    public let id: UUID
   }
 }
 
@@ -32,12 +29,13 @@ public struct EventByDateFactory {
   public static func convert(events: [RaceEvent]) -> [EventByDate] {
     guard !events.isEmpty else { return [] }
 
-    return Dictionary(grouping: events) {
-      $0.date.formatted(.dateTime.day().month(.twoDigits)) // This sounds inefficient
-    }.map {
-      EventByDate(date: $0.key, events: $0.value.map(EventByDate.Event.init))
-    }.sorted {
-      $0.date < $1.date
+    let sorted = events.sorted {
+      let lhs = $0.date.map { ISO8601DateFormatter().string(from: $0) } ?? $0.scheduledDay ?? "9999"
+      let rhs = $1.date.map { ISO8601DateFormatter().string(from: $0) } ?? $1.scheduledDay ?? "9999"
+      return lhs < rhs
     }
+    var days: [String] = []
+    for event in sorted where !days.contains(event.dayLabel) { days.append(event.dayLabel) }
+    return days.map { day in EventByDate(date: day, events: sorted.filter { $0.dayLabel == day }.map(EventByDate.Event.init)) }
   }
 }

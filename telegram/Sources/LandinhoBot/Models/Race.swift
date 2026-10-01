@@ -10,7 +10,7 @@ import Foundation
 struct Category: Codable, Equatable {
   let title: String
   let tag: String
-  let comment: String
+  let comment: String?
   let races: [Race]?
 }
 
@@ -24,7 +24,8 @@ struct Race: Codable, Equatable {
 struct RaceEvent: Codable, Equatable, Identifiable {
   let id: UUID
   let title: String
-  let date: Date
+  let date: Date?
+  let isCancelled: Bool?
 }
 
 struct SubscriptionResponse: Codable {

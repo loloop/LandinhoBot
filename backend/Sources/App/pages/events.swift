@@ -47,37 +47,48 @@ struct UpdateEventsHandler: AsyncRequestHandler {
       throw Abort(.notFound)
     }
 
-    let events = request.events.compactMap {
-      RaceEvent(title: $0.title, date: $0.date, isMainEvent: $0.isMainEvent)
-    }
-
-    guard
-      !events.isEmpty,
-      let newEarliestDate = events.sorted(by: {
-        $0.date ?? Date() > $1.date ?? Date()
-      }).first?.date
-    else {
-      throw Abort(.badRequest)
-    }
-
     try await req.db.transaction { db in
-      try await RaceEvent
-        .query(on: db)
-        .join(parent: \.$race)
-        .filter(Race.self, \.$id, .equal, raceID)
-        .all()
-        .delete(on: db)
-
-      try await Race
-        .query(on: db)
-        .set(\.$earliestEventDate, to: newEarliestDate)
-        .filter(\.$id, .equal, raceID)
-        .update()
-
-      try await race.$events.create(events, on: db)
+      let existing = try await race.$events.query(on: db).all()
+      var retained = Set<UUID>()
+      for input in request.events {
+        guard !input.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else { throw Abort(.badRequest) }
+        let event: RaceEvent
+        if let id = input.id {
+          guard retained.insert(id).inserted else { throw Abort(.badRequest, reason: "Duplicate session ID") }
+          if let match = existing.first(where: { $0.id == id }) { event = match }
+          else {
+            // New app-side UUIDs are accepted only when they do not belong to another race.
+            guard try await RaceEvent.find(id, on: db) == nil else { throw Abort(.badRequest) }
+            event = RaceEvent(id: id, title: input.title, date: input.date, isMainEvent: input.isMainEvent)
+          }
+        } else {
+          let matches = existing.filter { $0.title == input.title && !retained.contains($0.id!) }
+          event = matches.count == 1 ? matches[0] : RaceEvent(title: input.title, date: input.date, isMainEvent: input.isMainEvent)
+          retained.insert(try event.requireID())
+        }
+        event.$race.id = raceID
+        event.title = input.title
+        event.date = input.date
+        event.isMainEvent = input.isMainEvent
+        event.isCancelled = input.isCancelled ?? event.isCancelled
+        try await event.save(on: db)
+      }
+      for event in existing where !retained.contains(try event.requireID()) {
+        if event.sourceID != nil {
+          // A manual removal lasts until the next authoritative import; keep its identity.
+          event.isCancelled = true
+          try await event.save(on: db)
+        } else { try await event.delete(on: db) }
+      }
+      let dates = request.events.filter { $0.isCancelled != true }.compactMap(\.date)
+      if race.sourceID == nil {
+        race.earliestEventDate = dates.min() ?? race.earliestEventDate
+        race.scheduleEndDate = dates.max() ?? race.scheduleEndDate
+        try await race.save(on: db)
+      }
     }
 
-    return events
+    return try await race.$events.query(on: req.db).sort(\.$date).all()
   }
 
   struct SaveEventListRequest: Content {
@@ -85,9 +96,11 @@ struct UpdateEventsHandler: AsyncRequestHandler {
     let events: [UploadRaceEvent]
 
     struct UploadRaceEvent: Content {
+      let id: UUID?
       let title: String
-      let date: Date
+      let date: Date?
       let isMainEvent: Bool
+      let isCancelled: Bool?
     }
   }
 }
