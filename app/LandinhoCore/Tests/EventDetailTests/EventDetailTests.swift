@@ -9,13 +9,16 @@ final class EventDetailTests: XCTestCase {
   func testFetchByIDUsesPublicEndpointAndRepeatedAppearanceDoesNotRestart() async {
     let race = makeRace()
     let recorder = RequestRecorder()
+    let clock = TestClock()
     let store = TestStore(initialState: EventDetail.State(raceID: race.id)) { EventDetail() }
     store.dependencies.apiRequester = RoundRequester { endpoint in
       await recorder.record(endpoint)
+      try await clock.sleep(for: .seconds(1))
       return race
     }
     await store.send(.onAppear) { $0.isLoading = true }
     await store.send(.onAppear)
+    await clock.advance(by: .seconds(1))
     await store.receive(.response(.success(race))) {
       $0.isLoading = false
       $0.race = race

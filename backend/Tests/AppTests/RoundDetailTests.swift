@@ -19,7 +19,7 @@ final class RoundDetailTests: XCTestCase {
     let app = Application(.testing)
     defer { app.shutdown() }
     try await configure(app)
-    let category = Category(title: "Read test", tag: "read-" + UUID().uuidString)
+    let category = Category(title: "Read test", tag: "read-" + UUID().uuidString, comment: nil)
     try await category.create(on: app.db)
     let round = Race(title: "Past cancelled round", earliestEventDate: .distantPast, shortTitle: "Past")
     round.$category.id = try category.requireID()
