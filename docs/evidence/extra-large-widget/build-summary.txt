@@ -1,0 +1,22 @@
+Shipping revision: 4105134 (based on feature/app-clip 73ff27b)
+Toolchain: Xcode 27.1 / iPhoneSimulator 27.1 SDK
+Destination: iPad Pro 13-inch (M4) / iOS 27.0 simulator 39C71B10-965F-4F33-B2DB-F8739C45C5A8
+
+DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild \
+  -skipMacroValidation -project app/VroomVroom.xcodeproj -scheme VroomVroom \
+  -destination 'platform=iOS Simulator,id=39C71B10-965F-4F33-B2DB-F8739C45C5A8' \
+  -derivedDataPath /tmp/landinho-about-developer-derived \
+  -clonedSourcePackagesDirPath /tmp/landinho-about-developer-derived/SourcePackages \
+  -disableAutomaticPackageResolution -onlyUsePackageVersionsFromResolvedFile \
+  -jobs 2 ARCHS=arm64 ONLY_ACTIVE_ARCH=YES \
+  'OTHER_SWIFT_FLAGS=$(inherited) -j2' CODE_SIGNING_ALLOWED=NO build
+
+** BUILD SUCCEEDED **
+Exit status: 0
+
+Verified actual app product contains:
+/tmp/landinho-about-developer-derived/Build/Products/Debug-iphonesimulator/VroomVroom.app/PlugIns/WidgetsExtension.appex
+/tmp/landinho-about-developer-derived/Build/Products/Debug-iphonesimulator/VroomVroom.app/AppClips/VroomVroomClip.app
+
+The source tree contains only shipping app/widget/Clip entries; the native evidence
+harness is confined to docs/evidence/extra-large-widget.
