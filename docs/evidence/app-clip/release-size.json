@@ -1,0 +1,14 @@
+{
+  "configuration": "Release",
+  "platform": "iphoneos",
+  "architecture": "arm64",
+  "codeSigningAllowed": false,
+  "bundleIdentifier": "me.mauriciocardozo.racing.vroomvroom.Clip",
+  "bundleVersion": "6",
+  "bundleUncompressedBytes": 2671985,
+  "bundleDecimalMB": 2.672,
+  "binaryBytes": 858768,
+  "conservativeBudgetBytes": 15000000,
+  "files": 4,
+  "measurement": "sum of regular file sizes in the unsigned unthinned device bundle; not an App Thinning distribution size report"
+}

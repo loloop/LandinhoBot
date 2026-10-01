@@ -83,6 +83,11 @@ public struct BetaSheet: View {
   let latestRelease: LocalizedStringKey = """
   01/10/2026
   • Manutenção: registra a pendência de verificar o domínio e o DNS da API hospedada
+  • Adiciona widget extra-largo no iPad com a próxima sessão, programação em duas colunas e indicação de horários pendentes
+  • Adiciona App Clip para consultar categorias e corridas por link e permite compartilhar o app pelos Ajustes
+  • Adiciona ações rápidas no ícone do app para abrir a Home, as categorias e os Ajustes
+  • Permite compartilhar a programação de uma corrida em texto, incluindo horários pendentes e sessões canceladas
+  • Manutenção: integra as configurações do App Clip e da versão Mock no projeto do app
   • Protege a administração com senha do servidor; o acesso fica oculto no número da versão em Ajustes e é bloqueado ao sair ou colocar o app em segundo plano
   • Adiciona favoritos de categorias e uma Home com paginação, atualização e prioridade para categorias favoritas
   • Manutenção: mantém o acesso administrativo da versão Mock inteiramente em memória e adapta seus testes à nova Home
@@ -140,12 +145,7 @@ public struct BetaSheet: View {
   Esta lista será completamente limpa antes do lançamento público do aplicativo (em ordem de prioridade)
 
   • Verificar o registro, a renovação e o DNS de vroomvroom.racing e confirmar o acesso à API
-  • App Clip
-    • Botão de compartilhar o app em Ajustes -> App Clip ou Link
-  • Ações rápidas no ícone do aplicativo
   • Design final da Home, Tela de Corrida, Categorias, Ajustes, Compartilhar, etc para iOS e iPadOS
-  • Widget extra-largo para iPads
-  • Compartilhar texto de uma corrida -> Estilo o bot
 
   Para o futuro:
   • Notificações no app quando eventos específicos forem começar
