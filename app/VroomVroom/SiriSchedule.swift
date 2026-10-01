@@ -95,7 +95,7 @@ struct AskNextRacingSessionIntent: AppIntent {
     let answer = UpcomingSessionQuery.answer(
       rounds: rounds, now: Date(), mainSessionsOnly: sessionKind == .race, categoryTag: category?.tag)
     let message = answer.message(categoryTitle: category?.title)
-    return .result(value: message, dialog: IntentDialog(stringLiteral: message), view: RacingScheduleSnippet(answer: answer, message: message))
+    return .result(value: message, dialog: IntentDialog(stringLiteral: message), view: RacingScheduleSnippet(message: message))
   }
 }
 
@@ -132,7 +132,6 @@ struct RacingScheduleShortcuts: AppShortcutsProvider {
 }
 
 struct RacingScheduleSnippet: View {
-  let answer: UpcomingSessionAnswer
   let message: String
 
   var body: some View {
@@ -142,11 +141,6 @@ struct RacingScheduleSnippet: View {
       Text(message)
         .font(.body)
         .fixedSize(horizontal: false, vertical: true)
-      if case .scheduled(_, let session) = answer, let date = session.date {
-        Text(date, style: .relative)
-          .font(.caption)
-          .foregroundStyle(.secondary)
-      }
     }
     .padding()
     .accessibilityElement(children: .combine)

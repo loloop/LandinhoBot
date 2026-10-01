@@ -1,0 +1,110 @@
+import AppIntents
+import ComposableArchitecture
+import Foundation
+import Settings
+import SwiftUI
+
+// Evidence source only. Temporarily replace VroomVroomApp.swift with this file,
+// restore the shipping entry, then run the final app/Widget/App Clip build.
+// Calls the committed AppIntent.perform(); this is not a spoken Siri invocation.
+@main
+struct VroomVroomApp: App {
+  @UIApplicationDelegateAdaptor var delegate: VroomAppDelegate
+  private let mode = ProcessInfo.processInfo.environment["LANDINHO_SIRI_EVIDENCE"] ?? "race"
+
+  init() { RacingScheduleShortcuts.updateAppShortcutParameters() }
+
+  var body: some Scene {
+    WindowGroup {
+      if mode == "settings" {
+        NavigationStack {
+          SettingsView(store: Store(initialState: Settings.State()) { Settings() })
+        }
+      } else {
+        SiriQueryEvidenceView(mode: mode)
+      }
+    }
+  }
+}
+
+private struct SiriQueryEvidenceView: View {
+  let mode: String
+  @State private var message: String?
+  @State private var errorMessage: String?
+
+  var body: some View {
+    NavigationStack {
+      ScrollView {
+        VStack(alignment: .leading, spacing: 20) {
+          Text("App Intent · execução nativa")
+            .font(.caption)
+            .foregroundStyle(.secondary)
+          if let message {
+            // The exact production snippet, using the value returned by perform().
+            RacingScheduleSnippet(message: message)
+              .frame(maxWidth: .infinity, alignment: .leading)
+              .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 20))
+          } else if let errorMessage {
+            Label("Calendário indisponível", systemImage: "wifi.exclamationmark")
+              .font(.headline)
+            Text(errorMessage)
+              .fixedSize(horizontal: false, vertical: true)
+          } else {
+            ProgressView("Consultando calendário…")
+          }
+        }
+        .padding(24)
+      }
+      .navigationTitle(mode == "session" ? "Próxima sessão" : "Próxima corrida")
+      .task { await runIntent() }
+    }
+  }
+
+  @MainActor
+  private func runIntent() async {
+    var intent = AskNextRacingSessionIntent(sessionKind: mode == "session" ? .session : .race)
+    do {
+      if mode == "category" {
+        let matches = try await RacingCategoryQuery().entities(matching: "F1")
+        guard let category = matches.first else { throw SiriEvidenceError.missingCategory }
+        intent.category = category
+      }
+      let result = try await intent.perform()
+      guard let value = result.value else { throw SiriEvidenceError.missingValue }
+      message = value
+      saveResult(text: value, error: nil, categoryTag: intent.category?.tag)
+    } catch {
+      let value = error.localizedDescription
+      errorMessage = value
+      saveResult(text: nil, error: value, categoryTag: intent.category?.tag)
+    }
+  }
+
+  private func saveResult(text: String?, error: String?, categoryTag: String?) {
+    let result = SiriEvidenceResult(mode: mode, text: text, error: error, categoryTag: categoryTag)
+    let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    do {
+      let data = try JSONEncoder().encode(result)
+      try data.write(to: directory.appendingPathComponent("SiriEvidence.json"), options: .atomic)
+      print("SIRI_EVIDENCE \(String(decoding: data, as: UTF8.self))")
+    } catch { print("SIRI_EVIDENCE_WRITE_FAILED \(error.localizedDescription)") }
+  }
+}
+
+private struct SiriEvidenceResult: Encodable {
+  let mode: String
+  let text: String?
+  let error: String?
+  let categoryTag: String?
+}
+
+private enum SiriEvidenceError: LocalizedError {
+  case missingCategory
+  case missingValue
+  var errorDescription: String? {
+    switch self {
+    case .missingCategory: "The fixture category query returned no F1 match."
+    case .missingValue: "AppIntent.perform() did not return its required answer value."
+    }
+  }
+}
