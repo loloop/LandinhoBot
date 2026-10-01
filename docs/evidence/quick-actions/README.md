@@ -56,9 +56,11 @@ and does not boot or shut down any device:
 bash docs/evidence/quick-actions/capture.sh APPROVED_UDID APPROVED_DERIVED_DATA_PATH
 ```
 
-The parent must verify that no other task owns fixture port 18084. Both Xcode and
-the Swift driver are capped at two jobs. All modes run against one evidence
-build; then the unchanged app entry is restored for a final shipping build.
+Verify that no other task owns fixture port 18084. Xcode runs with `-jobs 2` and
+requests `-j2` through `OTHER_SWIFT_FLAGS`; this Xcode version appends a later
+`-j12` for the app compiler, so that flag does not cap every nested compiler.
+All modes run against one evidence build; then the unchanged app entry is
+restored for a final shipping build.
 
 The intended screenshot pairs show actual rendered app UI before and after a
 programmatic production-method invocation: Home → Settings, category detail →
