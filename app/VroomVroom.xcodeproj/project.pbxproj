@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C01100012CA0000000000005 /* SiriSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01100012CA0000000000002 /* SiriSchedule.swift */; };
+		C01100012CA0000000000006 /* AppShortcuts.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C01100012CA0000000000004 /* AppShortcuts.xcstrings */; };
+		C01100012CA0000000000003 /* AppShortcuts.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C01100012CA0000000000004 /* AppShortcuts.xcstrings */; };
+		C01100012CA0000000000001 /* SiriSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01100012CA0000000000002 /* SiriSchedule.swift */; };
 		B40A75222B0D793200CFB10E /* Router in Frameworks */ = {isa = PBXBuildFile; productRef = B40A75212B0D793200CFB10E /* Router */; };
 		B41E56A42BFB800500020994 /* WidgetUI in Frameworks */ = {isa = PBXBuildFile; productRef = B41E56A32BFB800500020994 /* WidgetUI */; };
 		B42CA9ED2AFE8B66009B3FFB /* VroomVroomApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42CA9EC2AFE8B66009B3FFB /* VroomVroomApp.swift */; };
@@ -110,6 +114,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C01100012CA0000000000004 /* AppShortcuts.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = AppShortcuts.xcstrings; sourceTree = "<group>"; };
+		C01100012CA0000000000002 /* SiriSchedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiriSchedule.swift; sourceTree = "<group>"; };
 		B42CA9E92AFE8B66009B3FFB /* VroomVroom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VroomVroom.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B42CA9EC2AFE8B66009B3FFB /* VroomVroomApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VroomVroomApp.swift; sourceTree = "<group>"; };
 		B42CA9EE2AFE8B66009B3FFB /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
@@ -251,6 +257,8 @@
 			children = (
 				B45002592AFE91A1003CDE6A /* Info.plist */,
 				B42CA9EC2AFE8B66009B3FFB /* VroomVroomApp.swift */,
+				C01100012CA0000000000002 /* SiriSchedule.swift */,
+				C01100012CA0000000000004 /* AppShortcuts.xcstrings */,
 				B47CAE6E2B0D2D3C000164A0 /* VroomSceneDelegate.swift */,
 				B42CA9EE2AFE8B66009B3FFB /* RootView.swift */,
 				B48A501E2AFECEEB00A01B7E /* Root.swift */,
@@ -484,9 +492,10 @@
 			};
 			buildConfigurationList = B42CA9E42AFE8B66009B3FFB /* Build configuration list for PBXProject "VroomVroom" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = "pt-BR";
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				"pt-BR",
 				en,
 				Base,
 			);
@@ -511,6 +520,7 @@
 			files = (
 				B42CA9F42AFE8B67009B3FFB /* Preview Assets.xcassets in Resources */,
 				B42CA9F12AFE8B67009B3FFB /* Assets.xcassets in Resources */,
+				C01100012CA0000000000003 /* AppShortcuts.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,6 +552,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C01100012CA0000000000006 /* AppShortcuts.xcstrings in Resources */,
 				5C85CF2A272140838514CDFE /* Preview Assets.xcassets in Resources */,
 				941F6EE4CCF8426092C97FB0 /* Assets.xcassets in Resources */,
 			);
@@ -556,6 +567,7 @@
 			files = (
 				B42CA9EF2AFE8B66009B3FFB /* RootView.swift in Sources */,
 				B42CA9ED2AFE8B66009B3FFB /* VroomVroomApp.swift in Sources */,
+				C01100012CA0000000000001 /* SiriSchedule.swift in Sources */,
 				B48A501F2AFECEEB00A01B7E /* Root.swift in Sources */,
 				B47CAE6F2B0D2D3C000164A0 /* VroomSceneDelegate.swift in Sources */,
 			);
@@ -594,6 +606,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C01100012CA0000000000005 /* SiriSchedule.swift in Sources */,
 				DB8567AFFC714BF78D02171E /* RootView.swift in Sources */,
 				A0628F4B3002429AA8C833E6 /* VroomVroomApp.swift in Sources */,
 				4901E046772B489A8E39AC5D /* Root.swift in Sources */,

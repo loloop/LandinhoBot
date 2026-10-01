@@ -49,6 +49,7 @@ let package = Package(
         name: "APIClient",
         dependencies: [
           "AdminSession",
+          foundation,
           .product(name: "NotificationsQueue", package: "LandinhoCoreUI"),
           composable
         ]),

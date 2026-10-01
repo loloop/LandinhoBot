@@ -7,6 +7,7 @@
 
 import Admin
 import APIClient
+import AppIntents
 import BetaSheet
 import Foundation
 import ComposableArchitecture
@@ -122,6 +123,14 @@ public struct SettingsView: View {
           }
         } footer: {
           Text(AppSharing(bundle: .main).explanation)
+        }
+
+        Section {
+          ShortcutsLink()
+        } header: {
+          Text("Siri e Atalhos")
+        } footer: {
+          Text("Pergunte: “Quando é a próxima corrida no VroomVroom?” Você também pode consultar a próxima sessão ou escolher uma categoria nos Atalhos. Horários no fuso do aparelho. Requer conexão.")
         }
 
         NavigationLink {

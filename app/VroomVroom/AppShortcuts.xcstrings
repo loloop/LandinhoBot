@@ -1,0 +1,61 @@
+{
+  "sourceLanguage" : "pt-BR",
+  "strings" : {
+    "Quando é a próxima corrida no ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "pt-BR" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [ "Quando é a próxima corrida no ${applicationName}" ]
+          }
+        }
+      }
+    },
+    "Qual o horário da próxima corrida no ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "pt-BR" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [ "Qual o horário da próxima corrida no ${applicationName}" ]
+          }
+        }
+      }
+    },
+    "Quando é a próxima corrida de ${category} no ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "pt-BR" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [ "Quando é a próxima corrida de ${category} no ${applicationName}" ]
+          }
+        }
+      }
+    },
+    "Quando é a próxima sessão no ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "pt-BR" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [ "Quando é a próxima sessão no ${applicationName}" ]
+          }
+        }
+      }
+    },
+    "Quando é a próxima sessão de ${category} no ${applicationName}" : {
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "pt-BR" : {
+          "stringSet" : {
+            "state" : "translated",
+            "values" : [ "Quando é a próxima sessão de ${category} no ${applicationName}" ]
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.1"
+}
