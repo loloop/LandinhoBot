@@ -79,6 +79,7 @@ let package = Package(
         name: "Categories",
         dependencies: [
           categoryUI,
+          .product(name: "CategoryFavorites", package: "LandinhoCore"),
           apiClient,
           notifications,
           scheduleList,

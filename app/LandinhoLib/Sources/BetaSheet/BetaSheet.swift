@@ -117,7 +117,6 @@ public struct BetaSheet: View {
   • App Clip
     • Botão de compartilhar o app em Ajustes -> App Clip ou Link
   • Categorias terão uma "accent color"
-  • Home de verdade, com os horários de todas as categorias, categorias favoritas aparecendo primeiro e paginação
   • Ações rápidas no ícone do aplicativo
   • Design final da Home, Tela de Corrida, Categorias, Ajustes, Compartilhar, etc para iOS e iPadOS
   • Widget extra-largo para iPads

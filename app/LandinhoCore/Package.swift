@@ -26,6 +26,7 @@ let package = Package(
     ],
     products: [
       .library(name: "APIClient", targets: ["APIClient"]),
+      .library(name: "CategoryFavorites", targets: ["CategoryFavorites"]),
       .library(name: "EventDetail", targets: ["EventDetail"]),
       .library(name: "ScheduleList", targets: ["ScheduleList"]),
     ],
@@ -39,6 +40,7 @@ let package = Package(
     targets: [
       .target(name: "AdminSession"),
       .testTarget(name: "AdminSessionTests", dependencies: ["AdminSession"]),
+      .target(name: "CategoryFavorites", dependencies: [composable]),
       .target(
         name: "APIClient",
         dependencies: [
@@ -58,10 +60,13 @@ let package = Package(
         .target(
           name: "ScheduleList",
           dependencies: [
+            "APIClient",
+            "CategoryFavorites",
             foundation,
             "EventDetail",
             widgetUI,
             composable
           ]),
+      .testTarget(name: "ScheduleListTests", dependencies: ["ScheduleList", "CategoryFavorites", foundation, composable]),
     ]
 )

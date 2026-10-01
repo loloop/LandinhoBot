@@ -6,14 +6,13 @@
 //
 
 import APIClient
+import CategoryFavorites
 import CategoryUI
 import LandinhoFoundation
 import Foundation
 import ComposableArchitecture
 import ScheduleList
 import SwiftUI
-
-// TODO: On tap of a category, @PresentationState present a ScheduleList
 
 @Reducer
 public struct Categories {
@@ -22,21 +21,40 @@ public struct Categories {
   public struct State: Equatable {
     public init() {}
 
+    public var favoriteTags: Set<String> = []
     public var categoriesState = APIClient<[RaceCategory]>.State(endpoint: "category")
   }
 
   public enum Action: Equatable {
     case onAppear
     case onCategoryTap(String)
+    case favoriteTapped(String)
+    case delegate(DelegateAction)
     case categoriesRequest(APIClient<[RaceCategory]>.Action)
   }
 
 
 
+  public enum DelegateAction: Equatable {
+    case favoritesChanged(Set<String>)
+  }
+
+  @Dependency(\.categoryFavorites) var favorites
+
   public var body: some ReducerOf<Self> {
     Reduce { state, action in
       switch action {
       case .onAppear:
+        state.favoriteTags = favorites.read()
+        return .none
+
+      case .favoriteTapped(let tag):
+        state.favoriteTags = favorites.read()
+        if !state.favoriteTags.insert(tag).inserted { state.favoriteTags.remove(tag) }
+        favorites.write(state.favoriteTags)
+        return .send(.delegate(.favoritesChanged(state.favoriteTags)))
+
+      case .delegate:
         return .none
 
       // TODO: DelegateAction
@@ -60,8 +78,6 @@ public struct CategoriesView: View {
 
   let store: StoreOf<Categories>
 
-  @Dependency(\.notificationQueue) var notificationQueue
-
   public var body: some View {
     WithViewStore(store, observe: { $0 }) { viewStore in
       switch viewStore.categoriesState.response {
@@ -71,27 +87,30 @@ public struct CategoriesView: View {
         ProgressView()
       case .reloading(let categories), .finished(.success(let categories)):
         List(categories) { category in
-          Button {
-            viewStore.send(.onCategoryTap(category.tag))
-          } label: {
-            HStack {
-              CategoryColorSwatch(color: category.resolvedColor)
-                .accessibilityHidden(true)
-              VStack(alignment: .leading) {
-                Text(category.title)
-                  .font(.headline)
-                // TODO: Request next race for a given category and display it here
-                Text("TODO: Mostrar a próxima corrida da categoria aqui")
-                  .font(.caption)
-              }
-              Spacer()
-
-              Image(systemName: "heart")
-                .onTapGesture {
-                  // TODO: Add a way to favorite categories
-                  notificationQueue.enqueue(.testflight("Ainda não fiz essa funcionalidade, desculpa!"))
+          HStack {
+            Button {
+              viewStore.send(.onCategoryTap(category.tag))
+            } label: {
+              HStack {
+                CategoryColorSwatch(color: category.resolvedColor)
+                  .accessibilityHidden(true)
+                VStack(alignment: .leading) {
+                  Text(category.title).font(.headline)
+                  Text("TODO: Mostrar a próxima corrida da categoria aqui").font(.caption)
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
+              }
             }
+            .buttonStyle(.plain)
+
+            Button {
+              viewStore.send(.favoriteTapped(category.tag))
+            } label: {
+              Image(systemName: viewStore.favoriteTags.contains(category.tag) ? "heart.fill" : "heart")
+                .frame(minWidth: 44, minHeight: 44)
+            }
+            .buttonStyle(.borderless)
+            .accessibilityLabel(viewStore.favoriteTags.contains(category.tag) ? "Remover \(category.title) dos favoritos" : "Favoritar \(category.title)")
           }
           .foregroundStyle(.primary)
         }
@@ -99,6 +118,6 @@ public struct CategoriesView: View {
         APIErrorView(error: error)
       }
     }
-
+    .task { store.send(.onAppear) }
   }
 }

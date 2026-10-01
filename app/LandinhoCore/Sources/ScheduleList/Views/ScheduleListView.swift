@@ -1,127 +1,83 @@
-//
-//  ScheduleListView.swift
-//
-//
-//  Created by Mauricio Cardozo on 17/11/23.
-//
-
-import APIClient
-import LandinhoFoundation
 import ComposableArchitecture
 import Foundation
+import LandinhoFoundation
 import SwiftUI
 import WidgetUI
 
 public struct ScheduleListView: View {
-  public init(store: StoreOf<ScheduleList>) {
-    self.store = store
-  }
-
+  public init(store: StoreOf<ScheduleList>) { self.store = store }
   let store: StoreOf<ScheduleList>
 
   public var body: some View {
     WithViewStore(store, observe: { $0 }) { viewStore in
-      switch viewStore.racesState.response {
-      case .idle:
-        // FIXME: Color not available on tvOS
-        //Color(.systemBackground)
-        Color.clear
-          .task {
-            viewStore.send(.onAppear)
+      ScrollView {
+        LazyVStack(spacing: 20) {
+          if viewStore.hasLoaded, !viewStore.items.isEmpty {
+            HStack {
+              Text("\(viewStore.items.count) de \(viewStore.total) etapas")
+                .font(.caption).foregroundStyle(.secondary)
+              Spacer()
+              if viewStore.isRefreshing { ProgressView().accessibilityLabel("Atualizando horários") }
+            }
+            .padding(.horizontal)
           }
-      case .loading:
-        ProgressView()
-      case .reloading(let response), .finished(.success(let response)):
-        ScrollView {
-          LazyVStack(spacing: 20) {
-            ForEach(response.items) { item in
-              Button(action: {
+          if !viewStore.hasLoaded, viewStore.isLoading {
+            ProgressView("Carregando horários…").padding()
+          }
+          if viewStore.hasLoaded, viewStore.items.isEmpty {
+            ContentUnavailableView("Nenhuma próxima etapa", systemImage: "flag.checkered",
+              description: Text("Novos horários aparecerão aqui quando forem publicados."))
+          }
+          ForEach(viewStore.items) { item in
+            VStack(alignment: .leading, spacing: 4) {
+              if viewStore.favoriteTags.contains(item.category.tag) {
+                Label("Favorita", systemImage: "heart.fill")
+                  .font(.caption).foregroundStyle(.secondary)
+              }
+              Button {
                 viewStore.send(.delegate(.onWidgetTap(item)))
-              }, label: {
-                NextRaceMediumWidgetView(race: item, lastUpdatedDate: Date())
+              } label: {
+                NextRaceMediumWidgetView(race: item, lastUpdatedDate: viewStore.lastUpdatedDate)
                   .widgetBackground()
                   .widgetFrame(family: .systemMedium)
-                // FIXME: Fix animation
-//                  .onTapAnimate {
-//                    viewStore.send(.delegate(.onWidgetTap(item)))
-//                  }
-                  .contextMenu {
-                    Button("Compartilhar", systemImage: "square.and.arrow.up") {
-                      viewStore.send(.delegate(.onShareTap(item)))
-                    }
-                  }
-              })
-              .buttonStyle(PlainButtonStyle())
+              }
+              .buttonStyle(.plain)
+              .contextMenu {
+                Button("Compartilhar", systemImage: "square.and.arrow.up") {
+                  viewStore.send(.delegate(.onShareTap(item)))
+                }
+              }
+            }
+          }
+          if let message = viewStore.errorMessage {
+            VStack(spacing: 12) {
+              Text(message).multilineTextAlignment(.center)
+              Button("Tentar novamente") { viewStore.send(.retry) }
+            }
+            .padding()
+          } else if viewStore.canLoadMore {
+            if viewStore.isLoading, !viewStore.isRefreshing {
+              ProgressView("Carregando mais etapas…").padding()
+            } else if !viewStore.isRefreshing {
+              Button("Carregar mais etapas") { viewStore.send(.loadMore) }
+                .padding()
             }
           }
         }
-        .frame(maxWidth: .infinity)
-        .background(
-          .background.secondary
-        )
-        .refreshable {
-          viewStore.send(.onAppear)
-        }
-      case .finished(.failure(let error)):
-        APIErrorView(error: error)
+        .padding(.vertical)
       }
+      .frame(maxWidth: .infinity)
+      .background(.background.secondary)
+      .refreshable { await viewStore.send(.refresh).finish() }
+      .task { viewStore.send(.onAppear) }
+      .onDisappear { viewStore.send(.onDisappear) }
     }
   }
 }
 
 #Preview {
-  let store = Store(initialState: ScheduleList.State(categoryTag: nil)) {
-    ScheduleList()
-  }
-  store.send(.racesRequest(.response(.finished(.success(.init(items: [
-    .init(
-      id: .init(),
-      title: "Race",
-      shortTitle: "Race",
-      events: [
-        .init(
-          id: .init(),
-          title: "Treino Livre 1",
-          date: Date(),
-          isMainEvent: false)
-      ],
-      category: .init(
-        id: .init(),
-        title: "Formula 1",
-        tag: "f1"))
-  ], metadata: .init(page: 0, per: 0, total: 0)))))))
-
-  return NavigationStack {
-    ScheduleListView(store: store)
-      .navigationTitle("ScheduleList")
-  }
-}
-
-// TODO: Move to a new module, CommonUI or whatever
-struct TapAnimationModifier: ViewModifier {
-  @State private var isTapped = false
-  var completion: () -> Void
-  var delay: TimeInterval = 0.2
-
-  func body(content: Content) -> some View {
-    content
-      .scaleEffect(isTapped ? 0.95 : 1.0)
-      .onTapGesture {
-        withAnimation(.spring(duration: delay)) {
-          isTapped = true
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-          completion()
-          withAnimation(.spring(duration: delay)) {
-            isTapped = false
-          }
-        }
-      }
-  }
-}
-
-extension View {
-  func onTapAnimate(delay: TimeInterval = 0.2, completion: @escaping () -> Void) -> some View {
-    self.modifier(TapAnimationModifier(completion: completion, delay: delay))
+  NavigationStack {
+    ScheduleListView(store: Store(initialState: ScheduleList.State(categoryTag: nil)) { ScheduleList() })
+      .navigationTitle("Home")
   }
 }
