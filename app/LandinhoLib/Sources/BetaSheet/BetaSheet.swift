@@ -116,7 +116,6 @@ public struct BetaSheet: View {
 
   • Ações rápidas no ícone do aplicativo
   • Design final da Home, Tela de Corrida, Categorias, Ajustes, Compartilhar, etc para iOS e iPadOS
-  • Widget extra-largo para iPads
   • Compartilhar texto de uma corrida -> Estilo o bot
 
   Para o futuro:

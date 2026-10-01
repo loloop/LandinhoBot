@@ -34,7 +34,7 @@ struct NextRaceWidget: Widget {
         }
         .containerBackground(.background, for: .widget)
       }
-      .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
+      .supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .systemExtraLarge])
       .configurationDisplayName("Próxima corrida")
       .description("Mostra a próxima corrida que vai acontecer")
   }
@@ -68,7 +68,13 @@ struct NextRaceWidgetView: View {
         lastUpdatedDate: lastUpdatedDate,
         referenceDate: referenceDate,
         showNonMainEventSessions: showNonMainEventSessions)
-    case .systemExtraLarge, .accessoryCircular, .accessoryRectangular, .accessoryInline:
+    case .systemExtraLarge:
+      NextRaceExtraLargeWidgetView(
+        race: race,
+        lastUpdatedDate: lastUpdatedDate,
+        referenceDate: referenceDate,
+        showNonMainEventSessions: showNonMainEventSessions)
+    case .accessoryCircular, .accessoryRectangular, .accessoryInline:
       // TODO: Accessory Widgets
       EmptyView()
     @unknown default:
@@ -119,6 +125,13 @@ struct NextRaceWidgetView: View {
     date: Date(),
     response: .init(),
     error: NextRaceTimelineProvider.TimelineError.failure)
+  NextRaceEntry.empty
+  NextRaceEntry.placeholder
+}
+
+#Preview(as: .systemExtraLarge) {
+  NextRaceWidget()
+} timeline: {
   NextRaceEntry.empty
   NextRaceEntry.placeholder
 }

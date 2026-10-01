@@ -45,5 +45,6 @@ let package = Package(
             foundation,
             "CategoryUI",
           ]),
+        .testTarget(name: "WidgetUITests", dependencies: ["WidgetUI"]),
     ]
 )
