@@ -25,6 +25,10 @@ struct VroomVroomApp: App {
 
   @UIApplicationDelegateAdaptor var delegate: VroomAppDelegate
 
+  init() {
+    RacingScheduleShortcuts.updateAppShortcutParameters()
+  }
+
   var body: some Scene {
     WindowGroup {
       RootView(store: store)

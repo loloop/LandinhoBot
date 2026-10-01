@@ -151,7 +151,6 @@ public struct BetaSheet: View {
 
   Para o futuro:
   • Enviar feedback de horário direto numa corrida
-  • Pedir horário da próxima corrida para a Siri
   • Busca de Categorias
   • Easter egg com Live Activity na busca de Categorias -> Você poderá criar um lembrete para a tela de notificações a partir de uma busca
   • Suporte a mais de um fuso horário
