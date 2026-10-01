@@ -336,6 +336,7 @@ private struct SessionReminderButton: View {
             HStack(spacing: 6) {
               Label(isScheduled ? "Lembrete ativado" : "Avisar no início",
                     systemImage: isScheduled ? "bell.badge.fill" : "bell")
+                .foregroundStyle(Color.primary)
               if viewStore.changingReminderID == session.id { ProgressView() }
             }
             .font(.subheadline)

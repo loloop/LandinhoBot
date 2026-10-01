@@ -1,0 +1,18 @@
+{
+  "awaitedAPI" : "notificationSettings",
+  "events" : [
+    {
+      "applicationState" : 0,
+      "epoch" : 1790856600.8052831,
+      "error" : "",
+      "phase" : "notificationSettings.begin"
+    },
+    {
+      "applicationState" : 0,
+      "epoch" : 1790856632.0705819,
+      "error" : "",
+      "phase" : "notificationSettings.timeout"
+    }
+  ],
+  "timedOutAPI" : "notificationSettings"
+}
