@@ -116,6 +116,50 @@ State records are written to the installed app's Documents directory and copied
 here; screenshots are compressed with `sips`. The Core test run temporarily used
 the app's resolved dependency pins, then removed both generated Core pin files.
 
+## Main integration validation (01/10/2026)
+
+The published branch history was preserved with normal merges: the published
+#36 resolution `d8942e1809cd418833153fd1d17890914f0d2c70`, then current main
+`58889923d64193ddb8bb2c73beb266d0b457238c`, and finally main after #36 merged,
+`5fdade7f8aaa3400e5da67a6f785b2e45344c5d0`. The Xcode project matches the #36
+resolution, including normal app, widget, App Clip, and Mock target membership.
+The dated in-app changelog retains the incoming history and API-domain maintenance
+notes, adds notification behavior, and keeps completed feature TODOs removed.
+
+The combined native Core suite passed **40 tests, zero failures**: the previous
+31 tests plus 9 incoming MockAPIClient tests. The mock schedule integration now
+records the reminder refresh, waits for the effect to finish, and asserts that the
+exact loaded page is reconciled. Its test backend never calls native notification
+APIs. The tracked Core dependency pins from main were preserved byte-for-byte.
+An earlier compilation was cancelled before tests when the published #36
+resolution arrived; only the complete combined run is counted here. The final
+main merge changed only the changelog, so the unchanged Core tests were not
+repeated. The normal app/widget/embedded App Clip build passed again after that
+merge, and their executable membership was checked. The separate VroomVroomMock
+build also passed; its distinct bundle ID, display name, executable, and absence
+of the live widget extension were verified. The task simulator was shut down
+after validation.
+
+The complete run uses the same exact simulator and DerivedData as above, from
+`app/LandinhoCore`:
+
+```sh
+DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild \
+  -skipMacroValidation -disableAutomaticPackageResolution \
+  -scheme LandinhoCore-Package \
+  -destination 'platform=iOS Simulator,id=B741BA8C-47CD-4105-A6E6-98ADF0946FEF' \
+  -derivedDataPath /tmp/landinho-about-developer-derived \
+  -clonedSourcePackagesDirPath /tmp/landinho-about-developer-derived/SourcePackages \
+  -jobs 2 -parallel-testing-enabled NO \
+  ARCHS=arm64 ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=NO \
+  'OTHER_SWIFT_FLAGS=$(inherited) -j2' test
+```
+
+The existing UI and native scheduling captures remain from the labeled earlier
+runs. This integration changes the changelog and mock test/configuration; reminder
+UI and scheduling behavior are unchanged. No OS permission/delivery run was
+repeated for the integration.
+
 ## Behavior limits
 
 Reminders are local to this device and scheduled at a specific session's start.
