@@ -11,6 +11,7 @@ app_dir="$build_dir/ExtraLargeEvidence.app"
 sdk_path="$(xcrun --sdk iphonesimulator --show-sdk-path)"
 mkdir -p "$app_dir"
 
+if [[ "${REUSE_EVIDENCE_BUILD:-0}" != 1 ]]; then
 if [[ "$mode" == before ]]; then
   git archive 4ff8bc0 app/LandinhoFoundation/Sources app/LandinhoCoreUI/Sources/WidgetUI app/LandinhoCoreUI/Sources/CategoryUI app/Widgets/NextRaceWidget/NextRaceWidget.swift | tar -x -C "$build_dir"
   source_dir="$build_dir"
@@ -39,6 +40,10 @@ compiler=(xcrun --sdk iphonesimulator swiftc -j2 -sdk "$sdk_path" -target arm64-
   "$source_dir/app/LandinhoCoreUI/Sources/WidgetUI/WidgetBackground.swift" -o "$app_dir/libWidgetUI.dylib"
 "${compiler[@]}" "$evidence_dir/PreviewHarness.swift" "$build_dir/FamilyDispatcher.swift" \
   -lLandinhoFoundation -lCategoryUI -lWidgetUI -Xlinker -rpath -Xlinker @executable_path -o "$app_dir/ExtraLargeEvidence"
+elif [[ ! -f "$app_dir/ExtraLargeEvidence" ]]; then
+  printf '%s\n' 'No existing harness binary; rerun without REUSE_EVIDENCE_BUILD=1.' >&2
+  exit 1
+fi
 
 bundle_id="com.landinho.ExtraLargeEvidence.$mode"
 cat > "$app_dir/Info.plist" <<PLIST
