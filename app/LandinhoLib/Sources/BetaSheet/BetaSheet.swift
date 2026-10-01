@@ -84,12 +84,12 @@ public struct BetaSheet: View {
   01/10/2026
   • Adiciona lembretes locais para o início de sessões com horário confirmado, com opção de ativar ou cancelar nos detalhes; a permissão de notificações é solicitada somente ao ativar um lembrete
   • Atualiza os lembretes quando a programação recebida é recarregada e mostra acesso aos Ajustes quando as notificações estão desativadas
+  • Manutenção: registra a pendência de verificar o domínio e o DNS da API hospedada
   • Adiciona widget extra-largo no iPad com a próxima sessão, programação em duas colunas e indicação de horários pendentes
   • Adiciona App Clip para consultar categorias e corridas por link e permite compartilhar o app pelos Ajustes
   • Adiciona ações rápidas no ícone do app para abrir a Home, as categorias e os Ajustes
   • Permite compartilhar a programação de uma corrida em texto, incluindo horários pendentes e sessões canceladas
   • Manutenção: integra as configurações do App Clip e da versão Mock no projeto do app
-  • Manutenção: registra a pendência de verificar o domínio e o DNS da API hospedada
   • Protege a administração com senha do servidor; o acesso fica oculto no número da versão em Ajustes e é bloqueado ao sair ou colocar o app em segundo plano
   • Adiciona favoritos de categorias e uma Home com paginação, atualização e prioridade para categorias favoritas
   • Manutenção: mantém o acesso administrativo da versão Mock inteiramente em memória e adapta seus testes à nova Home
