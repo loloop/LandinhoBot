@@ -211,15 +211,8 @@ struct InnerEventDetailView: View {
     .navigationTitle(race.shortTitle)
     .toolbar {
       ToolbarItem {
-        Menu {
-          ShareLink(item: race.roundLinkShareText) {
-            Label("Compartilhar link", systemImage: "link")
-          }
-          Button("Compartilhar imagem", systemImage: "photo") {
-            store.send(.delegate(.onShareTap(race: race)))
-          }
-        } label: {
-          Label("Compartilhar", systemImage: "square.and.arrow.up")
+        RoundShareMenu(race: race) {
+          store.send(.delegate(.onShareTap(race: race)))
         }
       }
     }
