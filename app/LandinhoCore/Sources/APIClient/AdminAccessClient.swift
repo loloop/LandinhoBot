@@ -18,7 +18,8 @@ public struct AdminAccessClient: DependencyKey {
     _ = AdminAccessLifecycle.shared
     return Self(unlock: { password in
       let attempt = liveAdminSession.beginUnlock()
-      let response = try await APIClientService.live.request(AdminVerification.self,
+      @Dependency(\.apiRequester) var api
+      let response = try await api.request(AdminVerification.self,
         endpoint: "admin-session", method: "GET", data: nil, queryItems: [],
         headers: ["Authorization": AdminSession.header(password: password)])
       try Task.checkCancellation()
