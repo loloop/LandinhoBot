@@ -1,0 +1,31 @@
+{
+  "count" : 6,
+  "failures" : 0,
+  "tests" : [
+    {
+      "name" : "prebinding_delivered_once",
+      "passed" : true
+    },
+    {
+      "name" : "latest_action_before_bind",
+      "passed" : true
+    },
+    {
+      "name" : "warm_actions_and_completion",
+      "passed" : true
+    },
+    {
+      "name" : "unknown_warm_action",
+      "passed" : true
+    },
+    {
+      "name" : "beta_deferral",
+      "passed" : true
+    },
+    {
+      "name" : "delegate_store_isolation",
+      "passed" : true
+    }
+  ],
+  "trigger" : "production scene methods and Root store; no OS Home Screen interaction"
+}

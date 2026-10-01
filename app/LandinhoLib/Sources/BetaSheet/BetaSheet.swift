@@ -114,9 +114,7 @@ public struct BetaSheet: View {
   let nextSteps: LocalizedStringKey = """
   Esta lista será completamente limpa antes do lançamento público do aplicativo (em ordem de prioridade)
 
-  • Ações rápidas no ícone do aplicativo
   • Design final da Home, Tela de Corrida, Categorias, Ajustes, Compartilhar, etc para iOS e iPadOS
-  • Compartilhar texto de uma corrida -> Estilo o bot
 
   Para o futuro:
   • Notificações quando eventos específicos forem começar
