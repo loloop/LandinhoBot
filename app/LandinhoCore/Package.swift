@@ -29,6 +29,7 @@ let package = Package(
       .library(name: "CategoryFavorites", targets: ["CategoryFavorites"]),
       .library(name: "EventDetail", targets: ["EventDetail"]),
       .library(name: "ScheduleList", targets: ["ScheduleList"]),
+      .library(name: "SessionReminders", targets: ["SessionReminders"]),
     ],
     dependencies: [
       .package(path: "../LandinhoCoreUI"),
@@ -41,6 +42,8 @@ let package = Package(
       .target(name: "AdminSession"),
       .testTarget(name: "AdminSessionTests", dependencies: ["AdminSession"]),
       .target(name: "CategoryFavorites", dependencies: [composable]),
+      .target(name: "SessionReminders", dependencies: [foundation]),
+      .testTarget(name: "SessionRemindersTests", dependencies: ["SessionReminders", foundation]),
       .target(
         name: "APIClient",
         dependencies: [
@@ -55,6 +58,7 @@ let package = Package(
             foundation,
             "APIClient",
             .product(name: "CategoryUI", package: "LandinhoCoreUI"),
+            "SessionReminders",
             widgetUI,
             composable
           ]),

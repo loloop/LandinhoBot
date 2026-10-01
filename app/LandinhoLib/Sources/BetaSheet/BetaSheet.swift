@@ -117,7 +117,6 @@ public struct BetaSheet: View {
   • Design final da Home, Tela de Corrida, Categorias, Ajustes, Compartilhar, etc para iOS e iPadOS
 
   Para o futuro:
-  • Notificações quando eventos específicos forem começar
   • Enviar feedback de horário direto numa corrida
   • Pedir horário da próxima corrida para a Siri
   • Busca de Categorias

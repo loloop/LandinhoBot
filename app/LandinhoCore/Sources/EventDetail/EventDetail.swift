@@ -11,6 +11,7 @@ import Foundation
 import ComposableArchitecture
 @_spi(Internal) import APIClient
 import SwiftUI
+import SessionReminders
 
 public struct EventDetail: Reducer {
   public init() {}
@@ -30,6 +31,11 @@ public struct EventDetail: Reducer {
     public var race: Race?
     public var isLoading = false
     public var loadFailure: LoadFailure?
+    var reminders = SessionReminderSnapshot(authorization: .notDetermined, scheduledDates: [:])
+    var isLoadingReminders = false
+    var changingReminderID: UUID?
+    var reminderError: String?
+    var isNotificationSettingsNeeded = false
   }
 
   public enum Action: Equatable {
@@ -37,6 +43,10 @@ public struct EventDetail: Reducer {
     case retry
     case onDisappear
     case response(TaskResult<Race>)
+    case refreshReminders
+    case toggleReminder(UUID)
+    case reminderResponse(TaskResult<SessionReminderSnapshot>)
+    case reminderState(SessionReminderSnapshot)
     case delegate(DelegateAction)
   }
 
@@ -52,10 +62,13 @@ public struct EventDetail: Reducer {
     case onShareTap(race: Race)
   }
 
+  @Dependency(\.sessionReminders) var sessionReminders
+
   public var body: some ReducerOf<Self> {
     Reduce { state, action in
       switch action {
       case .onAppear, .retry:
+        if state.race != nil { return .send(.refreshReminders) }
         guard let id = state.raceID, state.race == nil, !state.isLoading else { return .none }
         if action == .onAppear, state.loadFailure != nil { return .none }
         state.isLoading = true
@@ -86,13 +99,60 @@ public struct EventDetail: Reducer {
           return .none
         }
         state.race = race
-        return .none
+        return .send(.refreshReminders)
 
       case .response(.failure(let error)):
         guard state.isLoading else { return .none }
         state.isLoading = false
         let error = error as NSError
         state.loadFailure = error.domain == "LandinhoAPI" && error.code == 404 ? .notFound : .unavailable
+        return .none
+
+      case .refreshReminders:
+        guard let race = state.race, !state.isLoadingReminders, state.changingReminderID == nil else { return .none }
+        state.isLoadingReminders = true
+        return .run { send in
+          await send(.reminderResponse(TaskResult { try await sessionReminders.refresh([race]) }))
+        }
+
+      case .toggleReminder(let id):
+        guard let race = state.race, let session = race.events.first(where: { $0.id == id }),
+          !state.isLoadingReminders, state.changingReminderID == nil else { return .none }
+        state.changingReminderID = id
+        state.reminderError = nil
+        state.isNotificationSettingsNeeded = false
+        return .run { send in
+          await send(.reminderResponse(TaskResult { try await sessionReminders.toggle(race, session) }))
+        }
+
+      case .reminderResponse(.success(let snapshot)):
+        state.reminders = snapshot
+        state.isLoadingReminders = false
+        state.changingReminderID = nil
+        state.reminderError = nil
+        state.isNotificationSettingsNeeded = snapshot.authorization == .denied
+        return .none
+
+      case .reminderResponse(.failure(let error)):
+        state.isLoadingReminders = true
+        state.changingReminderID = nil
+        state.isNotificationSettingsNeeded = (error as? SessionReminderError) == .permissionDenied
+        switch error as? SessionReminderError {
+        case .cancelled: state.reminderError = "Esta sessão foi cancelada."
+        case .pendingTime: state.reminderError = "O horário desta sessão ainda não foi confirmado."
+        case .alreadyStarted: state.reminderError = "Esta sessão já começou. Escolha uma sessão futura."
+        case .permissionDenied: state.reminderError = "Permita notificações nos Ajustes para receber este lembrete."
+        case .limitReached: state.reminderError = "Você atingiu o limite de lembretes. Desative um lembrete antes de adicionar outro."
+        default: state.reminderError = "Não foi possível atualizar o lembrete. Tente novamente."
+        }
+        return .run { send in
+          await send(.reminderState(await sessionReminders.current()))
+        }
+
+      case .reminderState(let snapshot):
+        state.reminders = snapshot
+        state.isLoadingReminders = false
+        state.isNotificationSettingsNeeded = snapshot.authorization == .denied
         return .none
       case .delegate:
         return .none
@@ -140,6 +200,8 @@ public struct EventDetailView: View {
 struct InnerEventDetailView: View {
   let store: StoreOf<EventDetail>
   let race: Race
+  @Environment(\.scenePhase) var scenePhase
+  @Environment(\.openURL) var openURL
 
   var body: some View {
     ScrollView {
@@ -185,14 +247,19 @@ struct InnerEventDetailView: View {
               Text(event.date)
                 .font(.headline)
               ForEach(event.events) { innerEvent in
-                HStack {
-                  Text(innerEvent.title)
-                    .font(.title3)
-
-                  Spacer()
-                  Text(innerEvent.time)
-                    .fontDesign(.monospaced)
+                VStack(alignment: .leading, spacing: 8) {
+                  HStack {
+                    Text(innerEvent.title)
+                      .font(.title3)
+                    Spacer()
+                    Text(innerEvent.time)
+                      .fontDesign(.monospaced)
+                  }
+                  if let session = race.events.first(where: { $0.id == innerEvent.id }) {
+                    SessionReminderButton(store: store, round: race, session: session)
+                  }
                 }
+                .padding(.vertical, 6)
               }
               Spacer()
             }
@@ -201,6 +268,28 @@ struct InnerEventDetailView: View {
               .font(.caption)
               .foregroundStyle(.secondary)
               .frame(maxWidth: .infinity, alignment: .trailing)
+
+            WithViewStore(store, observe: { $0 }) { viewStore in
+              if let error = viewStore.reminderError {
+                Text(error)
+                  .font(.callout)
+                  .foregroundStyle(.red)
+                  .accessibilityLabel("Erro no lembrete: \(error)")
+              }
+              if viewStore.isNotificationSettingsNeeded {
+                Text("As notificações estão desativadas para este app.")
+                  .font(.callout)
+                  .foregroundStyle(.secondary)
+                #if os(iOS)
+                Button("Abrir Ajustes de notificações") {
+                  if let url = URL(string: UIApplication.openNotificationSettingsURLString) { openURL(url) }
+                }
+                #endif
+              }
+            }
+            Text("Lembretes neste dispositivo, no início da sessão. Horários alterados são atualizados quando a programação é recarregada no app.")
+              .font(.caption)
+              .foregroundStyle(.secondary)
           }
         }
       }
@@ -209,6 +298,9 @@ struct InnerEventDetailView: View {
     }
     .frame(maxWidth: .infinity)
     .navigationTitle(race.shortTitle)
+    .onChange(of: scenePhase) { _, phase in
+      if phase == .active { store.send(.refreshReminders) }
+    }
     .toolbar {
       ToolbarItem {
         RoundShareMenu(race: race) {
@@ -225,6 +317,36 @@ struct InnerEventDetailView: View {
 
   var eventsByDate: [EventByDate] {
     EventByDateFactory.convert(events: race.events)
+  }
+}
+
+private struct SessionReminderButton: View {
+  let store: StoreOf<EventDetail>
+  let round: Race
+  let session: RaceEvent
+
+  var body: some View {
+    WithViewStore(store, observe: { $0 }) { viewStore in
+      TimelineView(.periodic(from: .now, by: 30)) { context in
+        if !round.isCancelled, !session.isCancelled, let date = session.date, date > context.date {
+          let isScheduled = viewStore.reminders.scheduledDates[session.id] != nil
+          Button {
+            store.send(.toggleReminder(session.id))
+          } label: {
+            HStack(spacing: 6) {
+              Label(isScheduled ? "Lembrete ativado" : "Avisar no início",
+                    systemImage: isScheduled ? "bell.badge.fill" : "bell")
+              if viewStore.changingReminderID == session.id { ProgressView() }
+            }
+            .font(.subheadline)
+          }
+          .buttonStyle(.bordered)
+          .disabled(viewStore.isLoadingReminders || viewStore.changingReminderID != nil)
+          .accessibilityLabel(isScheduled ? "Desativar lembrete para \(session.title)" : "Avisar quando \(session.title) começar")
+          .accessibilityValue(isScheduled ? "Ativado" : "Desativado")
+        }
+      }
+    }
   }
 }
 

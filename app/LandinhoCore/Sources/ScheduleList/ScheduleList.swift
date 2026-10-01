@@ -1,6 +1,7 @@
 @_spi(Internal) import APIClient
 import CategoryFavorites
 import ComposableArchitecture
+import EventDetail
 import Foundation
 import LandinhoFoundation
 
@@ -95,6 +96,8 @@ public struct ScheduleList: Reducer {
   @Dependency(\.categoryFavorites) var favorites
   @Dependency(\.date.now) var now
 
+  @Dependency(\.sessionReminders) var sessionReminders
+
   public var body: some ReducerOf<Self> {
     Reduce { state, action in
       switch action {
@@ -154,6 +157,12 @@ public struct ScheduleList: Reducer {
           state.hasLoaded = true
           state.lastUpdatedDate = now
           state.errorMessage = nil
+          return .run { _ in
+            // Only reconcile the validated response, including cancelled rounds.
+            _ = try await sessionReminders.refresh(response.items)
+          } catch: { _, _ in
+            // Round details expose reminder errors and retry controls.
+          }
         case .failure:
           state.failedPage = page
           state.errorMessage = "Não foi possível carregar os horários. Tente novamente."
