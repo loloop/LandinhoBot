@@ -11,7 +11,6 @@ import SwiftUI
 struct AppWatermark: View {
   var body: some View {
     HStack {
-      // TODO: Resize and compress this
       Image("AppIcon", bundle: .module)
         .resizable()
         .frame(width: 30, height: 30)
