@@ -1,0 +1,24 @@
+Source: shipping entries restored, feature/app-clip atop feature/app-icon (8c18bc3).
+Toolchain: /Applications/Xcode.app/Contents/Developer (Xcode 27.1).
+
+swift test --package-path app/LandinhoClip --scratch-path /tmp/landinho-app-clip-tests --jobs 2
+PASS: 17 tests, 0 failures (2026-10-01 07:34:17).
+
+swift test --package-path app/LandinhoFoundation --scratch-path /tmp/landinho-app-clip-foundation-tests --jobs 2
+PASS: 23 tests, 0 failures, including 3 AppSharing tests.
+
+xcodebuild -jobs 2 -skipMacroValidation -project app/VroomVroom.xcodeproj -scheme VroomVroom -destination 'platform=iOS Simulator,id=E9AFF1D8-B586-4C58-B0CE-8C94EAC7C084' -derivedDataPath /tmp/landinho-about-developer-derived ARCHS=arm64 ONLY_ACTIVE_ARCH=YES 'OTHER_SWIFT_FLAGS=$(inherited) -j2' CODE_SIGNING_ALLOWED=NO build
+BUILD SUCCEEDED: restored shipping entries, full app + Widget + embedded Clip.
+Actual product: VroomVroom.app/AppClips/VroomVroomClip.app and VroomVroom.app/PlugIns/WidgetsExtension.appex verified.
+
+xcodebuild -jobs 2 -skipMacroValidation -project app/VroomVroom.xcodeproj -scheme VroomVroomClip -configuration Release -destination 'generic/platform=iOS' -derivedDataPath /tmp/landinho-about-developer-derived ARCHS=arm64 ONLY_ACTIVE_ARCH=YES 'OTHER_SWIFT_FLAGS=$(inherited) -j2' CODE_SIGNING_ALLOWED=NO build
+BUILD SUCCEEDED: Release iphoneos Mach-O arm64 executable.
+Unsigned unthinned Clip bundle: 2671985 bytes; executable: 858768 bytes.
+Budget check: 2671985 < 15000000.
+Not a signed distribution/App Thinning size report.
+
+Static project/plist/entitlement/AASA and syntax checks: PASS.
+Native handoff attempt: vroomvroom://settings; UIKit accepted=false; unavailable-app alert captured.
+AppClip/Settings native screenshots: source-entry harness triggers, documented in README.md.
+All harness entry replacements restored before final build.
+Task-owned E9 simulator shutdown verified; fixture process stopped.

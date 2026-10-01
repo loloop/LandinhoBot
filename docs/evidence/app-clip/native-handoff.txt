@@ -1,0 +1,3 @@
+Timestamp               Ty Process[PID:TID]
+2026-10-01 07:38:58.798 Df VroomVroomClip[5914:338698] (Foundation) LANDINHO_CLIP_EVIDENCE requested vroomvroom://settings
+2026-10-01 07:38:58.806 Df VroomVroomClip[5914:338698] (Foundation) LANDINHO_CLIP_EVIDENCE native accepted=false

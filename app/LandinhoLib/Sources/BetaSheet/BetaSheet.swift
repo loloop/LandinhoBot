@@ -114,8 +114,6 @@ public struct BetaSheet: View {
   let nextSteps: LocalizedStringKey = """
   Esta lista será completamente limpa antes do lançamento público do aplicativo (em ordem de prioridade)
 
-  • App Clip
-    • Botão de compartilhar o app em Ajustes -> App Clip ou Link
   • Ações rápidas no ícone do aplicativo
   • Design final da Home, Tela de Corrida, Categorias, Ajustes, Compartilhar, etc para iOS e iPadOS
   • Widget extra-largo para iPads
