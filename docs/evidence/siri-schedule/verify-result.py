@@ -27,6 +27,12 @@ elif scenario == "session":
 elif scenario == "category":
     assert "Corrida, São Paulo, de Fórmula 1" in text, result
     assert result.get("categoryTag") == "f1" and not error, result
+elif scenario in ("mock", "mock-session"):
+    expected = "Corrida" if scenario == "mock" else "Treino Livre"
+    assert f"{expected}, São Paulo, de Formula 1" in text and not error, result
+    assert result.get("categoryTag") == "f1", result
+    assert result.get("networkingMode") == "mock", result
+    assert result.get("apiURLOverride") == "http://127.0.0.1:1", result
 else:
     raise ValueError(f"Unknown native query scenario: {scenario}")
 print(json.dumps({"scenario": scenario, "verified": True, "result": result}, ensure_ascii=False))

@@ -1,7 +1,29 @@
+#if MOCK_NETWORKING
+@_spi(Internal) import APIClient
+@_spi(Internal) import MockAPIClient
+#else
 import APIClient
+#endif
 import AppIntents
+import ComposableArchitecture
 import LandinhoFoundation
 import SwiftUI
+
+/// App Intents and entity queries can run without constructing the Root Store.
+/// The demo target must therefore choose its requester at this boundary too.
+private enum SiriScheduleEnvironment {
+  static func withAPI<Value>(_ operation: () async throws -> Value) async rethrows -> Value {
+    #if MOCK_NETWORKING
+    return try await withDependencies {
+      $0.apiRequester = MockAPIClientService.liveValue
+    } operation: {
+      try await operation()
+    }
+    #else
+    return try await operation()
+    #endif
+  }
+}
 
 struct RacingCategoryEntity: AppEntity {
   static var typeDisplayRepresentation: TypeDisplayRepresentation = "Categoria"
@@ -39,7 +61,11 @@ struct RacingCategoryQuery: EntityStringQuery {
   func suggestedEntities() async throws -> [RacingCategoryEntity] { try await load() }
 
   private func load() async throws -> [RacingCategoryEntity] {
-    do { return try await SiriScheduleClient.categories().map(RacingCategoryEntity.init) }
+    do {
+      return try await SiriScheduleEnvironment.withAPI {
+        try await SiriScheduleClient.categories().map(RacingCategoryEntity.init)
+      }
+    }
     catch is CancellationError { throw CancellationError() }
     catch { throw SiriScheduleIntentError.unavailable }
   }
@@ -88,7 +114,11 @@ struct AskNextRacingSessionIntent: AppIntent {
 
   func perform() async throws -> some IntentResult & ReturnsValue<String> & ProvidesDialog & ShowsSnippetView {
     let rounds: [Race]
-    do { rounds = try await SiriScheduleClient.upcomingRounds(categoryTag: category?.tag) }
+    do {
+      rounds = try await SiriScheduleEnvironment.withAPI {
+        try await SiriScheduleClient.upcomingRounds(categoryTag: category?.tag)
+      }
+    }
     catch is CancellationError { throw CancellationError() }
     catch { throw SiriScheduleIntentError.unavailable }
 

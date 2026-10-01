@@ -7,8 +7,12 @@ import subprocess
 import sys
 
 app = pathlib.Path(sys.argv[1])
+is_mock = len(sys.argv) == 3 and sys.argv[2] == "--mock"
+assert len(sys.argv) == 2 or is_mock, "Usage: verify-metadata.py APP_PATH [--mock]"
 with (app / "Info.plist").open("rb") as source:
     info = plistlib.load(source)
+if is_mock:
+    assert info["CFBundleIdentifier"] == "me.mauriciocardozo.racing.vroomvroom.mock", info
 assert info["CFBundleDevelopmentRegion"].replace("_", "-") == "pt-BR", info["CFBundleDevelopmentRegion"]
 localization = app / "pt-BR.lproj" / "AppShortcuts.strings"
 assert localization.is_file(), "Brazilian Portuguese shortcut phrases are not bundled"
@@ -45,10 +49,13 @@ training = (app / "Metadata.appintents" / "root.ssu.yaml").read_text()
 assert "locale: pt-BR" in training and "locale: en" not in training, training
 assert "Quando é a próxima corrida" in training and "Quando é a próxima sessão" in training, training
 assert "name: AskNextRacingSessionIntent_" in training and "name: AskNextSessionTimeIntent_" in training, training
-assert (app / "PlugIns" / "WidgetsExtension.appex").is_dir(), "Embedded Widget is missing"
+has_widget = (app / "PlugIns" / "WidgetsExtension.appex").is_dir()
 clips = list((app / "AppClips").glob("*.app"))
-assert len(clips) == 1, "Embedded App Clip is missing"
+if not is_mock:
+    assert has_widget, "Embedded Widget is missing"
+    assert len(clips) == 1, "Embedded App Clip is missing"
 print(json.dumps({
+    "target": "mock" if is_mock else "shipping",
     "shippingApp": str(app),
     "action": action["identifier"],
     "optionalCategory": parameters["category"]["isOptional"],
@@ -56,6 +63,6 @@ print(json.dumps({
     "shortcuts": len(shortcuts),
     "phraseLanguage": info["CFBundleDevelopmentRegion"],
     "bundledPortuguesePhrases": len(phrases),
-    "embeddedWidget": True,
-    "embeddedAppClip": clips[0].name,
+    "embeddedWidget": has_widget,
+    "embeddedAppClip": clips[0].name if len(clips) == 1 else None,
 }, ensure_ascii=False, indent=2))

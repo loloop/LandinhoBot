@@ -55,22 +55,22 @@ private struct SiriQueryEvidenceView: View {
         }
         .padding(24)
       }
-      .navigationTitle(mode == "session" ? "Próxima sessão" : "Próxima corrida")
+      .navigationTitle(isSession ? "Próxima sessão" : "Próxima corrida")
       .task { await runIntent() }
     }
   }
 
   @MainActor
   private func runIntent() async {
-    let intent = AskNextRacingSessionIntent(sessionKind: mode == "session" ? .session : .race)
+    let intent = AskNextRacingSessionIntent(sessionKind: isSession ? .session : .race)
     do {
-      if mode == "category" {
+      if ["category", "mock", "mock-session"].contains(mode) {
         let matches = try await RacingCategoryQuery().entities(matching: "F1")
         guard let category = matches.first else { throw SiriEvidenceError.missingCategory }
         intent.category = category
       }
       let returnedValue: String?
-      if mode == "session" {
+      if isSession {
         let sessionIntent = AskNextSessionTimeIntent()
         sessionIntent.category = intent.category
         returnedValue = try await sessionIntent.perform().value
@@ -87,17 +87,29 @@ private struct SiriQueryEvidenceView: View {
     }
   }
 
+  private var isSession: Bool { mode == "session" || mode == "mock-session" }
+
   private func saveResult(text: String?, error: String?, categoryTag: String?) {
     let result = SiriEvidenceResult(
       mode: mode, text: text, error: error, categoryTag: categoryTag,
       bundleLocalizations: Bundle.main.localizations,
-      developmentLocalization: Bundle.main.developmentLocalization)
+      developmentLocalization: Bundle.main.developmentLocalization,
+      networkingMode: networkingMode,
+      apiURLOverride: ProcessInfo.processInfo.environment["LANDINHO_API_URL"])
     let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
     do {
       let data = try JSONEncoder().encode(result)
       try data.write(to: directory.appendingPathComponent("SiriEvidence.json"), options: .atomic)
       print("SIRI_EVIDENCE \(String(decoding: data, as: UTF8.self))")
     } catch { print("SIRI_EVIDENCE_WRITE_FAILED \(error.localizedDescription)") }
+  }
+
+  private var networkingMode: String {
+    #if MOCK_NETWORKING
+    "mock"
+    #else
+    "live"
+    #endif
   }
 }
 
@@ -108,6 +120,8 @@ private struct SiriEvidenceResult: Encodable {
   let categoryTag: String?
   let bundleLocalizations: [String]
   let developmentLocalization: String?
+  let networkingMode: String
+  let apiURLOverride: String?
 }
 
 private enum SiriEvidenceError: LocalizedError {

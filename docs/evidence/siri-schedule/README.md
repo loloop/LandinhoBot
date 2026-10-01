@@ -118,3 +118,9 @@ These results validate direct native execution and extracted discovery metadata.
 Spoken Siri, a saved Shortcut, and the system-hosted Siri snippet were not
 executed. The Settings screenshot confirms the public `ShortcutsLink` render;
 its tap was not automated. No private API or disabled device interaction was used.
+
+Mock target compatibility is prepared separately in
+[mock-integration-plan.md](mock-integration-plan.md). Its source boundary and
+unreachable-API harness checks are static preparation; integrated Mock compilation
+and execution have not yet been performed. The recorded results above remain
+the original shipping-query evidence.

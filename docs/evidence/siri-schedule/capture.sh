@@ -2,17 +2,18 @@
 set -euo pipefail
 simulator_id="${1:?Usage: capture.sh EXACT_UDID EVIDENCE_APP_PATH scenario [light|dark]}"
 app_path="${2:?Evidence .app path is required}"
-scenario="${3:?Scenario: before-settings|after-settings|race|session|category|pending|cancelled|empty|offline}"
+scenario="${3:?Scenario: before-settings|after-settings|race|session|category|pending|cancelled|empty|offline|mock|mock-session}"
 appearance="${4:-light}"
 export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer
 repo_dir="$(git rev-parse --show-toplevel)"
 evidence_dir="$repo_dir/docs/evidence/siri-schedule"
-bundle_id="me.mauriciocardozo.racing.vroomvroom"
+bundle_id="$(plutil -extract CFBundleIdentifier raw -o - "$app_path/Info.plist")"
 api_url="http://127.0.0.1:18088"
 mode="$scenario"
 case "$scenario" in
   before-settings|after-settings) mode=settings ;;
   race|session|category) ;;
+  mock|mock-session) api_url="http://127.0.0.1:1" ;;
   pending|cancelled|empty|offline) api_url="$api_url/$scenario"; mode=race ;;
   *) echo "Unknown scenario: $scenario" >&2; exit 2 ;;
 esac
