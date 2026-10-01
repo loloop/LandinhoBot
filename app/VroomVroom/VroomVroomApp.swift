@@ -7,12 +7,20 @@
 
 import SwiftUI
 import ComposableArchitecture
+#if MOCK_NETWORKING
+@_spi(Internal) import APIClient
+@_spi(Internal) import MockAPIClient
+#endif
 
 @main
 struct VroomVroomApp: App {
 
   let store = Store(initialState: Root.State()) {
     Root()
+  } withDependencies: { dependencies in
+    #if MOCK_NETWORKING
+    dependencies.apiRequester = MockAPIClientService.liveValue
+    #endif
   }
 
   @UIApplicationDelegateAdaptor var delegate: VroomAppDelegate

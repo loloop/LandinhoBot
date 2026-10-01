@@ -26,6 +26,7 @@ let package = Package(
     ],
     products: [
       .library(name: "APIClient", targets: ["APIClient"]),
+      .library(name: "MockAPIClient", targets: ["MockAPIClient"]),
       .library(name: "EventDetail", targets: ["EventDetail"]),
       .library(name: "ScheduleList", targets: ["ScheduleList"]),
     ],
@@ -43,6 +44,14 @@ let package = Package(
           .product(name: "NotificationsQueue", package: "LandinhoCoreUI"),
           composable
         ]),
+
+      .target(
+        name: "MockAPIClient",
+        dependencies: ["APIClient", foundation, composable]),
+
+      .testTarget(
+        name: "MockAPIClientTests",
+        dependencies: ["APIClient", "MockAPIClient", "ScheduleList", foundation, composable]),
 
         .target(
           name: "EventDetail",

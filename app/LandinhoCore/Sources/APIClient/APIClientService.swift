@@ -121,7 +121,7 @@ final class APIClientService: APIClientServiceProtocol {
 
 struct TestAPIClientService: APIClientServiceProtocol {
   static var liveValue: TestAPIClientService = TestAPIClientService()
-  public static let test: any APIClientServiceProtocol = APIClientService()
+  public static let test: any APIClientServiceProtocol = TestAPIClientService()
 
   func request<T: Decodable>(
     _: T.Type,

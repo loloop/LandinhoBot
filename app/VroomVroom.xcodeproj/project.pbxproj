@@ -42,6 +42,24 @@
 		B4D87C4C2B01AF0B000EBEF9 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = B4D87C4B2B01AF0B000EBEF9 /* Settings */; };
 		B4D87C4E2B01B12B000EBEF9 /* EventDetail in Frameworks */ = {isa = PBXBuildFile; productRef = B4D87C4D2B01B12B000EBEF9 /* EventDetail */; };
 		B4E510372BFB14990050C6CD /* NotificationsQueue in Frameworks */ = {isa = PBXBuildFile; productRef = B4E510362BFB14990050C6CD /* NotificationsQueue */; };
+		DB8567AFFC714BF78D02171E /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42CA9EE2AFE8B66009B3FFB /* RootView.swift */; };
+		A0628F4B3002429AA8C833E6 /* VroomVroomApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42CA9EC2AFE8B66009B3FFB /* VroomVroomApp.swift */; };
+		4901E046772B489A8E39AC5D /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48A501E2AFECEEB00A01B7E /* Root.swift */; };
+		673C8AF2D0CB490DAAE20A23 /* VroomSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47CAE6E2B0D2D3C000164A0 /* VroomSceneDelegate.swift */; };
+		DA27115E82124F7896688FDA /* CategoriesAdmin in Frameworks */ = {isa = PBXBuildFile; productRef = 2707BEEDEE2046EFA94AC8B1 /* CategoriesAdmin */; };
+		4FF7CD08DD9D4062B0E2F464 /* Categories in Frameworks */ = {isa = PBXBuildFile; productRef = 6E0F56DAA0CF41B892D83048 /* Categories */; };
+		7D4391C095244CA188AE8620 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 8B7D55A3B9094F4994A8D12A /* Settings */; };
+		4D766BB75C91415CAE7B912C /* ScheduleList in Frameworks */ = {isa = PBXBuildFile; productRef = 10A2509F54654AB7B7B53B86 /* ScheduleList */; };
+		658032B7355D4A59A2A5066C /* APIClient in Frameworks */ = {isa = PBXBuildFile; productRef = D02B06C6410D47AFA50EE1EE /* APIClient */; };
+		C64CD0A290604FC299E8D6A4 /* Router in Frameworks */ = {isa = PBXBuildFile; productRef = 7C4576E7734947B894D87988 /* Router */; };
+		6A29D683D82B455AAC2556C9 /* EventDetail in Frameworks */ = {isa = PBXBuildFile; productRef = ABDD2CC83EC84437AA1EDA3A /* EventDetail */; };
+		B74B906581C04DB7813578BE /* Admin in Frameworks */ = {isa = PBXBuildFile; productRef = F5CA760ED3F0452488170A9A /* Admin */; };
+		2329AA9A535E42C1B3D27FC7 /* Sharing in Frameworks */ = {isa = PBXBuildFile; productRef = 8D7E9D6C7FF142659726310F /* Sharing */; };
+		0D6F6D4A743D49EFB03B32DA /* BetaSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 8DB4B58E6B694270B4504605 /* BetaSheet */; };
+		56E77B947D9546B2ADCD206F /* Home in Frameworks */ = {isa = PBXBuildFile; productRef = BA4B016C7AC149CDBD6C76EC /* Home */; };
+		5C85CF2A272140838514CDFE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B42CA9F32AFE8B67009B3FFB /* Preview Assets.xcassets */; };
+		941F6EE4CCF8426092C97FB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B42CA9F02AFE8B67009B3FFB /* Assets.xcassets */; };
+		982E65CEDCE94A26B535640A /* MockAPIClient in Frameworks */ = {isa = PBXBuildFile; productRef = 2B284143619940298F0F81E3 /* MockAPIClient */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +116,7 @@
 		B4CBD1A92B05574100BF6776 /* VroomVroom copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "VroomVroom copy-Info.plist"; path = "/Users/mauriciocardozo/Developer/LandinhoBot/app/VroomVroom copy-Info.plist"; sourceTree = "<absolute>"; };
 		B4D9A1C02AFE8B9A008E3EB6 /* LandinhoLib */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LandinhoLib; sourceTree = "<group>"; };
 		B4E5103A2BFB76A40050C6CD /* LandinhoFoundation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LandinhoFoundation; sourceTree = "<group>"; };
+		8204076147B2460399798308 /* VroomVroomMock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VroomVroomMock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +158,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9C6250096E084D92B95D0020 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				982E65CEDCE94A26B535640A /* MockAPIClient in Frameworks */,
+				DA27115E82124F7896688FDA /* CategoriesAdmin in Frameworks */,
+				4FF7CD08DD9D4062B0E2F464 /* Categories in Frameworks */,
+				7D4391C095244CA188AE8620 /* Settings in Frameworks */,
+				4D766BB75C91415CAE7B912C /* ScheduleList in Frameworks */,
+				658032B7355D4A59A2A5066C /* APIClient in Frameworks */,
+				C64CD0A290604FC299E8D6A4 /* Router in Frameworks */,
+				6A29D683D82B455AAC2556C9 /* EventDetail in Frameworks */,
+				B74B906581C04DB7813578BE /* Admin in Frameworks */,
+				2329AA9A535E42C1B3D27FC7 /* Sharing in Frameworks */,
+				0D6F6D4A743D49EFB03B32DA /* BetaSheet in Frameworks */,
+				56E77B947D9546B2ADCD206F /* Home in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -162,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				B42CA9E92AFE8B66009B3FFB /* VroomVroom.app */,
+				8204076147B2460399798308 /* VroomVroomMock.app */,
 				B4CBD16C2B05570F00BF6776 /* WidgetsExtension.appex */,
 				B4B8ECFA2BFB0767001D5A6B /* VroomVroomTV.app */,
 			);
@@ -318,6 +357,37 @@
 			productReference = B4CBD16C2B05570F00BF6776 /* WidgetsExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		C6C8CF0D64E54191AF5B12E2 /* VroomVroomMock */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17364D43734B4A1389F362FA /* Build configuration list for PBXNativeTarget "VroomVroomMock" */;
+			buildPhases = (
+				17539399FBD24516B75F8A6A /* Sources */,
+				9C6250096E084D92B95D0020 /* Frameworks */,
+				A1696A9D92F047189E20AD2C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VroomVroomMock;
+			packageProductDependencies = (
+				2B284143619940298F0F81E3 /* MockAPIClient */,
+				D02B06C6410D47AFA50EE1EE /* APIClient */,
+				6E0F56DAA0CF41B892D83048 /* Categories */,
+				10A2509F54654AB7B7B53B86 /* ScheduleList */,
+				8B7D55A3B9094F4994A8D12A /* Settings */,
+				ABDD2CC83EC84437AA1EDA3A /* EventDetail */,
+				BA4B016C7AC149CDBD6C76EC /* Home */,
+				F5CA760ED3F0452488170A9A /* Admin */,
+				2707BEEDEE2046EFA94AC8B1 /* CategoriesAdmin */,
+				8D7E9D6C7FF142659726310F /* Sharing */,
+				8DB4B58E6B694270B4504605 /* BetaSheet */,
+				7C4576E7734947B894D87988 /* Router */,
+			);
+			productName = VroomVroomMock;
+			productReference = 8204076147B2460399798308 /* VroomVroomMock.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -353,6 +423,7 @@
 			projectRoot = "";
 			targets = (
 				B42CA9E82AFE8B66009B3FFB /* VroomVroom */,
+				C6C8CF0D64E54191AF5B12E2 /* VroomVroomMock */,
 				B4CBD16B2B05570F00BF6776 /* WidgetsExtension */,
 				B4B8ECF92BFB0767001D5A6B /* VroomVroomTV */,
 			);
@@ -383,6 +454,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4CBD17B2B05571100BF6776 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1696A9D92F047189E20AD2C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5C85CF2A272140838514CDFE /* Preview Assets.xcassets in Resources */,
+				941F6EE4CCF8426092C97FB0 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,6 +499,17 @@
 				B4877C342B06B4C60009760C /* NextRaceWidget.swift in Sources */,
 				B4CBD1732B05570F00BF6776 /* WidgetsBundle.swift in Sources */,
 				B4877C272B0692F40009760C /* NextRaceTimelineProvider.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17539399FBD24516B75F8A6A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB8567AFFC714BF78D02171E /* RootView.swift in Sources */,
+				A0628F4B3002429AA8C833E6 /* VroomVroomApp.swift in Sources */,
+				4901E046772B489A8E39AC5D /* Root.swift in Sources */,
+				673C8AF2D0CB490DAAE20A23 /* VroomSceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -736,6 +827,78 @@
 			};
 			name = Release;
 		};
+		401DCC57FD1E4320A68CAFDB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_ASSET_PATHS = "\"VroomVroom/Preview Content\"";
+				DEVELOPMENT_TEAM = UQCQ667RNK;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = VroomVroom/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = me.mauriciocardozo.racing.vroomvroom.mock;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) MOCK_NETWORKING";
+				INFOPLIST_KEY_CFBundleDisplayName = "VroomVroom Mock";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4339CDF9BF924CB1A8856DBB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_ASSET_PATHS = "\"VroomVroom/Preview Content\"";
+				DEVELOPMENT_TEAM = UQCQ667RNK;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = VroomVroom/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = me.mauriciocardozo.racing.vroomvroom.mock;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) MOCK_NETWORKING";
+				INFOPLIST_KEY_CFBundleDisplayName = "VroomVroom Mock";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -771,6 +934,15 @@
 			buildConfigurations = (
 				B4CBD1812B05571100BF6776 /* Debug */,
 				B4CBD1822B05571100BF6776 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		17364D43734B4A1389F362FA /* Build configuration list for PBXNativeTarget "VroomVroomMock" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				401DCC57FD1E4320A68CAFDB /* Debug */,
+				4339CDF9BF924CB1A8856DBB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -837,6 +1009,54 @@
 		B4E510362BFB14990050C6CD /* NotificationsQueue */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NotificationsQueue;
+		};
+		D02B06C6410D47AFA50EE1EE /* APIClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = APIClient;
+		};
+		6E0F56DAA0CF41B892D83048 /* Categories */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Categories;
+		};
+		10A2509F54654AB7B7B53B86 /* ScheduleList */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ScheduleList;
+		};
+		8B7D55A3B9094F4994A8D12A /* Settings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Settings;
+		};
+		ABDD2CC83EC84437AA1EDA3A /* EventDetail */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = EventDetail;
+		};
+		BA4B016C7AC149CDBD6C76EC /* Home */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Home;
+		};
+		F5CA760ED3F0452488170A9A /* Admin */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Admin;
+		};
+		2707BEEDEE2046EFA94AC8B1 /* CategoriesAdmin */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CategoriesAdmin;
+		};
+		8D7E9D6C7FF142659726310F /* Sharing */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Sharing;
+		};
+		8DB4B58E6B694270B4504605 /* BetaSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BetaSheet;
+		};
+		7C4576E7734947B894D87988 /* Router */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Router;
+		};
+		2B284143619940298F0F81E3 /* MockAPIClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MockAPIClient;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -83,6 +83,8 @@ public struct BetaSheet: View {
 
   let latestRelease: LocalizedStringKey = """
   01/10/2026
+  • Manutenção: adiciona a versão VroomVroom Mock para testar o app sem servidor, com calendários de exemplo e alterações administrativas em memória
+  • Manutenção: corrige a dependência de rede dos testes para impedir consultas à API real
   • Atualiza a programação da Fórmula 1 automaticamente a partir da fonte oficial, incluindo temporadas futuras já publicadas e testes de pré-temporada
   • Adiciona a tela Importações em Ajustes → Admin → Fórmula 1 para configurar o intervalo de atualização e buscar a programação manualmente
   • Permite consultar o histórico de importações, comparar alterações, ver avisos e relacionar registros existentes
