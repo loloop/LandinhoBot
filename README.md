@@ -19,6 +19,7 @@ docker compose -f backend/docker-compose.yml up -d db
 Then run the backend from the repository root:
 
 ```sh
+export LANDINHO_ADMIN_PASSWORD='<your-long-random-admin-password>'
 swift run --package-path backend App serve --hostname 127.0.0.1 --port 8080
 ```
 
@@ -30,7 +31,19 @@ The scheduler checks local due dates an hour apart, beginning ten seconds after 
 
 Open `app/VroomVroom.xcodeproj` in Xcode and select the `VroomVroom` scheme. In the scheme's Run environment, set `LANDINHO_API_URL=http://127.0.0.1:8080` for the simulator. Without that override, the app uses the hosted API. The workspace uses sibling Swift packages within `app`.
 
-In the app, open Settings → Admin → Formula 1 → Importações. This screen controls automatic imports and the interval, starts a manual refresh, and shows import history, before/after changes, warnings, and ambiguous matches. Selecting an existing record for an ambiguous match triggers a new import using that identity.
+In the app, hold the version row in Settings for 1.5 seconds (or use its VoiceOver “Abrir administração” action), then enter the server's admin password. Open Formula 1 → Importações. This screen controls automatic imports and the interval, starts a manual refresh, and shows import history, before/after changes, warnings, and ambiguous matches. Selecting an existing record for an ambiguous match triggers a new import using that identity.
+
+The password is verified by `GET /admin-session` before administration opens. The app keeps the credential only in memory, sends it only to administrative endpoints, and clears it when you choose **Bloquear**, leave administration, background the app, or receive an unauthorized administrative response. A canceled verification cannot restore a locked credential. No password is shipped in the app or saved in UserDefaults.
+
+## Administrator access and deployment
+
+Set `LANDINHO_ADMIN_PASSWORD` in the backend process environment or deployment secret store. Docker Compose forwards this variable without a default password. Missing, empty, or whitespace-only configuration disables all administrative routes with HTTP 503; public calendars and Telegram subscriptions continue to work. Invalid or missing credentials receive HTTP 401. Restart every backend instance after setting or rotating the password; previously entered passwords will then fail and the app will lock on its next administrative request.
+
+The API uses HTTP Basic authorization with username `admin` and the configured shared password. Deploy behind verified HTTPS and avoid recording Authorization headers in proxy logs. The app permits plain HTTP administration only for loopback development URLs. There are no user accounts or persisted server sessions. Deploy the protected backend together with this app update: older app builds can still read calendars but their administrative requests will be rejected. Scheduled imports run internally and do not require an HTTP credential.
+
+Protected endpoints include `POST/PATCH /category`, `POST/PATCH /race`, `POST /events`, the existing destructive `GET /prune-race`, `GET /admin-session`, and every import endpoint below. `GET /category`, `GET /race`, `GET /events`, `GET /next-race`, `GET /next-races`, reminder reads, and Telegram subscription operations remain public.
+
+Public category JSON (including categories embedded in calendar responses) contains category identity, title, tag, and comment; import configuration is returned only by the protected import settings endpoint.
 
 ## Import behavior
 
@@ -54,6 +67,7 @@ Example manual refresh:
 
 ```sh
 curl --fail -H 'Content-Type: application/json' \
+  --user "admin:${LANDINHO_ADMIN_PASSWORD}" \
   --data '{"categoryTag":"f1"}' http://127.0.0.1:8080/import-refresh
 ```
 
@@ -74,7 +88,7 @@ LANDINHO_TEST_DATABASE=1 DATABASE_NAME=landinho_test \
   swift test --package-path backend
 ```
 
-The tests cover F1 parsing, pending times, future-season discovery, identity preservation, manual corrections, missing records, partial imports, cancellations, reminder filtering, failed fetches, concurrent imports, matching, history, and scheduling.
+The tests cover F1 parsing, pending times, future-season discovery, identity preservation, manual corrections, missing records, partial imports, cancellations, reminder filtering, failed fetches, concurrent imports, matching, history, and scheduling. Admin route tests run without a database and verify missing, malformed, wrong, valid, and unconfigured credentials across every protected route. App package tests in `AdminSessionTests` and `SettingsTests` cover credential scope, lock invalidation, successful verification, error states, and authorized retry.
 
 Build the app for a simulator from the command line:
 

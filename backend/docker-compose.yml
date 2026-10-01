@@ -25,6 +25,7 @@ x-shared_environment: &shared_environment
   DATABASE_NAME: race_database
   DATABASE_USERNAME: race_username
   DATABASE_PASSWORD: race_password
+  LANDINHO_ADMIN_PASSWORD: ${LANDINHO_ADMIN_PASSWORD:-}
   
 services:
   app:

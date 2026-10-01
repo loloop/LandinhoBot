@@ -61,6 +61,7 @@ let package = Package(
       from: Version(1, 5, 0)),
   ],
   targets: [
+    .testTarget(name: "SettingsTests", dependencies: ["Settings", apiClient, composable]),
     .target(
       name: "Admin",
       dependencies: [

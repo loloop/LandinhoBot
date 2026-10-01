@@ -37,9 +37,12 @@ let package = Package(
         from: Version(1, 5, 0)),
     ],
     targets: [
+      .target(name: "AdminSession"),
+      .testTarget(name: "AdminSessionTests", dependencies: ["AdminSession"]),
       .target(
         name: "APIClient",
         dependencies: [
+          "AdminSession",
           .product(name: "NotificationsQueue", package: "LandinhoCoreUI"),
           composable
         ]),

@@ -4,7 +4,7 @@ import FluentPostgresDriver
 import Vapor
 
 // configures your application
-public func configure(_ app: Application) async throws {
+public func configure(_ app: Application, adminPassword: String? = Environment.get("LANDINHO_ADMIN_PASSWORD")) async throws {
     // uncomment to serve files from /Public folder
     // app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
 
@@ -22,44 +22,7 @@ public func configure(_ app: Application) async throws {
   app.migrations.add(v0_3Migration())
   app.migrations.add(v0_4Migration())
 
-  [
-    // category
-    UploadCategoryHandler(),
-    CategoryListHandler(),
-    UpdateCategoryHandler(),
-
-    // next-race
-    NextRaceHandler(),
-
-    // next-races
-    NextRacesHandler(),
-
-    // race
-    RaceListHandler(),
-    UpdateRaceHandler(),
-    UploadRaceHandler(),
-
-    // prune-race
-    PruneRaceHandler(),
-
-    // events
-    EventListHandler(),
-    UpdateEventsHandler(),
-
-    // subscriptions
-    SubscribeHandler(),
-    UnsubscribeHandler(),
-    ChatSubscriptionsHandler(),
-
-    // alerts
-    UpcomingAlertsHandler(),
-
-    ImportSettingsHandler(),
-    UpdateImportSettingsHandler(),
-    RefreshImportHandler(),
-    ImportHistoryHandler(),
-    ResolveImportMatchHandler()
-  ].register(in: app)
+  registerRoutes(in: app, adminPassword: adminPassword)
 
    try await app.autoMigrate()
 
