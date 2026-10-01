@@ -115,7 +115,6 @@ public struct BetaSheet: View {
   Esta lista será completamente limpa antes do lançamento público do aplicativo (em ordem de prioridade)
 
   • Design final da Home, Tela de Corrida, Categorias, Ajustes, Compartilhar, etc para iOS e iPadOS
-  • Compartilhar texto de uma corrida -> Estilo o bot
 
   Para o futuro:
   • Notificações quando eventos específicos forem começar
