@@ -20,6 +20,7 @@ public func configure(_ app: Application) async throws {
   app.migrations.add(v0_1Migration())
   app.migrations.add(v0_2Migration())
   app.migrations.add(v0_3Migration())
+  app.migrations.add(v0_4Migration())
 
   [
     // category

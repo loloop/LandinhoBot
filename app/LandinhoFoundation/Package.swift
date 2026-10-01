@@ -19,6 +19,7 @@ let package = Package(
       ),
     ],
     targets: [
-      .target(name: "LandinhoFoundation")
+      .target(name: "LandinhoFoundation"),
+      .testTarget(name: "LandinhoFoundationTests", dependencies: ["LandinhoFoundation"])
     ]
 )

@@ -21,6 +21,7 @@ public struct SharingView: View {
 
   @Environment(\.dismiss) var dismiss
   @Environment(\.displayScale) var displayScale
+  @Environment(\.colorScheme) var colorScheme
 
   public var body: some View {
     // TODO: Fix issue where title flickers when going backwards on the navigation stack
@@ -30,7 +31,7 @@ public struct SharingView: View {
           .ignoresSafeArea()
 
         SharingRenderableView(store: store)
-          .frame(height: viewStore.isSquareAspectRatio ? 360 : 640)
+          .frame(width: 360, height: viewStore.isSquareAspectRatio ? 360 : 640)
 
         dismissButton(viewStore)
         cropButton(viewStore)
@@ -125,7 +126,8 @@ public struct SharingView: View {
 
   @MainActor
   func render(isSquareAspectRatio: Bool) {
-    let renderer = ImageRenderer(content: SharingRenderableView(store: store))
+    let renderer = ImageRenderer(content: SharingRenderableView(store: store)
+      .environment(\.colorScheme, colorScheme))
     if isSquareAspectRatio {
       renderer.proposedSize.height = 360
       renderer.proposedSize.width = 360
@@ -161,4 +163,3 @@ private struct ActivityView: UIViewControllerRepresentable {
     _ uiViewController: UIActivityViewController,
     context: Context) {}
 }
-

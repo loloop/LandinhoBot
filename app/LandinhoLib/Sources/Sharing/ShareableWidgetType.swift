@@ -6,16 +6,15 @@
 //
 
 import Foundation
-import WidgetUI
 
 public enum ShareableWidgetType: Equatable, CaseIterable {
   case systemMedium
   case systemLarge
 
-  var supportedFamily: SupportedWidgetFamily {
+  var size: CGSize {
     switch self {
-    case .systemMedium: .systemMedium
-    case .systemLarge: .systemLarge
+    case .systemMedium: CGSize(width: 364, height: 170)
+    case .systemLarge: CGSize(width: 364, height: 384)
     }
   }
 }

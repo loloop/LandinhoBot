@@ -17,12 +17,14 @@ final class Category: Model, Content {
     id: UUID = UUID(),
     title: String,
     tag: String,
-    comment: String?)
+    comment: String?,
+    color: String? = nil)
   {
     self.id = id
     self.title = title
     self.tag = tag
     self.comment = comment
+    self.color = color
     self.importIntervalDays = 7
     self.importsEnabled = false
   }
@@ -38,6 +40,9 @@ final class Category: Model, Content {
 
   @Field(key: "comment")
   var comment: String?
+
+  @OptionalField(key: "color")
+  var color: String?
 
   @Children(for: \.$category)
   var races: [Race]
