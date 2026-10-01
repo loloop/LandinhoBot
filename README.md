@@ -27,6 +27,8 @@ The Compose database matches the backend's default credentials. For another Post
 
 The scheduler checks local due dates an hour apart, beginning ten seconds after startup. It downloads source pages only when a category is due. Set `SCHEDULE_IMPORTS_ENABLED=false` to disable scheduled imports locally; manual refresh remains available.
 
+**Maintenance follow-up (01/10/2026):** Mauricio — check the registration, renewal, and DNS configuration for `vroomvroom.racing`. The hosted API hostname `api.vroomvroom.racing` returned `NXDOMAIN` during the availability check. After resolving the domain issue, verify that `https://api.vroomvroom.racing/category` responds successfully.
+
 ## Run the iOS app
 
 Open `app/VroomVroom.xcodeproj` in Xcode and select the `VroomVroom` scheme. In the scheme's Run environment, set `LANDINHO_API_URL=http://127.0.0.1:8080` for the simulator. Without that override, the app uses the hosted API. The workspace uses sibling Swift packages within `app`.
