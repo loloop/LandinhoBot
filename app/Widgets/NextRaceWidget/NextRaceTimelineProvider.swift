@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import LandinhoFoundation
 import Widgets
 import WidgetKit
 
@@ -14,10 +15,6 @@ struct NextRaceTimelineProvider: AppIntentTimelineProvider {
 
   enum TimelineError: LocalizedError {
     case failure
-  }
-
-  let store = Store(initialState: Widgets.State(categoryTag: nil)) {
-    Widgets()
   }
 
   func placeholder(in context: Context) -> NextRaceEntry {
@@ -34,39 +31,39 @@ struct NextRaceTimelineProvider: AppIntentTimelineProvider {
 
   @MainActor
   func timeline(for configuration: NextRaceConfigurationIntent, in context: Context) async -> Timeline<NextRaceEntry> {
+    // Each request owns its response, including overlapping widget configurations.
+    let store = Store(initialState: Widgets.State(categoryTag: nil)) {
+      Widgets()
+    }
     let viewStore = ViewStore(store, observe: { $0 })
     await viewStore.send(.racesRequest(.request(.get))).finish()
+    let updatedAt = Date()
+    let refreshDate = updatedAt.addingTimeInterval(15 * 60)
 
-    guard var nextRace = viewStore.racesState.response.value else {
+    guard let nextRace = viewStore.racesState.response.value else {
       return Timeline(
         entries: [
           .init(
-            date: Date(),
+            date: updatedAt,
             response: .init(),
             error: TimelineError.failure)
         ],
-        policy: .atEnd)
+        policy: .after(refreshDate))
     }
 
-    if !configuration.showNonMainEventSessions {
-      nextRace.events = nextRace.events.filter { $0.isMainEvent }
+    let schedule = WidgetSessionSchedule(
+      race: nextRace,
+      date: updatedAt,
+      showNonMainEventSessions: configuration.showNonMainEventSessions)
+    let entries = schedule.transitionDates.map { date in
+      NextRaceEntry(
+        date: date,
+        response: nextRace,
+        lastUpdatedDate: updatedAt,
+        showNonMainEventSessions: configuration.showNonMainEventSessions)
     }
 
-    // TODO: Fetch more than just the single next race to create a timeline
-    // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-//    let currentDate = Date()
-//    for hourOffset in 0 ..< 5 {
-//      let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-//      let entry = NextRaceEntry(date: entryDate)
-//      entries.append(entry)
-//    }
-
-    let entries: [NextRaceEntry] = [
-      .init(
-        date: Date(),
-        response: nextRace)
-    ]
-
-    return Timeline(entries: entries, policy: .atEnd)
+    // Future entries remain usable even if WidgetKit defers the network refresh.
+    return Timeline(entries: entries, policy: .after(refreshDate))
   }
 }

@@ -11,9 +11,19 @@ import WidgetKit
 import Widgets
 
 struct NextRaceEntry: TimelineEntry {
+  init(date: Date, response: Race, error: Error? = nil, lastUpdatedDate: Date? = nil, showNonMainEventSessions: Bool = true) {
+    self.date = date
+    self.response = response
+    self.error = error
+    self.lastUpdatedDate = lastUpdatedDate ?? date
+    self.showNonMainEventSessions = showNonMainEventSessions
+  }
+
   var date: Date
   var response: Race
   var error: Error?
+  var lastUpdatedDate: Date
+  var showNonMainEventSessions: Bool
 }
 
 extension NextRaceEntry {

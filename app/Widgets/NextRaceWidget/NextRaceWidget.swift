@@ -22,7 +22,9 @@ struct NextRaceWidget: Widget {
           if entry.error == nil {
             NextRaceWidgetView(
               race: entry.response,
-              lastUpdatedDate: entry.date)
+              lastUpdatedDate: entry.lastUpdatedDate,
+              referenceDate: entry.date,
+              showNonMainEventSessions: entry.showNonMainEventSessions)
           } else {
             NextRaceWidgetView(
               race: .init(),
@@ -43,21 +45,29 @@ struct NextRaceWidgetView: View {
   @Environment(\.widgetFamily) var family
   let race: Race
   let lastUpdatedDate: Date
+  var referenceDate: Date? = nil
+  var showNonMainEventSessions = true
 
   var body: some View {
     switch family {
     case .systemSmall:
       NextRaceSmallWidgetView(
         race: race,
-        lastUpdatedDate: lastUpdatedDate)
+        lastUpdatedDate: lastUpdatedDate,
+        referenceDate: referenceDate,
+        showNonMainEventSessions: showNonMainEventSessions)
     case .systemMedium:
       NextRaceMediumWidgetView(
         race: race,
-        lastUpdatedDate: lastUpdatedDate)
+        lastUpdatedDate: lastUpdatedDate,
+        referenceDate: referenceDate,
+        showNonMainEventSessions: showNonMainEventSessions)
     case .systemLarge:
       NextRaceLargeWidgetView(
         race: race,
-        lastUpdatedDate: lastUpdatedDate)
+        lastUpdatedDate: lastUpdatedDate,
+        referenceDate: referenceDate,
+        showNonMainEventSessions: showNonMainEventSessions)
     case .systemExtraLarge, .accessoryCircular, .accessoryRectangular, .accessoryInline:
       // TODO: Accessory Widgets
       EmptyView()
