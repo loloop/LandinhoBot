@@ -27,6 +27,7 @@ struct RootView: View {
       })
     }
     .task {
+      sceneDelegate.bindRootStore(store)
       sceneDelegate.setupNotificationQueueWindow(with: store)
       store.send(.onAppear)
     }
