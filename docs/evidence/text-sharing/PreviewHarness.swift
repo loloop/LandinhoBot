@@ -19,8 +19,20 @@ struct TextSharingEvidenceApp: App {
 
 private struct TextSharingEvidenceView: View {
   private let scenario = ProcessInfo.processInfo.arguments.last ?? "options"
-  private let race = Self.fixture
   @State private var showingSheet = false
+
+  private var race: Race {
+    let base = Self.fixture
+    let events: [RaceEvent]
+    switch scenario {
+    case "pending":
+      events = [Self.session("Classificação", day: "2026-10-17"), Self.session("Corrida", isMain: true)]
+    case "empty": events = []
+    default: events = base.events
+    }
+    return Race(id: base.id, title: base.title, shortTitle: base.shortTitle, events: events,
+      category: base.category, isCancelled: scenario == "cancelled")
+  }
 
   private var payload: String {
     #if BEFORE

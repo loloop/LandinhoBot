@@ -3,12 +3,12 @@ set -euo pipefail
 
 # Requires an already booted, task-owned simulator and the shared build lease.
 # This script never boots a simulator or changes the shipping app's sources.
-simulator_id="${1:?Usage: capture.sh SIMULATOR_UDID [before|after] [options|text|sheet] [BEFORE_REF]}"
+simulator_id="${1:?Usage: capture.sh SIMULATOR_UDID [before|after] [options|text|sheet|pending|cancelled|empty] [BEFORE_REF]}"
 mode="${2:-after}"
 scenario="${3:-options}"
 before_ref="${4:-feature/quick-actions}"
 [[ "$mode" == before || "$mode" == after ]]
-[[ "$scenario" == options || "$scenario" == text || "$scenario" == sheet ]]
+[[ "$scenario" == options || "$scenario" == text || "$scenario" == sheet || "$scenario" == pending || "$scenario" == cancelled || "$scenario" == empty ]]
 if [[ "$mode" == before && "$scenario" != options ]]; then
   echo 'The before branch has no text action; capture its options only.' >&2
   exit 1
