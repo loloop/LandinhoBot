@@ -81,6 +81,8 @@ public struct NextRaceExtraLargeWidgetView: View {
         footer
       }
       .frame(width: geometry.size.width, height: geometry.size.height, alignment: .topLeading)
+      // A widget cannot scroll: keep its next start and footer inside the fixed footprint.
+      .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
     }
   }
 

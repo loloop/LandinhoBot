@@ -18,12 +18,18 @@ if [[ "$mode" == before ]]; then
 else
   source_dir="$repo_dir"
 fi
-# Compile the exact production family switch without extension/timeline dependencies.
-{
-  printf '%s\n' 'import Foundation' 'import SwiftUI' 'import WidgetKit' 'import WidgetUI' 'import LandinhoFoundation'
-  sed -n '/^struct NextRaceWidgetView: View {/,/^\/\/ MARK: - Previews/{ /^\/\/ MARK/d; p; }' \
-    "$source_dir/app/Widgets/NextRaceWidget/NextRaceWidget.swift"
-} > "$build_dir/FamilyDispatcher.swift"
+# Compile the production switch without extension/timeline dependencies. WidgetKit's
+# environment family is read-only, so only its declaration becomes an injected value.
+python3 - "$source_dir/app/Widgets/NextRaceWidget/NextRaceWidget.swift" "$build_dir/FamilyDispatcher.swift" <<'PY'
+import pathlib, sys
+source = pathlib.Path(sys.argv[1]).read_text()
+dispatcher = source.split("struct NextRaceWidgetView: View {", 1)[1].split("// MARK: - Previews", 1)[0]
+declaration = "@Environment(\\.widgetFamily) var family"
+assert dispatcher.count(declaration) == 1
+dispatcher = dispatcher.replace(declaration, "let family: WidgetFamily")
+imports = "import Foundation\nimport SwiftUI\nimport WidgetKit\nimport WidgetUI\nimport LandinhoFoundation\n"
+pathlib.Path(sys.argv[2]).write_text(imports + "struct NextRaceWidgetView: View {" + dispatcher)
+PY
 compiler=(xcrun --sdk iphonesimulator swiftc -j2 -sdk "$sdk_path" -target arm64-apple-ios17.0-simulator -parse-as-library -I "$build_dir" -L "$app_dir")
 "${compiler[@]}" -emit-library -emit-module -module-name LandinhoFoundation \
   -emit-module-path "$build_dir/LandinhoFoundation.swiftmodule" \
@@ -65,7 +71,7 @@ PLIST
 xcrun simctl install "$simulator_id" "$app_dir"
 xcrun simctl terminate "$simulator_id" "$bundle_id" 2>/dev/null || true
 xcrun simctl launch "$simulator_id" "$bundle_id" -AppleLocale pt_BR -AppleLanguages '(pt-BR)' "$scenario"
-sleep 3
+sleep 5
 xcrun simctl io "$simulator_id" screenshot "$evidence_dir/$mode-$scenario.png"
 sips -s format jpeg -s formatOptions 80 "$evidence_dir/$mode-$scenario.png" --out "$evidence_dir/$mode-$scenario.jpg" >/dev/null
 rm "$evidence_dir/$mode-$scenario.png"
