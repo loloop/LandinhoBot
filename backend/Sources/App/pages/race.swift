@@ -39,7 +39,7 @@ struct UploadRaceHandler: AsyncRequestHandler {
     if let date = request.earliestEventDate {
       earliestDate = date
     } else if let date = events.sorted(
-      by: { $0.date ?? Date() > $1.date ?? Date() })
+      by: { $0.date ?? .distantFuture < $1.date ?? .distantFuture })
       .first?
       .date {
       earliestDate = date
@@ -51,6 +51,7 @@ struct UploadRaceHandler: AsyncRequestHandler {
       title: request.title,
       earliestEventDate: earliestDate,
       shortTitle: request.shortTitle)
+    race.scheduleEndDate = events.compactMap(\.date).max() ?? earliestDate
 
     try await req.db.transaction { db in
       try await category.$races.create(race, on: db)

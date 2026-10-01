@@ -23,6 +23,8 @@ final class Category: Model, Content {
     self.title = title
     self.tag = tag
     self.comment = comment
+    self.importIntervalDays = 7
+    self.importsEnabled = false
   }
 
   @ID(key: .id)
@@ -39,6 +41,12 @@ final class Category: Model, Content {
 
   @Children(for: \.$category)
   var races: [Race]
+
+  @OptionalField(key: "import_provider") var importProvider: String?
+  @Field(key: "import_interval_days") var importIntervalDays: Int
+  @Field(key: "imports_enabled") var importsEnabled: Bool
+  @OptionalField(key: "next_import_at") var nextImportAt: Date?
+  @OptionalField(key: "last_import_at") var lastImportAt: Date?
 }
 
 final class Race: Model, Content {
@@ -57,6 +65,7 @@ final class Race: Model, Content {
     self.title = title
     self.earliestEventDate = earliestEventDate
     self.shortTitle = shortTitle
+    self.isCancelled = false
   }
 
   @ID(key: .id)
@@ -76,6 +85,12 @@ final class Race: Model, Content {
 
   @Children(for: \.$race)
   var events: [RaceEvent]
+
+  @OptionalField(key: "source_id") var sourceID: String?
+  @OptionalField(key: "source_url") var sourceURL: String?
+  @OptionalField(key: "schedule_end_date") var scheduleEndDate: Date?
+  @Field(key: "is_cancelled") var isCancelled: Bool
+  @OptionalField(key: "import_warning") var importWarning: String?
 }
 
 final class RaceEvent: Model, Content {
@@ -86,7 +101,7 @@ final class RaceEvent: Model, Content {
   init(
     id: UUID = UUID(),
     title: String,
-    date: Date,
+    date: Date?,
     isMainEvent: Bool
   )
   {
@@ -94,6 +109,7 @@ final class RaceEvent: Model, Content {
     self.title = title
     self.date = date
     self.isMainEvent = isMainEvent
+    self.isCancelled = false
   }
 
   @ID(key: .id)
@@ -102,7 +118,7 @@ final class RaceEvent: Model, Content {
   @Field(key: "title")
   var title: String?
 
-  @Field(key: "date")
+  @OptionalField(key: "date")
   var date: Date?
 
   @Field(key: "is_main_event")
@@ -110,6 +126,12 @@ final class RaceEvent: Model, Content {
 
   @Parent(key: "race")
   var race: Race
+
+  @OptionalField(key: "source_id") var sourceID: String?
+  @OptionalField(key: "source_url") var sourceURL: String?
+  @OptionalField(key: "scheduled_day") var scheduledDay: String?
+  @Field(key: "is_cancelled") var isCancelled: Bool
+  @OptionalField(key: "import_warning") var importWarning: String?
 }
 
 final class Chat: Model {

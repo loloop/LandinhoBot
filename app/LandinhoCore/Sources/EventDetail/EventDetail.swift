@@ -85,6 +85,15 @@ struct InnerEventDetailView: View {
     ScrollView {
       VStack(alignment: .leading, spacing: 20) {
 
+        if race.events.isEmpty || race.events.contains(where: { $0.date == nil && !$0.isCancelled }) {
+          Text("Ainda não conseguimos obter todos os horários. Consulte a fonte oficial para confirmar a programação.")
+            .font(.callout)
+            .foregroundStyle(.secondary)
+        }
+        if let source = race.sourceURL, let url = URL(string: source) {
+          Link("Ver programação oficial", destination: url)
+        }
+
         MainEventsView(events: mainEvents)
 
         RoundedRectangle(cornerRadius: 25.0, style: .continuous)
@@ -126,7 +135,7 @@ struct InnerEventDetailView: View {
               Spacer()
             }
 
-            Text("Todos os horários estão no fuso horário do Brasil")
+            Text("Horários no fuso do seu dispositivo")
               .font(.caption)
               .foregroundStyle(.secondary)
               .frame(maxWidth: .infinity, alignment: .trailing)
@@ -180,9 +189,9 @@ struct MainEventsView: View {
           Spacer()
 
           VStack(alignment: .trailing) {
-            Text(event.date.formatted(.dateTime.day().weekday()))
+            Text(event.dayLabel)
               .font(.caption)
-            Text(event.date.formatted(.dateTime.hour().minute()))
+            Text(event.timeLabel)
               .font(.title)
           }
         }
@@ -204,9 +213,9 @@ struct MainEventsView: View {
               .font(.title2)
             Spacer()
 
-            Text(event.date.formatted(.dateTime.day().weekday()))
+            Text(event.dayLabel)
               .font(.caption)
-            Text(event.date.formatted(.dateTime.hour().minute()))
+            Text(event.timeLabel)
               .font(.title)
           }
           .padding()

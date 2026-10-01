@@ -6,6 +6,7 @@
 //
 
 import Vapor
+import Fluent
 import Foundation
 
 // MARK: - GET /upcoming-alerts
@@ -26,6 +27,7 @@ struct UpcomingAlertsHandler: AsyncRequestHandler {
     let upperBound = now.addingTimeInterval(thresholdSeconds)
 
     let events = try await RaceEvent.query(on: req.db)
+      .filter(\.$isCancelled == false)
       .filter(\.$date, .greaterThanOrEqual, now)
       .filter(\.$date, .lessThanOrEqual, upperBound)
       .with(\.$race) { raceQuery in
@@ -38,6 +40,7 @@ struct UpcomingAlertsHandler: AsyncRequestHandler {
 
     let alertItems: [AlertItem] = events.compactMap { event in
       guard
+        !event.race.isCancelled,
         let eventDate = event.date,
         let eventTitle = event.title,
         let raceTitle = event.race.title,

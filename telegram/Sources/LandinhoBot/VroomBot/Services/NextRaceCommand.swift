@@ -31,7 +31,9 @@ struct NextRaceCommand: Command {
     \(response.category.title)
     \(response.title)
     \(formatRace(response))
-    \(response.category.comment)
+    \(response.category.comment ?? "")
+    \(response.events.isEmpty || response.events.contains(where: { $0.date == nil && $0.isCancelled != true }) ? "Ainda não conseguimos obter todos os horários. Consulte a programação oficial." : "")
+    \(response.sourceURL ?? "")
     \(showsHelpText ? Self.helpText : "")
     """
   }
@@ -51,7 +53,9 @@ struct NextRaceCommand: Command {
   }
 
   func formatEvent(_ event: RaceEvent) -> String {
-    "\(Self.formatter.string(from: event.date)) – \(event.title)"
+    if event.isCancelled == true { return "Cancelado – \(event.title)" }
+    guard let date = event.date else { return "Horário pendente – \(event.title)" }
+    return "\(Self.formatter.string(from: date)) – \(event.title)"
   }
 
   func formatEventlessRace(race: NextRaceResponse) -> String {
@@ -59,7 +63,7 @@ struct NextRaceCommand: Command {
 
     🏎️🏎️🏎️🏎️🏎️🏎️🏎️
 
-    \(Self.formatter.string(from: race.earliestEventDate))
+    \(race.earliestEventDate.formatted(date: .long, time: .omitted))
 
     🏎️🏎️🏎️🏎️🏎️🏎️🏎️
 
@@ -84,5 +88,6 @@ struct NextRaceCommand: Command {
     let earliestEventDate: Date
     let events: [RaceEvent]
     let category: Category
+    let sourceURL: String?
   }
 }

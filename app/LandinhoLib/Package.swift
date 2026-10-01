@@ -43,6 +43,7 @@ let package = Package(
     .library(name: "CategoriesAdmin", targets: ["CategoriesAdmin"]),
     .library(name: "EventsAdmin", targets: ["EventsAdmin"]),
     .library(name: "Home", targets: ["Home"]),
+    .library(name: "ImportsAdmin", targets: ["ImportsAdmin"]),
     .library(name: "RacesAdmin", targets: ["RacesAdmin"]),
     .library(name: "Router", targets: ["Router"]),
     .library(name: "Settings", targets: ["Settings"]),
@@ -50,9 +51,9 @@ let package = Package(
     .library(name: "Widgets", targets: ["Widgets"]),
   ],
   dependencies: [
-    .package(path: "LandinhoCore"),
-    .package(path: "LandinhoCoreUI"),
-    .package(path: "LandinhoFoundation"),
+    .package(path: "../LandinhoCore"),
+    .package(path: "../LandinhoCoreUI"),
+    .package(path: "../LandinhoFoundation"),
     .package(
       url: "https://github.com/pointfreeco/swift-composable-architecture",
       from: Version(1, 5, 0)),
@@ -114,9 +115,12 @@ let package = Package(
           apiClient,
           foundation,
           "EventsAdmin",
+          "ImportsAdmin",
           notifications,
           composable
         ]),
+
+      .target(name: "ImportsAdmin", dependencies: [apiClient, composable]),
 
       .target(
         name: "Router",

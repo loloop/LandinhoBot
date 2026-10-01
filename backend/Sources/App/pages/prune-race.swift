@@ -21,7 +21,12 @@ struct PruneRaceHandler: AsyncRequestHandler {
         .query(on: db)
         .join(parent: \.$category)
         .filter(Category.self, \.$tag, .equal, arg.tag)
-        .filter(\.$earliestEventDate, .lessThan, Date())
+        .group(.or) { group in
+          group.filter(\.$scheduleEndDate < Date())
+          group.group(.and) { fallback in
+            fallback.filter(\.$scheduleEndDate == nil).filter(\.$earliestEventDate < Date())
+          }
+        }
         .with(\.$events)
         .all()
 
@@ -43,4 +48,3 @@ struct PruneRaceHandler: AsyncRequestHandler {
     let tag: String
   }
 }
-

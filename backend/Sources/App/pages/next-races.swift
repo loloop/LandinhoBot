@@ -23,9 +23,7 @@ struct NextRacesHandler: AsyncRequestHandler {
       categoryTag = ""
     }
 
-    let query = Race
-      .query(on: req.db)
-      .filter(\.$earliestEventDate, .greaterThanOrEqual, currentDate)
+    let query = upcomingRaces(on: req.db, now: currentDate)
       .join(parent: \.$category)
       .sort(\.$earliestEventDate, .ascending)
       .with(\.$events)
