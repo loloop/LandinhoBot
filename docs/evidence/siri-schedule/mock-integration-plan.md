@@ -1,59 +1,49 @@
-# Mock target integration preparation
+# Mock target verification
 
-This is a static preparation record, not a passing native validation claim.
-The original validated checkpoint is `723c937`, with four Siri commits above
-`33341cf9a37f9f12d8da7d3600e77aa156929325`. Do not transplant main or rebase until
-the final Notifications integration tip is supplied by the task coordinator.
+The Root Store scopes its mock requester to reducer operations. App Intent
+`perform()` and category entity queries are independent entry points.
+`SiriScheduleEnvironment` therefore sets `apiRequester` to
+`MockAPIClientService.liveValue` at both Siri query boundaries when the app target
+is compiled with `MOCK_NETWORKING`. The ordinary app preserves its normal
+requester and live read-only API configuration. The Core package does not depend
+on the mock module; only the Mock app target imports it.
 
-The current main app entry injects `MockAPIClientService.liveValue` into only
-the Root Store when `MOCK_NETWORKING` is defined. App Intent `perform()` and
-category entity queries are separate entry points. `SiriScheduleEnvironment`
-therefore sets `apiRequester` to that same mock service at both Siri query
-boundaries. The production compilation branch preserves its normal injected
-requester and live read-only API configuration. The Swift package does not
-depend on the mock module; only the Mock app target imports it.
+The Mock target includes the shared `SiriSchedule.swift` source and
+`AppShortcuts.xcstrings` catalog. Its Debug and Release configurations already
+define `MOCK_NETWORKING` and link `MockAPIClient`. The ordinary app retains its
+Siri memberships and embedded Widget/App Clip packaging.
 
-After the parent integration, add these two build-file entries for the existing
-shared source/resource references in `app/VroomVroom.xcodeproj/project.pbxproj`:
+On 01/10/2026, after integrating Notifications/main at
+`c5b2b5cddab8cee6b2a915f99aa8e0f8fb99ccb1`, the temporary native harness called
+both real intent entry points without constructing a Root Store. Each call
+resolved F1 through `RacingCategoryQuery.entities(matching:)` first. The
+`LANDINHO_API_URL` override was deliberately set to `http://127.0.0.1:1`, with
+no local listener. Both calls returned the in-memory demo's Formula 1 race and
+practice successfully. The actual JSON records the mock compilation mode,
+category tag, override and returned text in `mock-result.json` and
+`mock-session-result.json`. A live fallback would have failed to connect.
 
-| Mock membership | New build-file ID | Existing file reference |
-| --- | --- | --- |
-| `SiriSchedule.swift in Sources` | `C01100012CA0000000000005` | `C01100012CA0000000000002` |
-| `AppShortcuts.xcstrings in Resources` | `C01100012CA0000000000006` | `C01100012CA0000000000004` |
+The corresponding actual simulator captures are `harness-mock-light.jpg` and
+`harness-mock-session-light.jpg`. They show the production snippet rendered with
+the exact native result, not a Siri system screen.
 
-Main's Mock sources phase is `17539399FBD24516B75F8A6A`; its resources phase is
-`A1696A9D92F047189E20AD2C`. Append the respective new build-file IDs there.
-Keep the production memberships, Portuguese development localization, both
-targets' ordinary app entry, and the shipping Widget/App Clip packaging intact.
-The Mock target already links `MockAPIClient` and defines `MOCK_NETWORKING`
-for Debug and Release. Inspect the integrated target before applying these IDs
-in case the parent merge has already added either membership.
+To reproduce under the sole native build/simulator lease:
 
-With the sole native build/simulator lease, validate after integration:
+1. Back up the ordinary app entry; temporarily use `PreviewHarness.swift` and
+   build the `VroomVroomMock` scheme. The harness creates no Root Store in query
+   modes. Use an initialized task-owned simulator and check port 1 has no listener.
+2. Run `capture.sh EXACT_UDID VroomVroomMock.app mock`, then `mock-session`.
+   The script reads the app's actual bundle identifier, sets the unreachable
+   override, calls the real intents and verifies the written JSON.
+3. Restore the ordinary app entry and build both app schemes. Refresh the
+   shortcut catalog training assets for incremental builds. Verify normal
+   metadata with `verify-metadata.py VroomVroom.app` and Mock metadata with
+   `verify-metadata.py VroomVroomMock.app --mock`.
 
-1. Back up the integrated ordinary app entry. Temporarily use the current
-   `PreviewHarness.swift`, build the `VroomVroomMock` scheme and regenerate the
-   shortcut catalog training assets. This harness constructs no Root Store in
-   query modes.
-2. Check that localhost port 1 has no listener. Run `capture.sh` against
-   `VroomVroomMock.app` for `mock` and `mock-session`. Those modes deliberately
-   set `LANDINHO_API_URL=http://127.0.0.1:1`, resolve F1 through the actual
-   entity query, and call both production intent entry points independently.
-   Any live fallback would fail to connect. `verify-result.py` requires demo
-   Formula 1 race/practice replies, the F1 tag, the mock compilation mode and
-   that exact unreachable override in the app's actual result JSON.
-3. Restore the integrated ordinary entry. Build both the ordinary app and
-   `VroomVroomMock`, refreshing the catalog for each build. Run the metadata
-   verifier for the ordinary app and with `--mock` for the Mock bundle. Require
-   distinct action identifiers, the race default, both optional category
-   inputs, all five Portuguese phrases and `pt-BR` SSU training. The shipping
-   gate also requires its embedded Widget and App Clip; Mock packaging is
-   reported as built rather than assumed to embed either extension.
-4. Review the final main diff and dated pt-BR changelog, record actual results
-   in the evidence README, then publish the Siri PR against main when the
-   coordinator confirms the integration is ready.
-
-Do not replace the original seven passing query JSON files or ten captures.
-They remain valid direct-native evidence for the original shipping query;
-append the Mock execution and integrated build records separately. Spoken Siri,
-saved Shortcuts execution and tapping ShortcutsLink remain unverified.
+The final build records are described in the evidence README. Discovery checks
+require distinct action identifiers, the race default, optional category inputs,
+all five Portuguese phrases and `pt-BR` SSU training. The ordinary app gate also
+requires its embedded Widget and App Clip; Mock packaging is reported as built.
+The original seven query results and ten captures remain unchanged; the Mock
+records are additional native evidence. Spoken Siri, saved Shortcuts execution
+and tapping ShortcutsLink remain unverified.

@@ -1,0 +1,12 @@
+{
+  "target": "shipping",
+  "shippingApp": "/tmp/landinho-about-developer-derived/Build/Products/Debug-iphonesimulator/VroomVroom.app",
+  "action": "AskNextRacingSessionIntent",
+  "optionalCategory": true,
+  "defaultSessionKind": "race",
+  "shortcuts": 2,
+  "phraseLanguage": "pt-BR",
+  "bundledPortuguesePhrases": 5,
+  "embeddedWidget": true,
+  "embeddedAppClip": "VroomVroomClip.app"
+}

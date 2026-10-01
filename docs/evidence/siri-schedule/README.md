@@ -119,8 +119,26 @@ Spoken Siri, a saved Shortcut, and the system-hosted Siri snippet were not
 executed. The Settings screenshot confirms the public `ShortcutsLink` render;
 its tap was not automated. No private API or disabled device interaction was used.
 
-Mock target compatibility is prepared separately in
-[mock-integration-plan.md](mock-integration-plan.md). Its source boundary and
-unreachable-API harness checks are static preparation; integrated Mock compilation
-and execution have not yet been performed. The recorded results above remain
-the original shipping-query evidence.
+After integrating main/Notifications at
+`c5b2b5cddab8cee6b2a915f99aa8e0f8fb99ccb1`, the Mock target compiled the same
+Siri source and shortcut catalog. Two additional direct-native calls outside the
+Root Store passed: mock main race and mock next session, each resolving the real
+F1 entity first. Both succeeded with `LANDINHO_API_URL=http://127.0.0.1:1` and no
+listener, proving they used the in-memory demo requester. See `mock-result.json`,
+`mock-session-result.json`, and the two `harness-mock*.jpg` captures. The Mock
+dependency boundary and reproduction are documented in
+[mock-integration-plan.md](mock-integration-plan.md).
+
+The ordinary shared app entry was restored and both final schemes passed:
+`VroomVroom` (with embedded Widget/App Clip) and `VroomVroomMock`. Both final
+bundles passed fresh Portuguese phrase/SSU metadata verification; see
+`integrated-shipping-metadata.json` and `mock-metadata-verification.json`.
+Both final apps were installed on the exact task simulator. The original seven
+query results, ten captures and 52 passing Foundation tests remain valid: no
+query logic changed during integration. The Settings baseline source also
+matches the integrated parent exactly. The two Mock captures make twelve actual
+screenshots in total.
+
+The existing BetaSheet issue for the hosted API's NXDOMAIN response was
+preserved. Production Siri reads require that endpoint to be reachable; native
+HTTP evidence here uses the local fixture, and Mock uses its in-memory calendar.

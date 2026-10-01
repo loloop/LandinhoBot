@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C01100012CA0000000000005 /* SiriSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01100012CA0000000000002 /* SiriSchedule.swift */; };
+		C01100012CA0000000000006 /* AppShortcuts.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C01100012CA0000000000004 /* AppShortcuts.xcstrings */; };
 		C01100012CA0000000000003 /* AppShortcuts.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = C01100012CA0000000000004 /* AppShortcuts.xcstrings */; };
 		C01100012CA0000000000001 /* SiriSchedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01100012CA0000000000002 /* SiriSchedule.swift */; };
 		B40A75222B0D793200CFB10E /* Router in Frameworks */ = {isa = PBXBuildFile; productRef = B40A75212B0D793200CFB10E /* Router */; };
@@ -550,6 +552,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C01100012CA0000000000006 /* AppShortcuts.xcstrings in Resources */,
 				5C85CF2A272140838514CDFE /* Preview Assets.xcassets in Resources */,
 				941F6EE4CCF8426092C97FB0 /* Assets.xcassets in Resources */,
 			);
@@ -603,6 +606,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C01100012CA0000000000005 /* SiriSchedule.swift in Sources */,
 				DB8567AFFC714BF78D02171E /* RootView.swift in Sources */,
 				A0628F4B3002429AA8C833E6 /* VroomVroomApp.swift in Sources */,
 				4901E046772B489A8E39AC5D /* Root.swift in Sources */,
