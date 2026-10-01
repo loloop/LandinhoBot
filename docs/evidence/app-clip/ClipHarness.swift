@@ -21,7 +21,7 @@ struct VroomVroomClipApp: App {
     case "cold", "warm": url = "https://vroomvroom.racing/categories/f1"
     case "categories": url = "https://vroomvroom.racing/categories"
     case "round": url = "https://vroomvroom.racing/rounds/4caebfb4-c669-46f1-b74e-ad391517f373"
-    case "settings", "handoff": url = "https://vroomvroom.racing/settings"
+    case "settings", "handoff", "handoff-native": url = "https://vroomvroom.racing/settings"
     case "invalid": url = "https://evil.example/categories/f1"
     case "missing": url = "https://vroomvroom.racing/rounds/00000000-0000-0000-0000-000000000999"
     default: url = nil
@@ -44,10 +44,17 @@ struct VroomVroomClipApp: App {
             model.receive(activity)
           } else if mode == "handoff" {
             try? await Task.sleep(for: .seconds(5))
-            // Same production handoff method as the button, called without an
-            // unavailable UI tap. Full app is temporarily absent on this device.
+            // Deterministic rejected-opener result; demonstrates the production
+            // fallback alert without claiming a completed external OS handoff.
+            model.openFullApp { _, completion in completion(false) }
+          } else if mode == "handoff-native" {
+            try? await Task.sleep(for: .seconds(5))
             model.openFullApp { url, completion in
-              UIApplication.shared.open(url, options: [:], completionHandler: completion)
+              NSLog("LANDINHO_CLIP_EVIDENCE requested %@", url.absoluteString)
+              UIApplication.shared.open(url, options: [:]) { accepted in
+                NSLog("LANDINHO_CLIP_EVIDENCE native accepted=%@", String(accepted))
+                completion(accepted)
+              }
             }
           }
         }

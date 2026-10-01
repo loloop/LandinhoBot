@@ -19,6 +19,7 @@ restore() {
   cp "$scratch_dir/clip-entry.swift" "$clip_entry"
   cp "$scratch_dir/app-entry.swift" "$app_entry"
   if [[ -n "$fixture_pid" ]]; then kill "$fixture_pid" 2>/dev/null || true; fi
+  xcrun simctl shutdown "$simulator_id" 2>/dev/null || true
 }
 trap restore EXIT
 build() {
@@ -53,9 +54,9 @@ xcrun simctl bootstatus "$simulator_id" -b
 xcrun simctl ui "$simulator_id" appearance dark
 xcrun simctl uninstall "$simulator_id" me.mauriciocardozo.racing.vroomvroom 2>/dev/null || true
 xcrun simctl install "$simulator_id" "$derived_dir/Build/Products/Debug-iphonesimulator/VroomVroomClip.app"
-for mode in cold categories round restored invalid missing settings handoff; do
+for mode in cold categories round restored invalid missing settings handoff handoff-native; do
   clip_mode "$mode"
-  sleep 7
+  if [[ "$mode" == handoff* ]]; then sleep 15; else sleep 7; fi
   capture "clip-$mode"
 done
 clip_mode warm
@@ -73,7 +74,7 @@ for mode in settings share; do
   SIMCTL_CHILD_LANDINHO_API_URL=http://127.0.0.1:18085 \
   SIMCTL_CHILD_LANDINHO_SETTINGS_EVIDENCE="$mode" xcrun simctl launch "$simulator_id" \
     me.mauriciocardozo.racing.vroomvroom
-  sleep 9
+  if [[ "$mode" == share ]]; then sleep 25; else sleep 9; fi
   capture "app-$mode"
 done
 cp "$scratch_dir/app-entry.swift" "$app_entry"

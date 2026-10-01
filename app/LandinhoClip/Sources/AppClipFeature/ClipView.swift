@@ -87,7 +87,7 @@ public struct ClipView: View {
       } message: {
         Text("Você pode continuar consultando os horários aqui.")
       }
-      .appStoreOverlay(isPresented: $isStoreOverlayPresented) { _ in
+      .appStoreOverlay(isPresented: $isStoreOverlayPresented) {
         SKOverlay.AppClipConfiguration(position: .bottom)
       }
     }
@@ -143,7 +143,7 @@ public struct ClipView: View {
                 Image(systemName: "chevron.right").foregroundStyle(lime)
               }
               if let session = WidgetSessionSchedule(race: round, date: Date()).sessions.first {
-                Text("\(session.title) · \(session.dayLabel) · \(session.timeLabel)")
+                Text("\(session.title) · \(ClipDayLabel.label(for: session)) · \(session.timeLabel)")
                   .font(.subheadline).foregroundStyle(.secondary)
               } else { Text("Horários pendentes").font(.subheadline).foregroundStyle(.secondary) }
             }
@@ -170,7 +170,7 @@ public struct ClipView: View {
             Spacer()
             VStack(alignment: .trailing, spacing: 4) {
               Text(session.timeLabel).fontWeight(session.isMainEvent ? .bold : .regular)
-              Text(session.dayLabel).font(.caption).foregroundStyle(.secondary)
+              Text(ClipDayLabel.label(for: session)).font(.caption).foregroundStyle(.secondary)
             }
           }
           .accessibilityElement(children: .combine)

@@ -10,7 +10,6 @@ import UIKit
 @main
 struct VroomVroomApp: App {
   let store: StoreOf<Root>
-  @State private var isSharing = false
   @UIApplicationDelegateAdaptor var delegate: VroomAppDelegate
   private let showShare = ProcessInfo.processInfo.environment["LANDINHO_SETTINGS_EVIDENCE"] == "share"
 
@@ -24,20 +23,18 @@ struct VroomVroomApp: App {
   var body: some Scene {
     WindowGroup {
       RootView(store: store)
-        .sheet(isPresented: $isSharing) { NativeAppShareSheet() }
         .task {
           if showShare {
             try? await Task.sleep(for: .seconds(3))
-            isSharing = true
+            guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let controller = scene.windows.first(where: \.isKeyWindow)?.rootViewController
+            else { return }
+            let sheet = UIActivityViewController(activityItems: [AppSharing(bundle: .main).shareText], applicationActivities: nil)
+            sheet.popoverPresentationController?.sourceView = controller.view
+            sheet.popoverPresentationController?.sourceRect = controller.view.bounds
+            controller.present(sheet, animated: true)
           }
         }
     }
   }
-}
-
-private struct NativeAppShareSheet: UIViewControllerRepresentable {
-  func makeUIViewController(context: Context) -> UIActivityViewController {
-    UIActivityViewController(activityItems: [AppSharing(bundle: .main).shareText], applicationActivities: nil)
-  }
-  func updateUIViewController(_ controller: UIActivityViewController, context: Context) {}
 }

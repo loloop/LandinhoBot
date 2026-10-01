@@ -11,7 +11,9 @@ existing public `GET /category`, `GET /next-races?page=1&per=5&category=<tag>` a
 `GET /rounds/<UUID>` endpoints through an ephemeral URLSession. It includes no
 administration, favorites store, widgets or third-party packages. The preview
 shows five upcoming rounds; a round view shows all its sessions, including
-pending times and cancellations. `LANDINHO_API_URL` supports HTTPS overrides or
+pending times and cancellations. Clip dates use consistent localized month
+names; confirmed instants use the device timezone while source-only days retain
+their calendar date. `LANDINHO_API_URL` supports HTTPS overrides or
 an HTTP loopback fixture server for development.
 
 ## Invocation and handoff
@@ -93,6 +95,8 @@ Store Connect experience, or activate production Universal Links. Before release
    verify a signed device/archive build. Xcode synthesizes the parent's
    `associated-appclip-app-identifiers` entitlement when archiving the embedded
    Clip; the Clip's source entitlement names the parent using `AppIdentifierPrefix`.
+   Deploy the backend version containing the public `GET /rounds/<UUID>` route
+   from the deep-links layer before enabling live round invocations.
 2. Deploy HTTPS pages and the AASA from `docs/deep-links/apple-app-site-association`
    on the owned canonical domain. Add `applinks:vroomvroom.racing` to the full
    app and `appclips:vroomvroom.racing` to the Clip's signed entitlements (examples
