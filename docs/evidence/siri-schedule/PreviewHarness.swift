@@ -81,7 +81,10 @@ private struct SiriQueryEvidenceView: View {
   }
 
   private func saveResult(text: String?, error: String?, categoryTag: String?) {
-    let result = SiriEvidenceResult(mode: mode, text: text, error: error, categoryTag: categoryTag)
+    let result = SiriEvidenceResult(
+      mode: mode, text: text, error: error, categoryTag: categoryTag,
+      bundleLocalizations: Bundle.main.localizations,
+      developmentLocalization: Bundle.main.developmentLocalization)
     let directory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
     do {
       let data = try JSONEncoder().encode(result)
@@ -96,6 +99,8 @@ private struct SiriEvidenceResult: Encodable {
   let text: String?
   let error: String?
   let categoryTag: String?
+  let bundleLocalizations: [String]
+  let developmentLocalization: String?
 }
 
 private enum SiriEvidenceError: LocalizedError {

@@ -6,6 +6,8 @@ import sys
 scenario, path = sys.argv[1:]
 with open(path) as source:
     result = json.load(source)
+assert result.get("developmentLocalization", "").replace("_", "-") == "pt-BR", result
+assert "pt-BR" in [locale.replace("_", "-") for locale in result["bundleLocalizations"]], result
 text = result.get("text", "")
 error = result.get("error", "")
 if scenario == "offline":
