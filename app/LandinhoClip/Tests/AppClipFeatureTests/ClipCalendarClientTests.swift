@@ -49,4 +49,12 @@ final class ClipCalendarClientTests: XCTestCase {
     do { _ = try await invalid.categories(); XCTFail("Expected decoding error") }
     catch { XCTAssertTrue(error is DecodingError) }
   }
+
+  func testUnrelatedRoundFromServerCannotReplaceRequestedRound() async throws {
+    let client = ClipCalendarClient { request in
+      (Data(Self.roundJSON.utf8), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+    }
+    do { _ = try await client.round(id: UUID()); XCTFail("Expected ID mismatch failure") }
+    catch { XCTAssertEqual((error as? URLError)?.code, .cannotDecodeContentData) }
+  }
 }

@@ -14,6 +14,7 @@ public final class ClipModel: ObservableObject {
 
   @Published public private(set) var navigation: ClipNavigation
   @Published public private(set) var content: Content = .loading
+  @Published public var isAppUnavailable = false
   private let client: ClipCalendarClient
   private let defaults: UserDefaults
   private var requestGeneration = 0
@@ -34,6 +35,11 @@ public final class ClipModel: ObservableObject {
   public func navigate(to route: AppRoute) {
     navigation.navigate(to: route)
     saveRoute()
+  }
+
+  public func openFullApp(using open: (URL, @escaping (Bool) -> Void) -> Void) {
+    guard let url = navigation.fullAppRoute.url else { return }
+    open(url) { accepted in self.isAppUnavailable = !accepted }
   }
 
   public func reload() async {

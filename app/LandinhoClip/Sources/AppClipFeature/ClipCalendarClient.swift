@@ -40,7 +40,9 @@ public struct ClipCalendarClient {
   }
 
   public func round(id: UUID) async throws -> Race {
-    try await get(Race.self, path: "rounds/" + id.uuidString.lowercased())
+    let round = try await get(Race.self, path: "rounds/" + id.uuidString.lowercased())
+    guard round.id == id else { throw URLError(.cannotDecodeContentData) }
+    return round
   }
 
   private func get<T: Decodable>(_ type: T.Type, path: String, query: [URLQueryItem] = []) async throws -> T {

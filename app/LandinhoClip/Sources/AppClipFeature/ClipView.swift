@@ -6,7 +6,6 @@ import SwiftUI
 public struct ClipView: View {
   @ObservedObject private var model: ClipModel
   @Environment(\.openURL) private var openURL
-  @State private var isAppUnavailable = false
   @State private var isStoreOverlayPresented = false
   private let sharing: AppSharing
   private let lime = Color(red: 0.75, green: 0.94, blue: 0.24)
@@ -46,9 +45,7 @@ public struct ClipView: View {
             Text("Favorite suas categorias e acompanhe o calendário completo.")
               .font(.subheadline).foregroundStyle(.secondary)
             Button {
-              if let url = model.navigation.fullAppRoute.url {
-                openURL(url) { accepted in if !accepted { isAppUnavailable = true } }
-              }
+              model.openFullApp { url, completion in openURL(url, completion: completion) }
             } label: {
               Label("Abrir app instalado", systemImage: "arrow.up.forward.app")
                 .frame(maxWidth: .infinity)
@@ -84,7 +81,7 @@ public struct ClipView: View {
       }
       .refreshable { await model.reload() }
       .task(id: model.navigation.revision) { await model.reload() }
-      .alert("O app completo não está instalado", isPresented: $isAppUnavailable) {
+      .alert("O app completo não está instalado", isPresented: $model.isAppUnavailable) {
         if let appStoreURL = sharing.appStoreURL { Link("Ver na App Store", destination: appStoreURL) }
         Button("Continuar no App Clip", role: .cancel) {}
       } message: {

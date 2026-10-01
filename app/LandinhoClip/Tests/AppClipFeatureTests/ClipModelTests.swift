@@ -93,4 +93,21 @@ final class ClipModelTests: XCTestCase {
     await first.value
     XCTAssertEqual(model.content, .rounds([]))
   }
+
+  func testFullAppHandoffPreservesDestinationAndHandlesUnavailableApp() {
+    let model = ClipModel(defaults: defaults())
+    let round = AppRoute.round(id: ClipCalendarClientTests.id)
+    model.navigate(to: round)
+    model.openFullApp { url, completion in
+      XCTAssertEqual(url, round.url)
+      completion(false)
+    }
+    XCTAssertTrue(model.isAppUnavailable)
+    model.navigate(to: .settings)
+    model.openFullApp { url, completion in
+      XCTAssertEqual(url, AppRoute.settings.url)
+      completion(true)
+    }
+    XCTAssertFalse(model.isAppUnavailable)
+  }
 }
