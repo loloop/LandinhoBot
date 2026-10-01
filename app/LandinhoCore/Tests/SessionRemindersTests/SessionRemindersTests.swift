@@ -161,14 +161,22 @@ final class SessionRemindersTests: XCTestCase {
   func testFailedRescheduleRemovesKnownObsoleteTimeAndCanRetry() async throws {
     let backend = FakeNotifications(authorization: .allowed)
     let center = makeCenter(backend)
-    _ = try await center.toggle(round: round(), session: round().events[0])
+    var original = round()
+    original.events[1] = .init(id: UUID(uuidString: "33333333-3333-3333-3333-333333333333")!,
+                             title: "Corrida", date: now.addingTimeInterval(86400), isMainEvent: true)
+    _ = try await center.toggle(round: original, session: original.events[0])
+    _ = try await center.toggle(round: original, session: original.events[1])
     await backend.failAdds(true)
-    let updated = round(first: event(date: now.addingTimeInterval(10800)))
+    var updated = original
+    updated.events[0] = event(date: now.addingTimeInterval(10800))
+    updated.events[1] = .init(id: original.events[1].id, title: "Corrida", date: original.events[1].date,
+                            isMainEvent: true, isCancelled: true)
     do {
       _ = try await center.refresh(rounds: [updated])
       XCTFail("Scheduling error should be visible")
     } catch { XCTAssertEqual(error as? SessionReminderError, .schedulingFailed) }
     let state = await center.current()
+    // An earlier failed update must not stop cancellation of another session.
     XCTAssertTrue(state.scheduledDates.isEmpty)
     await backend.failAdds(false)
     let retried = try await center.toggle(round: updated, session: updated.events[0])
@@ -247,7 +255,8 @@ private actor FakeNotifications: SessionNotificationBackend {
   }
 
   func pending() -> PendingSessionReminders {
-    .init(reminders: Array(reminders.values), totalRequestCount: reminders.count + otherRequestCount)
+    .init(reminders: reminders.values.sorted { $0.sessionID.uuidString < $1.sessionID.uuidString },
+          totalRequestCount: reminders.count + otherRequestCount)
   }
 
   func add(_ reminder: SessionReminder) throws {

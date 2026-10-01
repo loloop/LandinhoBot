@@ -23,6 +23,7 @@ public actor SessionReminderCenter {
     defer { releaseOperation() }
     let authorization = await backend.authorization()
     let pending = await backend.pending()
+    var schedulingError: Error?
     for reminder in pending.reminders {
       guard let round = rounds.first(where: { $0.id == reminder.roundID }) else { continue }
       if round.isCancelled {
@@ -48,10 +49,12 @@ public actor SessionReminderCenter {
         } catch {
           // Never leave a known obsolete start time armed after an update fails.
           await backend.remove(identifiers: [reminder.identifier])
-          throw error
+          // Continue checking other opted-in sessions, especially cancellations.
+          schedulingError = error
         }
       }
     }
+    if let schedulingError { throw schedulingError }
     return await snapshot(authorization: authorization)
   }
 

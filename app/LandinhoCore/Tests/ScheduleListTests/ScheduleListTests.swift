@@ -1,7 +1,9 @@
 import CategoryFavorites
 import ComposableArchitecture
+import EventDetail
 import Foundation
 import LandinhoFoundation
+import SessionReminders
 @testable import ScheduleList
 import XCTest
 
@@ -151,10 +153,105 @@ final class ScheduleListTests: XCTestCase {
     XCTAssertEqual(CategoryFavorites(defaults: defaults).read(), ["stock"])
   }
 
+  func testValidatedRefreshReconcilesRawRoundsIncludingCancellations() async {
+    let live = race(1)
+    let cancelled = Race(id: race(2).id, title: "Cancelled round", shortTitle: "Cancelled",
+      events: [], category: live.category, isCancelled: true)
+    let response = Page(items: [live, cancelled, live], metadata: .init(page: 1, per: 5, total: 3))
+    var state = ScheduleList.State(categoryTag: nil)
+    state.items = [race(0)]
+    state.hasLoaded = true
+    state.currentPage = 2
+    state.total = 10
+    state.requestGeneration = 9
+    state.inFlightPage = 1
+    state.isRefreshing = true
+    let recorder = ScheduleReminderRecorder()
+    let store = TestStore(initialState: state) { ScheduleList() } withDependencies: {
+      $0.date.now = date
+      $0.sessionReminders.refresh = { rounds in
+        await recorder.record(rounds)
+        return .init(authorization: .allowed, scheduledDates: [:])
+      }
+    }
+    await store.send(.pageResponse(generation: 9, page: 1, .success(response))) {
+      $0.inFlightPage = nil
+      $0.isRefreshing = false
+      $0.items = [live]
+      $0.currentPage = 1
+      $0.total = 3
+      $0.lastUpdatedDate = self.date
+    }
+    await store.finish()
+    let reconciled = await recorder.rounds
+    XCTAssertEqual(reconciled, [response.items])
+    XCTAssertEqual(store.state.items, [live])
+  }
+
+  func testStaleOrWrongPageCannotReconcileReminders() async {
+    let response = Page(items: [race(0)], metadata: .init(page: 1, per: 5, total: 1))
+    var state = ScheduleList.State(categoryTag: nil)
+    state.requestGeneration = 9
+    state.inFlightPage = 1
+    let store = TestStore(initialState: state) { ScheduleList() } withDependencies: {
+      $0.sessionReminders.refresh = { _ in
+        XCTFail("An ignored response must not reconcile reminders")
+        return .init(authorization: .allowed, scheduledDates: [:])
+      }
+    }
+    await store.send(.pageResponse(generation: 8, page: 1, .success(response)))
+    await store.send(.pageResponse(generation: 9, page: 2, .success(response)))
+    await store.finish()
+    XCTAssertEqual(store.state.inFlightPage, 1)
+    XCTAssertTrue(store.state.items.isEmpty)
+  }
+
+  func testMalformedOrFailedPageCannotReconcileReminders() async {
+    for metadata in [Page<Race>.Metadata(page: 2, per: 5, total: 1), .init(page: 1, per: 2, total: 1)] {
+      var state = ScheduleList.State(categoryTag: nil)
+      state.requestGeneration = 9
+      state.inFlightPage = 1
+      state.items = [race(0)]
+      let store = TestStore(initialState: state) { ScheduleList() } withDependencies: {
+        $0.sessionReminders.refresh = { _ in
+          XCTFail("Malformed metadata must not reconcile reminders")
+          return .init(authorization: .allowed, scheduledDates: [:])
+        }
+      }
+      await store.send(.pageResponse(generation: 9, page: 1, .success(.init(items: [race(1)], metadata: metadata)))) {
+        $0.inFlightPage = nil
+        $0.failedPage = 1
+        $0.errorMessage = "A programação recebida está incompleta. Tente novamente."
+      }
+      await store.finish()
+      XCTAssertEqual(store.state.items, state.items)
+    }
+    var state = ScheduleList.State(categoryTag: nil)
+    state.requestGeneration = 9
+    state.inFlightPage = 1
+    let store = TestStore(initialState: state) { ScheduleList() } withDependencies: {
+      $0.sessionReminders.refresh = { _ in
+        XCTFail("A failed fetch must not reconcile reminders")
+        return .init(authorization: .allowed, scheduledDates: [:])
+      }
+    }
+    await store.send(.pageResponse(generation: 9, page: 1, .failure(URLError(.notConnectedToInternet)))) {
+      $0.inFlightPage = nil
+      $0.failedPage = 1
+      $0.errorMessage = "Não foi possível carregar os horários. Tente novamente."
+    }
+    await store.finish()
+  }
+
   private func race(_ index: Int, tag: String = "f1") -> Race {
     .init(id: UUID(uuidString: String(format: "00000000-0000-0000-0000-%012d", index + 1))!,
       title: "Round \(index)", shortTitle: "Round \(index)",
       events: [.init(id: UUID(), title: "Race", date: date, isMainEvent: true)],
       category: .init(id: UUID().uuidString, title: tag, tag: tag))
   }
+}
+
+private actor ScheduleReminderRecorder {
+  var rounds: [[Race]] = []
+  func record(_ value: [Race]) { rounds.append(value) }
 }

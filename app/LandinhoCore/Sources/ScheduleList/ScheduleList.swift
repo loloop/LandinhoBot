@@ -161,7 +161,8 @@ public struct ScheduleList: Reducer {
             // Only reconcile the validated response, including cancelled rounds.
             _ = try await sessionReminders.refresh(response.items)
           } catch: { _, _ in
-            // Round details expose reminder errors and retry controls.
+            // Leave schedule loading usable. Details read the actual pending state
+            // and let the person request a reminder again if scheduling failed.
           }
         case .failure:
           state.failedPage = page

@@ -3,6 +3,16 @@ import LandinhoFoundation
 import SessionReminders
 
 public struct SessionReminderClient {
+  public init(
+    current: @escaping @Sendable () async -> SessionReminderSnapshot,
+    refresh: @escaping @Sendable ([Race]) async throws -> SessionReminderSnapshot,
+    toggle: @escaping @Sendable (Race, RaceEvent) async throws -> SessionReminderSnapshot
+  ) {
+    self.current = current
+    self.refresh = refresh
+    self.toggle = toggle
+  }
+
   public var current: @Sendable () async -> SessionReminderSnapshot
   public var refresh: @Sendable ([Race]) async throws -> SessionReminderSnapshot
   public var toggle: @Sendable (Race, RaceEvent) async throws -> SessionReminderSnapshot

@@ -73,7 +73,7 @@ let package = Package(
             widgetUI,
             composable
           ]),
-      .testTarget(name: "ScheduleListTests", dependencies: ["ScheduleList", "CategoryFavorites", foundation, composable]),
-      .testTarget(name: "EventDetailTests", dependencies: ["EventDetail", "APIClient", foundation, composable]),
+      .testTarget(name: "ScheduleListTests", dependencies: ["ScheduleList", "CategoryFavorites", "EventDetail", "SessionReminders", foundation, composable]),
+      .testTarget(name: "EventDetailTests", dependencies: ["EventDetail", "APIClient", "SessionReminders", foundation, composable]),
     ]
 )
