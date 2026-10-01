@@ -62,15 +62,22 @@ private struct SiriQueryEvidenceView: View {
 
   @MainActor
   private func runIntent() async {
-    var intent = AskNextRacingSessionIntent(sessionKind: mode == "session" ? .session : .race)
+    let intent = AskNextRacingSessionIntent(sessionKind: mode == "session" ? .session : .race)
     do {
       if mode == "category" {
         let matches = try await RacingCategoryQuery().entities(matching: "F1")
         guard let category = matches.first else { throw SiriEvidenceError.missingCategory }
         intent.category = category
       }
-      let result = try await intent.perform()
-      guard let value = result.value else { throw SiriEvidenceError.missingValue }
+      let returnedValue: String?
+      if mode == "session" {
+        let sessionIntent = AskNextSessionTimeIntent()
+        sessionIntent.category = intent.category
+        returnedValue = try await sessionIntent.perform().value
+      } else {
+        returnedValue = try await intent.perform().value
+      }
+      guard let value = returnedValue else { throw SiriEvidenceError.missingValue }
       message = value
       saveResult(text: value, error: nil, categoryTag: intent.category?.tag)
     } catch {

@@ -82,6 +82,8 @@ public struct BetaSheet: View {
 
   let latestRelease: LocalizedStringKey = """
   01/10/2026
+  • Consulta a próxima corrida ou sessão pela Siri e pelos Atalhos, com categoria opcional e horários no fuso do aparelho
+  • Adiciona acesso aos Atalhos em Ajustes e informa horários pendentes, cancelamentos e falhas de conexão nas consultas
   • Adiciona lembretes locais para o início de sessões com horário confirmado, com opção de ativar ou cancelar nos detalhes; a permissão de notificações é solicitada somente ao ativar um lembrete
   • Atualiza os lembretes quando a programação recebida é recarregada e mostra acesso aos Ajustes quando as notificações estão desativadas
   • Manutenção: registra a pendência de verificar o domínio e o DNS da API hospedada

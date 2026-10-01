@@ -107,12 +107,33 @@ enum SiriScheduleIntentError: LocalizedError {
   }
 }
 
+/// A distinct entry point keeps the session shortcut independent of the main-race
+/// parameter default. Both shortcuts share the same read-only query and reply.
+struct AskNextSessionTimeIntent: AppIntent {
+  static var title: LocalizedStringResource = "Consultar próxima sessão"
+  static var description = IntentDescription("Consulta a próxima sessão, incluindo treinos e classificação, no fuso do aparelho.")
+  static var openAppWhenRun = false
+
+  @Parameter(title: "Categoria")
+  var category: RacingCategoryEntity?
+
+  static var parameterSummary: some ParameterSummary {
+    Summary("Consultar próxima sessão") { \.$category }
+  }
+
+  func perform() async throws -> some IntentResult & ReturnsValue<String> & ProvidesDialog & ShowsSnippetView {
+    let query = AskNextRacingSessionIntent(sessionKind: .session)
+    query.category = category
+    return try await query.perform()
+  }
+}
+
 struct RacingScheduleShortcuts: AppShortcutsProvider {
-  static var shortcutTileColor: ShortcutTileColor = .green
+  static var shortcutTileColor: ShortcutTileColor = .lime
 
   static var appShortcuts: [AppShortcut] {
     AppShortcut(
-      intent: AskNextRacingSessionIntent(sessionKind: .race),
+      intent: AskNextRacingSessionIntent(),
       phrases: [
         "Quando é a próxima corrida no \(.applicationName)",
         "Qual o horário da próxima corrida no \(.applicationName)",
@@ -121,7 +142,7 @@ struct RacingScheduleShortcuts: AppShortcutsProvider {
       shortTitle: "Próxima corrida",
       systemImageName: "flag.checkered")
     AppShortcut(
-      intent: AskNextRacingSessionIntent(sessionKind: .session),
+      intent: AskNextSessionTimeIntent(),
       phrases: [
         "Quando é a próxima sessão no \(.applicationName)",
         "Quando é a próxima sessão de \(\.$category) no \(.applicationName)"

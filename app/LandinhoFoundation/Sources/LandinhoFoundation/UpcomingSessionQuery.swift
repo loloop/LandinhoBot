@@ -123,14 +123,22 @@ public enum UpcomingScheduleLoading {
 
   public static func rounds(fetchPage: (Int) async throws -> UpcomingSchedulePage) async throws -> [Race] {
     var rounds: [Race] = []
+    var seenRoundIDs = Set<UUID>()
+    var expectedPagination: (per: Int, total: Int)?
     var page = 1
     while page <= 50 {
       try Task.checkCancellation()
       let response = try await fetchPage(page)
       let metadata = response.metadata
-      guard metadata.page == page, metadata.per > 0, metadata.total >= 0,
-        response.items.count <= metadata.per,
-        response.items.isEmpty == (metadata.total == 0) else { throw LoadingError.incompleteCalendar }
+      guard metadata.page == page, metadata.per > 0, metadata.total >= rounds.count,
+        expectedPagination.map({ $0.per == metadata.per && $0.total == metadata.total }) ?? true,
+        response.items.count == min(metadata.per, metadata.total - rounds.count)
+        else { throw LoadingError.incompleteCalendar }
+      let pageIDs = Set(response.items.map(\.id))
+      guard pageIDs.count == response.items.count, seenRoundIDs.isDisjoint(with: pageIDs)
+        else { throw LoadingError.incompleteCalendar }
+      expectedPagination = (metadata.per, metadata.total)
+      seenRoundIDs.formUnion(pageIDs)
       rounds.append(contentsOf: response.items)
       let pageCount = metadata.total / metadata.per + (metadata.total % metadata.per == 0 ? 0 : 1)
       if page >= pageCount { return rounds }

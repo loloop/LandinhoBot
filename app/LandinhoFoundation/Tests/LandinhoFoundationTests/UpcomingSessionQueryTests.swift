@@ -117,4 +117,57 @@ final class UpcomingSessionQueryTests: XCTestCase {
       XCTFail("A missing page should fail the query")
     } catch { XCTAssertTrue(error is UpcomingScheduleLoading.LoadingError) }
   }
+
+  func testShortFinalPageIsRejectedEvenWhenItIsTheFirstPage() async {
+    for total in [2, 100] {
+      do {
+        _ = try await UpcomingScheduleLoading.rounds { page in
+          UpcomingSchedulePage(items: [self.round([self.session(100)])], metadata: .init(page: page, per: 100, total: total))
+        }
+        XCTFail("A truncated final page must not produce an answer")
+      } catch { XCTAssertTrue(error is UpcomingScheduleLoading.LoadingError) }
+    }
+    do {
+      _ = try await UpcomingScheduleLoading.rounds { page in
+        let items = page == 1 ? [self.round([]), self.round([])] : []
+        return UpcomingSchedulePage(items: items, metadata: .init(page: page, per: 2, total: 3))
+      }
+      XCTFail("A missing last item must not produce an answer")
+    } catch { XCTAssertTrue(error is UpcomingScheduleLoading.LoadingError) }
+  }
+
+  func testDuplicateRoundIDsWithinOrAcrossPagesAreRejected() async {
+    let repeated = round([session(100)])
+    for per in [1, 2] {
+      do {
+        _ = try await UpcomingScheduleLoading.rounds { page in
+          UpcomingSchedulePage(items: Array(repeating: repeated, count: per), metadata: .init(page: page, per: per, total: 2))
+        }
+        XCTFail("Repeated round IDs do not establish a complete calendar")
+      } catch { XCTAssertTrue(error is UpcomingScheduleLoading.LoadingError) }
+    }
+  }
+
+  func testChangedPaginationMetadataIsRejected() async {
+    for changed in [UpcomingSchedulePage.Metadata(page: 2, per: 2, total: 2), .init(page: 2, per: 1, total: 3), .init(page: 1, per: 1, total: 2)] {
+      do {
+        _ = try await UpcomingScheduleLoading.rounds { page in
+          UpcomingSchedulePage(items: [self.round([])], metadata: page == 1 ? .init(page: 1, per: 1, total: 2) : changed)
+        }
+        XCTFail("A changing calendar must fail instead of combining inconsistent pages")
+      } catch { XCTAssertTrue(error is UpcomingScheduleLoading.LoadingError) }
+    }
+  }
+
+  func testLoadingStopsAtFiftyPagesInsteadOfReturningPartialResults() async {
+    var requests = 0
+    do {
+      _ = try await UpcomingScheduleLoading.rounds { page in
+        requests += 1
+        return UpcomingSchedulePage(items: [self.round([])], metadata: .init(page: page, per: 1, total: 51))
+      }
+      XCTFail("A calendar beyond the limit must not produce an answer")
+    } catch { XCTAssertTrue(error is UpcomingScheduleLoading.LoadingError) }
+    XCTAssertEqual(requests, 50)
+  }
 }
