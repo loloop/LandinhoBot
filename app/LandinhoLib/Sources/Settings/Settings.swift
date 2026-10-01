@@ -75,9 +75,8 @@ public struct SettingsView: View {
         Label("Política de privacidade", systemImage: "lock")
       }
 
-      Button {
-        // TODO: Create developer page
-        notificationQueue.enqueue(.success("Ainda não amigo"))
+      NavigationLink {
+        AboutDeveloperView()
       } label: {
         Label("Sobre o desenvolvedor", systemImage: "person")
       }
