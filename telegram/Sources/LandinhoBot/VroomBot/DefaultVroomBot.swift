@@ -10,8 +10,12 @@ import Foundation
 
 final class DefaultVroomBot: SwiftyBot {
 
+  // Lazy so _bot is available after super.init()
+  private lazy var alertDispatcher = AlertDispatcher(bot: _bot)
+
   override init() {
     super.init()
+    alertDispatcher.start()
     update()
   }
 
@@ -19,7 +23,10 @@ final class DefaultVroomBot: SwiftyBot {
     [
       HelpCommand(),
       NextRaceCommand(),
-      CategoryListCommand()
+      CategoryListCommand(),
+      SubscribeCommand(),
+      UnsubscribeCommand(),
+      MySubscriptionsCommand()
     ]
   }
 }
