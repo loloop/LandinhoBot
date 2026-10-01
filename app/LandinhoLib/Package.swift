@@ -131,6 +131,7 @@ let package = Package(
       .target(
         name: "Router",
         dependencies: [
+          foundation,
           "Home",
           "Categories",
           eventDetail,
@@ -166,5 +167,6 @@ let package = Package(
           apiClient,
           composable
         ]),
+      .testTarget(name: "RouterTests", dependencies: ["Router", foundation, composable]),
   ]
 )

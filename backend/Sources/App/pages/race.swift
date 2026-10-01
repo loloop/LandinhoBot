@@ -7,6 +7,28 @@
 
 import Vapor
 import Foundation
+import Fluent
+
+/// Public read for shared links, including past and cancelled rounds.
+struct RoundDetailHandler: AsyncRequestHandler {
+  var method: HTTPMethod { .GET }
+  var path: String { "rounds/:id" }
+
+  func handle(req: Request) async throws -> some AsyncResponseEncodable {
+    guard let value = req.parameters.get("id"), value.utf8.count == 36,
+      let id = UUID(uuidString: value) else {
+      throw Abort(.badRequest, reason: "Invalid round ID")
+    }
+    guard let round = try await Race.query(on: req.db)
+      .filter(\.$id == id)
+      .with(\.$category)
+      .with(\.$events)
+      .first() else {
+      throw Abort(.notFound, reason: "Round not found")
+    }
+    return round
+  }
+}
 
 struct UploadRaceHandler: AsyncRequestHandler {
   var method: HTTPMethod { .POST }

@@ -30,5 +30,6 @@ struct RootView: View {
       sceneDelegate.setupNotificationQueueWindow(with: store)
       store.send(.onAppear)
     }
+    .onOpenURL { store.send(.openURL($0)) }
   }
 }

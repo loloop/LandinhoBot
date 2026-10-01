@@ -52,6 +52,7 @@ let package = Package(
         .target(
           name: "EventDetail",
           dependencies: [
+            foundation,
             "APIClient",
             widgetUI,
             composable
@@ -68,5 +69,6 @@ let package = Package(
             composable
           ]),
       .testTarget(name: "ScheduleListTests", dependencies: ["ScheduleList", "CategoryFavorites", foundation, composable]),
+      .testTarget(name: "EventDetailTests", dependencies: ["EventDetail", "APIClient", foundation, composable]),
     ]
 )
