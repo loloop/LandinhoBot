@@ -21,6 +21,7 @@ let package = Package(
       .watchOS(.v10)
     ],
     products: [
+      .library(name: "CategoryUI", targets: ["CategoryUI"]),
       .library(name: "NotificationsQueue", targets: ["NotificationsQueue"]),
       .library(name: "WidgetUI", targets: ["WidgetUI"]),
     ],
@@ -31,6 +32,7 @@ let package = Package(
       .package(path: "../LandinhoFoundation")
     ],
     targets: [
+      .target(name: "CategoryUI", dependencies: [foundation]),
       .target(
         name: "NotificationsQueue",
         dependencies: [

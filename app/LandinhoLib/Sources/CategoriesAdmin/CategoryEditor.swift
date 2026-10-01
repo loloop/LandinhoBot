@@ -19,6 +19,7 @@ public struct CategoryEditor: Reducer {
       title = category.title
       tag = category.tag
       comment = category.comment ?? ""
+      color = category.color
       isEditing = true
     }
 
@@ -27,6 +28,7 @@ public struct CategoryEditor: Reducer {
       title = ""
       tag = ""
       comment = ""
+      color = nil
       isEditing = false
     }
 
@@ -34,6 +36,9 @@ public struct CategoryEditor: Reducer {
     @BindingState var title: String
     @BindingState var tag: String
     @BindingState var comment: String
+    @BindingState var color: CategoryColor?
+
+    var resolvedColor: CategoryColor { color ?? .fallback(for: tag) }
 
     let isEditing: Bool
 
@@ -57,7 +62,8 @@ public struct CategoryEditor: Reducer {
             id: state.id,
             title: state.title,
             tag: state.tag,
-            comment: state.comment)
+            comment: state.comment,
+            color: state.color)
           return .run { send in
             try await send(.categoryRequest(.request(.patch(request))))
           }
@@ -66,7 +72,8 @@ public struct CategoryEditor: Reducer {
           let request = UploadCategoryRequest(
             title: state.title,
             categoryTag: state.tag,
-            comment: state.comment)
+            comment: state.comment,
+            color: state.color)
           return .run { send in
             try await send(.categoryRequest(.request(.post(request))))
           }
@@ -86,6 +93,6 @@ public struct CategoryEditor: Reducer {
     let title: String
     let categoryTag: String
     let comment: String?
+    let color: CategoryColor?
   }
 }
-

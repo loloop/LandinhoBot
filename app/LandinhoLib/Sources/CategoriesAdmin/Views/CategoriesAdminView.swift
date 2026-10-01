@@ -6,6 +6,7 @@
 //
 
 import APIClient
+import CategoryUI
 import ComposableArchitecture
 import Foundation
 import SwiftUI
@@ -39,6 +40,8 @@ public struct CategoriesAdminView: View {
               viewStore.send(.onCategoryTap(category.id))
             } label: {
               HStack {
+                CategoryColorSwatch(color: category.resolvedColor)
+                  .accessibilityHidden(true)
                 VStack(alignment: .leading) {
                   Text(category.title)
                     .font(.title3)

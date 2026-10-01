@@ -117,7 +117,6 @@ public struct BetaSheet: View {
   • App Clip
     • Botão de compartilhar o app em Ajustes -> App Clip ou Link
   • Parte de administração das categorias será escondida e protegida por senha
-  • Adicionar cores para as categorias
   • Categorias terão uma "accent color"
   • Home de verdade, com os horários de todas as categorias, categorias favoritas aparecendo primeiro e paginação
   • Ações rápidas no ícone do aplicativo

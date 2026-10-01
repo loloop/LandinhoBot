@@ -31,6 +31,8 @@ let widgetUI = Target.Dependency.product(
   name: "WidgetUI",
   package: "LandinhoCoreUI")
 
+let categoryUI = Target.Dependency.product(name: "CategoryUI", package: "LandinhoCoreUI")
+
 let package = Package(
   name: "LandinhoLib",
   platforms: [
@@ -75,6 +77,7 @@ let package = Package(
       .target(
         name: "Categories",
         dependencies: [
+          categoryUI,
           apiClient,
           notifications,
           scheduleList,
@@ -84,6 +87,7 @@ let package = Package(
       .target(
         name: "CategoriesAdmin",
         dependencies: [
+          categoryUI,
           apiClient,
           foundation,
           "RacesAdmin",

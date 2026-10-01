@@ -6,6 +6,7 @@
 //
 
 import APIClient
+import CategoryUI
 import LandinhoFoundation
 import Foundation
 import ComposableArchitecture
@@ -74,6 +75,8 @@ public struct CategoriesView: View {
             viewStore.send(.onCategoryTap(category.tag))
           } label: {
             HStack {
+              CategoryColorSwatch(color: category.resolvedColor)
+                .accessibilityHidden(true)
               VStack(alignment: .leading) {
                 Text(category.title)
                   .font(.headline)
@@ -99,4 +102,3 @@ public struct CategoriesView: View {
 
   }
 }
-
