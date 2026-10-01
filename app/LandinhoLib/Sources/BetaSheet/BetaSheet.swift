@@ -82,6 +82,8 @@ public struct BetaSheet: View {
 
   let latestRelease: LocalizedStringKey = """
   01/10/2026
+  • Adiciona lembretes locais para o início de sessões com horário confirmado, com opção de ativar ou cancelar nos detalhes; a permissão de notificações é solicitada somente ao ativar um lembrete
+  • Atualiza os lembretes quando a programação recebida é recarregada e mostra acesso aos Ajustes quando as notificações estão desativadas
   • Manutenção: registra a pendência de verificar o domínio e o DNS da API hospedada
   • Adiciona widget extra-largo no iPad com a próxima sessão, programação em duas colunas e indicação de horários pendentes
   • Adiciona App Clip para consultar categorias e corridas por link e permite compartilhar o app pelos Ajustes
@@ -148,7 +150,6 @@ public struct BetaSheet: View {
   • Design final da Home, Tela de Corrida, Categorias, Ajustes, Compartilhar, etc para iOS e iPadOS
 
   Para o futuro:
-  • Notificações no app quando eventos específicos forem começar
   • Enviar feedback de horário direto numa corrida
   • Pedir horário da próxima corrida para a Siri
   • Busca de Categorias

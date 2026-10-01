@@ -1,0 +1,72 @@
+{
+  "awaitedAPI" : "shippingRequestAuthorization",
+  "events" : [
+    {
+      "applicationState" : 1,
+      "epoch" : 1790856285.364114,
+      "error" : "",
+      "phase" : "notificationSettings.begin"
+    },
+    {
+      "applicationState" : 1,
+      "epoch" : 1790856285.368124,
+      "error" : "",
+      "phase" : "notificationSettings.end"
+    },
+    {
+      "applicationState" : 1,
+      "epoch" : 1790856285.3690882,
+      "error" : "",
+      "phase" : "pendingNotificationRequests.begin"
+    },
+    {
+      "applicationState" : 1,
+      "epoch" : 1790856285.3701229,
+      "error" : "",
+      "phase" : "pendingNotificationRequests.end"
+    },
+    {
+      "applicationState" : 1,
+      "epoch" : 1790856285.3704691,
+      "error" : "",
+      "phase" : "pendingNotificationRequests.begin"
+    },
+    {
+      "applicationState" : 1,
+      "epoch" : 1790856285.370882,
+      "error" : "",
+      "phase" : "pendingNotificationRequests.end"
+    },
+    {
+      "applicationState" : 1,
+      "epoch" : 1790856286.3753061,
+      "error" : "",
+      "phase" : "pendingNotificationRequests.begin"
+    },
+    {
+      "applicationState" : 1,
+      "epoch" : 1790856286.376513,
+      "error" : "",
+      "phase" : "pendingNotificationRequests.end"
+    },
+    {
+      "applicationState" : 1,
+      "epoch" : 1790856286.3770661,
+      "error" : "",
+      "phase" : "notificationSettings.begin"
+    },
+    {
+      "applicationState" : 1,
+      "epoch" : 1790856286.3782711,
+      "error" : "",
+      "phase" : "notificationSettings.end"
+    },
+    {
+      "applicationState" : 1,
+      "epoch" : 1790856286.378685,
+      "error" : "",
+      "phase" : "shippingRequestAuthorization.begin"
+    }
+  ],
+  "timedOutAPI" : ""
+}

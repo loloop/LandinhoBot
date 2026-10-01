@@ -1,0 +1,25 @@
+{
+  "authorization" : "allowed",
+  "deliveredNotifications" : [
+    {
+      "body" : "Formula 1 · São Paulo.",
+      "deliveredEpoch" : 1790856347,
+      "identifier" : "landinho.session.22222222-2222-2222-2222-222222222222",
+      "title" : "Classificação vai começar"
+    }
+  ],
+  "error" : "",
+  "expectedStartEpoch" : 1790856347,
+  "failures" : [
+
+  ],
+  "mode" : "native-provisional",
+  "nativeRequests" : [
+
+  ],
+  "phase" : "delivery",
+  "scheduledSessionIDs" : [
+
+  ],
+  "systemAuthorizationRawValue" : 3
+}

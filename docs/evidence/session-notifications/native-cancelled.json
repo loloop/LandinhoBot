@@ -1,0 +1,27 @@
+{
+  "authorization" : "allowed",
+  "deliveredNotifications" : [
+
+  ],
+  "error" : "",
+  "expectedStartEpoch" : 1790856347,
+  "failures" : [
+
+  ],
+  "mode" : "native-provisional",
+  "nativeRequests" : [
+    {
+      "body" : "Formula 1 · São Paulo.",
+      "identifier" : "landinho.session.22222222-2222-2222-2222-222222222222",
+      "nextTriggerEpoch" : 1790856347,
+      "repeats" : false,
+      "timeZone" : "GMT",
+      "title" : "Classificação vai começar"
+    }
+  ],
+  "phase" : "cancelled",
+  "scheduledSessionIDs" : [
+    "22222222-2222-2222-2222-222222222222"
+  ],
+  "systemAuthorizationRawValue" : 3
+}

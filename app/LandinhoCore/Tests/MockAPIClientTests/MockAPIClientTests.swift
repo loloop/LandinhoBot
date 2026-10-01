@@ -1,5 +1,6 @@
 @_spi(Internal) import APIClient
 import ComposableArchitecture
+import EventDetail
 import Foundation
 import LandinhoFoundation
 @_spi(Internal) import MockAPIClient
@@ -8,17 +9,22 @@ import XCTest
 
 final class MockAPIClientTests: XCTestCase {
   @MainActor
-  func testScheduleReducerLoadsThroughTheInjectedMock() async throws {
+  func testScheduleReducerLoadsAndReconcilesRemindersThroughTheInjectedMock() async throws {
     let service = MockAPIClientService()
     let page = try await request(Page<Race>.self, from: service, endpoint: "next-races",
       query: ["category": "f1", "page": "0", "per": "5"])
     let now = Date(timeIntervalSince1970: 2_000_000_000)
+    let reminderRefresh = MockReminderRefreshRecorder()
     let store = TestStore(initialState: ScheduleList.State(categoryTag: "f1")) {
       ScheduleList()
     } withDependencies: {
       $0.apiRequester = service
       $0.scheduleClient = .liveValue
       $0.date.now = now
+      $0.sessionReminders.refresh = { rounds in
+        await reminderRefresh.record(rounds)
+        return .init(authorization: .notDetermined, scheduledDates: [:])
+      }
     }
     await store.send(.onAppear) {
       $0.requestGeneration = 1
@@ -32,6 +38,9 @@ final class MockAPIClientTests: XCTestCase {
       $0.hasLoaded = true
       $0.lastUpdatedDate = now
     }
+    await store.finish()
+    let reconciledRounds = await reminderRefresh.rounds
+    XCTAssertEqual(reconciledRounds, [page.items])
   }
 
   func testAdminVerificationUsesTheInjectedMock() async throws {
@@ -176,5 +185,13 @@ final class MockAPIClientTests: XCTestCase {
     let items: [Run]
     let metadata: Metadata
     struct Metadata: Decodable { let total: Int }
+  }
+}
+
+private actor MockReminderRefreshRecorder {
+  private(set) var rounds: [[Race]] = []
+
+  func record(_ rounds: [Race]) {
+    self.rounds.append(rounds)
   }
 }
