@@ -74,6 +74,7 @@ public struct BetaSheet: View {
   }
 
   let issues: LocalizedStringKey = """
+  • A API hospedada está inacessível: api.vroomvroom.racing retorna NXDOMAIN na consulta de DNS
   • Design obviamente não está nem um pouco próximo de estar pronto
   • App não tem cache em nada. Tudo vai ser recarregado quando o app inicia
   • Erros atualmente mostram o payload completo do erro (Intencional, por enquanto)
@@ -81,6 +82,7 @@ public struct BetaSheet: View {
 
   let latestRelease: LocalizedStringKey = """
   01/10/2026
+  • Manutenção: registra a pendência de verificar o domínio e o DNS da API hospedada
   • Adiciona widget extra-largo no iPad com a próxima sessão, programação em duas colunas e indicação de horários pendentes
   • Adiciona App Clip para consultar categorias e corridas por link e permite compartilhar o app pelos Ajustes
   • Adiciona ações rápidas no ícone do app para abrir a Home, as categorias e os Ajustes
@@ -142,6 +144,7 @@ public struct BetaSheet: View {
   let nextSteps: LocalizedStringKey = """
   Esta lista será completamente limpa antes do lançamento público do aplicativo (em ordem de prioridade)
 
+  • Verificar o registro, a renovação e o DNS de vroomvroom.racing e confirmar o acesso à API
   • Design final da Home, Tela de Corrida, Categorias, Ajustes, Compartilhar, etc para iOS e iPadOS
 
   Para o futuro:
