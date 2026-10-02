@@ -1,5 +1,6 @@
 @_spi(Internal) import APIClient
 import CategoryFavorites
+import CalendarStore
 import ComposableArchitecture
 import EventDetail
 import Foundation
@@ -62,6 +63,7 @@ public struct ScheduleList: Reducer {
     public let categoryTag: String?
     public let pageSize: Int
     public var items: [Race] = []
+    public var savedRoundIDs: Set<UUID> = []
     public var favoriteTags: Set<String> = []
     public var currentPage = 0
     public var total = 0
@@ -72,6 +74,11 @@ public struct ScheduleList: Reducer {
     public var failedPage: Int?
     public var lastUpdatedDate: Date?
     public var requestGeneration = 0
+    var restoredPage: RestoredPage?
+    struct RestoredPage: Equatable {
+      let number: Int
+      let startIndex: Int
+    }
 
     public var canLoadMore: Bool { hasLoaded && currentPage * pageSize < total }
     public var isLoading: Bool { inFlightPage != nil }
@@ -85,10 +92,11 @@ public struct ScheduleList: Reducer {
     case retry
     case favoritesChanged(Set<String>)
     case pageResponse(generation: Int, page: Int, TaskResult<Page<Race>>)
+    case savedPage(generation: Int, page: Int, SavedCalendar<CalendarPage>)
     case delegate(DelegateAction)
   }
   public enum DelegateAction: Equatable {
-    case onWidgetTap(Race)
+    case onWidgetTap(Race, savedAt: Date? = nil)
     case onShareTap(Race)
   }
   private enum CancelID { case page }
@@ -97,6 +105,7 @@ public struct ScheduleList: Reducer {
   @Dependency(\.date.now) var now
 
   @Dependency(\.sessionReminders) var sessionReminders
+  @Dependency(\.calendarStore) var calendarStore
 
   public var body: some ReducerOf<Self> {
     Reduce { state, action in
@@ -125,6 +134,7 @@ public struct ScheduleList: Reducer {
         guard state.categoryTag == nil, state.favoriteTags != tags else { return .none }
         state.favoriteTags = tags
         state.items = []
+        state.savedRoundIDs = []
         state.hasLoaded = false
         state.currentPage = 0
         state.total = 0
@@ -138,6 +148,26 @@ public struct ScheduleList: Reducer {
         guard !state.isLoading else { return .none }
         return load(page: state.failedPage ?? 1, state: &state)
 
+      case let .savedPage(generation, page, saved):
+        guard generation == state.requestGeneration, page == state.inFlightPage,
+          saved.value.page == page, saved.value.per == state.pageSize,
+          !state.hasLoaded || page > state.currentPage else { return .none }
+        if page == 1 {
+          state.items = []
+          state.savedRoundIDs = []
+        }
+        state.restoredPage = .init(number: page, startIndex: state.items.count)
+        var ids = Set(state.items.map(\.id))
+        let restored = saved.value.items.filter { !$0.isCancelled && ids.insert($0.id).inserted }
+        state.items += restored
+        state.savedRoundIDs.formUnion(restored.map(\.id))
+        state.currentPage = page
+        state.total = saved.value.total
+        state.hasLoaded = true
+        state.lastUpdatedDate = saved.updatedAt
+        state.isRefreshing = page == 1
+        return .none
+
       case let .pageResponse(generation, page, result):
         guard generation == state.requestGeneration, page == state.inFlightPage else { return .none }
         state.inFlightPage = nil
@@ -149,15 +179,29 @@ public struct ScheduleList: Reducer {
             state.errorMessage = "A programação recebida está incompleta. Tente novamente."
             return .none
           }
-          if page == 1 { state.items = [] }
+          if page == 1 {
+            state.items = []
+            state.savedRoundIDs = []
+          } else if let restored = state.restoredPage, restored.number == page {
+            state.savedRoundIDs.subtract(state.items.dropFirst(restored.startIndex).map(\.id))
+            state.items = Array(state.items.prefix(restored.startIndex))
+          }
+          state.restoredPage = nil
           var ids = Set(state.items.map(\.id))
           state.items += response.items.filter { !$0.isCancelled && ids.insert($0.id).inserted }
+          state.savedRoundIDs.subtract(response.items.map(\.id))
           state.currentPage = page
           state.total = response.metadata.total
           state.hasLoaded = true
           state.lastUpdatedDate = now
           state.errorMessage = nil
+          let query = CalendarQuery(category: state.categoryTag, favorites: state.favoriteTags, per: state.pageSize)
+          let savedPage = CalendarPage(items: response.items, page: page, per: response.metadata.per,
+            total: response.metadata.total)
+          let updatedAt = now
           return .run { _ in
+            // Storage failures must not hide a successfully fetched calendar.
+            try? await calendarStore.savePage(query, savedPage, updatedAt)
             // Only reconcile the validated response, including cancelled rounds.
             _ = try await sessionReminders.refresh(response.items)
           } catch: { _, _ in
@@ -182,11 +226,17 @@ public struct ScheduleList: Reducer {
     let category = state.categoryTag
     let tags = state.favoriteTags
     let per = state.pageSize
+    let shouldRestore = !state.hasLoaded || page > state.currentPage
+    let query = CalendarQuery(category: category, favorites: tags, per: per)
     state.inFlightPage = page
     state.isRefreshing = page == 1 && state.hasLoaded
     state.errorMessage = nil
     state.failedPage = nil
     return .run { send in
+      if shouldRestore, let saved = try? await calendarStore.loadPage(query, page) {
+        try Task.checkCancellation()
+        await send(.savedPage(generation: generation, page: page, saved))
+      }
       let result = await TaskResult { try await client.page(category, tags, page, per) }
       await send(.pageResponse(generation: generation, page: page, result))
     }

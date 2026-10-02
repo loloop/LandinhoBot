@@ -10,7 +10,7 @@ import EventDetail
 import Foundation
 import SwiftUI
 import ScheduleList
-import Sharing
+import RaceSharing
 
 @Reducer
 public struct Home {

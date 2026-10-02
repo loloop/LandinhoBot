@@ -15,6 +15,8 @@ let foundation = Target.Dependency.product(
   name: "LandinhoFoundation",
   package: "LandinhoFoundation")
 
+let calendarStore = Target.Dependency.product(name: "CalendarStore", package: "LandinhoPersistence")
+
 let package = Package(
     name: "LandinhoCore",
     platforms: [
@@ -35,9 +37,10 @@ let package = Package(
     dependencies: [
       .package(path: "../LandinhoCoreUI"),
       .package(path: "../LandinhoFoundation"),
+      .package(path: "../LandinhoPersistence"),
       .package(
         url: "https://github.com/pointfreeco/swift-composable-architecture",
-        from: Version(1, 5, 0)),
+        from: Version(1, 26, 2)),
     ],
     targets: [
       .target(name: "AdminSession"),
@@ -55,7 +58,7 @@ let package = Package(
 
       .target(
         name: "MockAPIClient",
-        dependencies: ["APIClient", foundation, composable]),
+        dependencies: ["APIClient", foundation, calendarStore, composable]),
 
       .testTarget(
         name: "MockAPIClientTests",
@@ -66,6 +69,7 @@ let package = Package(
           dependencies: [
             foundation,
             "APIClient",
+            calendarStore,
             .product(name: "CategoryUI", package: "LandinhoCoreUI"),
             "SessionReminders",
             widgetUI,
@@ -76,13 +80,14 @@ let package = Package(
           name: "ScheduleList",
           dependencies: [
             "APIClient",
+            calendarStore,
             "CategoryFavorites",
             foundation,
             "EventDetail",
             widgetUI,
             composable
           ]),
-      .testTarget(name: "ScheduleListTests", dependencies: ["ScheduleList", "CategoryFavorites", "EventDetail", "SessionReminders", foundation, composable]),
-      .testTarget(name: "EventDetailTests", dependencies: ["EventDetail", "APIClient", "SessionReminders", foundation, composable]),
+      .testTarget(name: "ScheduleListTests", dependencies: ["ScheduleList", "CategoryFavorites", "EventDetail", "SessionReminders", calendarStore, foundation, composable]),
+      .testTarget(name: "EventDetailTests", dependencies: ["EventDetail", "APIClient", "SessionReminders", calendarStore, foundation, composable]),
     ]
 )

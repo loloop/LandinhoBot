@@ -1,4 +1,5 @@
 import CategoryFavorites
+import CalendarStore
 import ComposableArchitecture
 import EventDetail
 import Foundation
@@ -241,6 +242,91 @@ final class ScheduleListTests: XCTestCase {
       $0.errorMessage = "Não foi possível carregar os horários. Tente novamente."
     }
     await store.finish()
+  }
+
+  func testSavedScheduleAppearsBeforeFetchAndSurvivesOfflineRefresh() async throws {
+    let local = CalendarStore(databaseURL: nil)
+    let race = race(0)
+    let query = CalendarQuery(category: nil, favorites: [], per: 5)
+    let saved = SavedCalendar(value: CalendarPage(items: [race], page: 1, per: 5, total: 1), updatedAt: date)
+    try await local.savePage(query, saved.value, date)
+    let clock = TestClock()
+    let error = URLError(.notConnectedToInternet)
+    let store = TestStore(initialState: ScheduleList.State(categoryTag: nil)) { ScheduleList() } withDependencies: {
+      $0.calendarStore = local
+      $0.scheduleClient = .init { _, _, _, _ in
+        try await clock.sleep(for: .seconds(1))
+        throw error
+      }
+    }
+    store.exhaustivity = .off
+    await store.send(.onAppear)
+    await store.receive(.savedPage(generation: 1, page: 1, saved))
+    XCTAssertEqual(store.state.items, [race])
+    XCTAssertEqual(store.state.lastUpdatedDate, date)
+    XCTAssertTrue(store.state.isRefreshing)
+    await clock.advance(by: .seconds(1))
+    await store.receive(.pageResponse(generation: 1, page: 1, .failure(error)))
+    XCTAssertEqual(store.state.items, [race])
+    XCTAssertFalse(store.state.isRefreshing)
+    XCTAssertNotNil(store.state.errorMessage)
+    await store.finish()
+  }
+
+  func testFreshPageReplacesRestoredMembershipAndIsPersisted() async throws {
+    let local = CalendarStore(databaseURL: nil)
+    let query = CalendarQuery(category: "f1", favorites: [], per: 2)
+    let first = race(0)
+    let oldSecond = race(1)
+    let freshSecond = race(2)
+    let saved = SavedCalendar(value: CalendarPage(items: [oldSecond], page: 2, per: 2, total: 4), updatedAt: date)
+    try await local.savePage(query, saved.value, date)
+    var state = ScheduleList.State(categoryTag: "f1", pageSize: 2)
+    state.items = [first]; state.hasLoaded = true; state.currentPage = 1; state.total = 4
+    let response = Page(items: [freshSecond], metadata: .init(page: 2, per: 2, total: 4))
+    let clock = TestClock()
+    let store = TestStore(initialState: state) { ScheduleList() } withDependencies: {
+      $0.date.now = date.addingTimeInterval(60)
+      $0.calendarStore = local
+      $0.scheduleClient = .init { _, _, _, _ in
+        try await clock.sleep(for: .seconds(1))
+        return response
+      }
+    }
+    store.exhaustivity = .off
+    await store.send(.loadMore)
+    await store.receive(.savedPage(generation: 1, page: 2, saved))
+    XCTAssertEqual(store.state.items, [first, oldSecond])
+    await clock.advance(by: .seconds(1))
+    await store.receive(.pageResponse(generation: 1, page: 2, .success(response)))
+    await store.finish()
+    XCTAssertEqual(store.state.items, [first, freshSecond])
+    let persisted = try await local.loadPage(query, 2)
+    XCTAssertEqual(persisted?.value.items, [freshSecond])
+  }
+
+  func testStorageFailureDoesNotPreventNetworkLoadingOrReminderReconciliation() async {
+    let race = race(0)
+    let response = Page(items: [race], metadata: .init(page: 1, per: 5, total: 1))
+    let recorder = ScheduleReminderRecorder()
+    let store = TestStore(initialState: ScheduleList.State(categoryTag: nil)) { ScheduleList() } withDependencies: {
+      $0.date.now = date
+      $0.calendarStore = .init(
+        loadPage: { _, _ in throw CocoaError(.fileReadCorruptFile) },
+        savePage: { _, _, _ in throw CocoaError(.fileWriteOutOfSpace) })
+      $0.scheduleClient = .init { _, _, _, _ in response }
+      $0.sessionReminders.refresh = { rounds in
+        await recorder.record(rounds)
+        return .init(authorization: .allowed, scheduledDates: [:])
+      }
+    }
+    store.exhaustivity = .off
+    await store.send(.onAppear)
+    await store.receive(.pageResponse(generation: 1, page: 1, .success(response)))
+    await store.finish()
+    XCTAssertEqual(store.state.items, [race])
+    let reconciled = await recorder.rounds
+    XCTAssertEqual(reconciled, [[race]])
   }
 
   private func race(_ index: Int, tag: String = "f1") -> Race {

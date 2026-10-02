@@ -12,13 +12,16 @@ public struct APIClient<T: Equatable & Decodable>: Reducer {
   public init() {}
 
   public struct State: Equatable {
-    public init(endpoint: String) {
+    public init(endpoint: String, preserveResponseOnFailure: Bool = false) {
       self.baseEndpoint = endpoint
+      self.preserveResponseOnFailure = preserveResponseOnFailure
     }
 
     public var baseEndpoint: String
     public var response: APIRequestState<T> = .idle
     public var headers: [String: String] = [:]
+    public var preserveResponseOnFailure: Bool
+    public var lastError: String?
   }
 
   public enum Action: Equatable {
@@ -38,6 +41,7 @@ public struct APIClient<T: Equatable & Decodable>: Reducer {
       case .request(let request):
         let endpoint = state.baseEndpoint
         state.response = .loading
+        state.lastError = nil
 
         return .run { send in
           try await callAPIRequester(
@@ -48,14 +52,14 @@ public struct APIClient<T: Equatable & Decodable>: Reducer {
 
       case .refresh(let request):
         let endpoint = state.baseEndpoint
-        let response = state.response
+        state.lastError = nil
+        if let value = state.response.value {
+          state.response = .reloading(value)
+        } else {
+          state.response = .loading
+        }
 
         return .run { send in
-          if case .finished(let taskResult) = response {
-            let innerValue = try taskResult.value
-            await send(.response(.reloading(innerValue)))
-          }
-
           try await callAPIRequester(
             request: request,
             endpoint: endpoint,
@@ -63,6 +67,15 @@ public struct APIClient<T: Equatable & Decodable>: Reducer {
         }
 
       case .response(.finished(let result)):
+        if case .failure(let error) = result {
+          state.lastError = error.localizedDescription
+          if state.preserveResponseOnFailure, let value = state.response.value {
+            state.response = .finished(.success(value))
+            return .none
+          }
+        } else {
+          state.lastError = nil
+        }
         state.response = .finished(result)
         return .none
 

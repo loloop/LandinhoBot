@@ -32,6 +32,7 @@ let widgetUI = Target.Dependency.product(
   package: "LandinhoCoreUI")
 
 let categoryUI = Target.Dependency.product(name: "CategoryUI", package: "LandinhoCoreUI")
+let calendarStore = Target.Dependency.product(name: "CalendarStore", package: "LandinhoPersistence")
 
 let package = Package(
   name: "LandinhoLib",
@@ -49,19 +50,21 @@ let package = Package(
     .library(name: "RacesAdmin", targets: ["RacesAdmin"]),
     .library(name: "Router", targets: ["Router"]),
     .library(name: "Settings", targets: ["Settings"]),
-    .library(name: "Sharing", targets: ["Sharing"]),
+    .library(name: "RaceSharing", targets: ["RaceSharing"]),
     .library(name: "Widgets", targets: ["Widgets"]),
   ],
   dependencies: [
     .package(path: "../LandinhoCore"),
     .package(path: "../LandinhoCoreUI"),
     .package(path: "../LandinhoFoundation"),
+    .package(path: "../LandinhoPersistence"),
     .package(
       url: "https://github.com/pointfreeco/swift-composable-architecture",
-      from: Version(1, 5, 0)),
+      from: Version(1, 26, 2)),
   ],
   targets: [
     .testTarget(name: "SettingsTests", dependencies: ["Settings", apiClient, composable]),
+    .testTarget(name: "CategoriesTests", dependencies: ["Categories", apiClient, calendarStore, foundation, composable]),
     .target(
       name: "Admin",
       dependencies: [
@@ -78,6 +81,7 @@ let package = Package(
       .target(
         name: "Categories",
         dependencies: [
+          calendarStore,
           categoryUI,
           .product(name: "CategoryFavorites", package: "LandinhoCore"),
           apiClient,
@@ -111,7 +115,7 @@ let package = Package(
           foundation,
           scheduleList,
           eventDetail,
-          "Sharing",
+          "RaceSharing",
           composable
         ]),
 
@@ -137,7 +141,7 @@ let package = Package(
           eventDetail,
           scheduleList,
           "Settings",
-          "Sharing",
+          "RaceSharing",
           composable
         ]),
 
@@ -153,13 +157,14 @@ let package = Package(
         ]),
 
       .target(
-        name: "Sharing",
+        name: "RaceSharing",
         dependencies: [
           foundation,
           notifications,
           widgetUI,
           composable
-        ]),
+        ],
+        path: "Sources/Sharing"),
 
       .target(
         name: "Widgets",

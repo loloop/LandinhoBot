@@ -19,7 +19,7 @@ struct VroomVroomApp: App {
     Root()
   } withDependencies: { dependencies in
     #if MOCK_NETWORKING
-    dependencies.apiRequester = MockAPIClientService.liveValue
+    MockAPIClientService.configure(&dependencies)
     #endif
   }
 

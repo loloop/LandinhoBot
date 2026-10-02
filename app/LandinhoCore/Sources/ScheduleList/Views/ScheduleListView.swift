@@ -35,7 +35,8 @@ public struct ScheduleListView: View {
                   .font(.caption).foregroundStyle(.secondary)
               }
               Button {
-                viewStore.send(.delegate(.onWidgetTap(item)))
+                viewStore.send(.delegate(.onWidgetTap(item,
+                  savedAt: viewStore.savedRoundIDs.contains(item.id) ? viewStore.lastUpdatedDate : nil)))
               } label: {
                 NextRaceMediumWidgetView(race: item, lastUpdatedDate: viewStore.lastUpdatedDate)
                   .widgetBackground()

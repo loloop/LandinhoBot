@@ -46,4 +46,14 @@ final class RouterTests: XCTestCase {
     await store.send(.openRoute(.category(tag: "../settings")))
     XCTAssertTrue(store.state.path.isEmpty)
   }
+
+  func testOpeningSavedHomeRoundPreservesItsFreshnessForDetailRevalidation() async {
+    let race = Race(id: UUID(), title: "São Paulo", shortTitle: "SP", events: [],
+      category: RaceCategory(id: "f1", title: "Formula 1", tag: "f1"))
+    let savedAt = Date(timeIntervalSince1970: 1_800_000_000)
+    let store = TestStore(initialState: Router.State()) { Router() }
+    await store.send(.home(.scheduleList(.delegate(.onWidgetTap(race, savedAt: savedAt))))) {
+      $0.path.append(.eventDetail(.init(race: race, savedAt: savedAt)))
+    }
+  }
 }
