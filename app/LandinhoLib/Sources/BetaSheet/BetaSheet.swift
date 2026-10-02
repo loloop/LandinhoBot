@@ -81,6 +81,10 @@ public struct BetaSheet: View {
   """
 
   let latestRelease: LocalizedStringKey = """
+  02/10/2026
+  • Manutenção: adiciona o manifesto do Xcode Cloud e reorganiza os arquivos do projeto
+  • Manutenção: mantém a declaração de uso de criptografia nas configurações de compilação do app e da versão Mock
+
   01/10/2026
   • Adiciona lembretes locais para o início de sessões com horário confirmado, com opção de ativar ou cancelar nos detalhes; a permissão de notificações é solicitada somente ao ativar um lembrete
   • Atualiza os lembretes quando a programação recebida é recarregada e mostra acesso aos Ajustes quando as notificações estão desativadas
