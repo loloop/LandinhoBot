@@ -2,50 +2,50 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-  <key>UIApplicationShortcutItems</key>
-  <array>
-    <dict>
-      <key>UIApplicationShortcutItemType</key>
-      <string>me.mauriciocardozo.racing.vroomvroom.quick-action.upcoming-sessions</string>
-      <key>UIApplicationShortcutItemTitle</key>
-      <string>Próximas sessões</string>
-      <key>UIApplicationShortcutItemIconSymbolName</key>
-      <string>calendar</string>
-    </dict>
-    <dict>
-      <key>UIApplicationShortcutItemType</key>
-      <string>me.mauriciocardozo.racing.vroomvroom.quick-action.categories</string>
-      <key>UIApplicationShortcutItemTitle</key>
-      <string>Categorias</string>
-      <key>UIApplicationShortcutItemIconSymbolName</key>
-      <string>square.grid.2x2</string>
-    </dict>
-    <dict>
-      <key>UIApplicationShortcutItemType</key>
-      <string>me.mauriciocardozo.racing.vroomvroom.quick-action.settings</string>
-      <key>UIApplicationShortcutItemTitle</key>
-      <string>Ajustes</string>
-      <key>UIApplicationShortcutItemIconSymbolName</key>
-      <string>gearshape</string>
-    </dict>
-  </array>
-  <key>CFBundleURLTypes</key>
-  <array>
-    <dict>
-      <key>CFBundleURLName</key>
-      <string>me.mauriciocardozo.racing.vroomvroom</string>
-      <key>CFBundleTypeRole</key>
-      <string>Viewer</string>
-      <key>CFBundleURLSchemes</key>
-      <array><string>vroomvroom</string></array>
-    </dict>
-  </array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>CFBundleURLName</key>
+			<string>me.mauriciocardozo.racing.vroomvroom</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>vroomvroom</string>
+			</array>
+		</dict>
+	</array>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemIconSymbolName</key>
+			<string>calendar</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Próximas sessões</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>me.mauriciocardozo.racing.vroomvroom.quick-action.upcoming-sessions</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconSymbolName</key>
+			<string>square.grid.2x2</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Categorias</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>me.mauriciocardozo.racing.vroomvroom.quick-action.categories</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconSymbolName</key>
+			<string>gearshape</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Ajustes</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>me.mauriciocardozo.racing.vroomvroom.quick-action.settings</string>
+		</dict>
+	</array>
 </dict>
 </plist>
