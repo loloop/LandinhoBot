@@ -13,7 +13,7 @@ import EventDetail
 import Home
 import ScheduleList
 import Settings
-import Sharing
+import RaceSharing
 import SwiftUI
 
 @Reducer
@@ -72,10 +72,10 @@ public struct Router {
         return .none
 
       case
-          .home(.scheduleList(.delegate(.onWidgetTap(let race)))),
-          .path(.element(id: _, action: .scheduleList(.delegate(.onWidgetTap(let race))))):
+          .home(.scheduleList(.delegate(.onWidgetTap(let race, let savedAt)))),
+          .path(.element(id: _, action: .scheduleList(.delegate(.onWidgetTap(let race, let savedAt))))):
         state.lastOpenedRoute = nil
-        state.path.append(.eventDetail(.init(race: race)))
+        state.path.append(.eventDetail(.init(race: race, savedAt: savedAt)))
         return .none
 
       case 
@@ -87,8 +87,7 @@ public struct Router {
         return .none
 
       case .onAppear:
-        guard state.categoriesState.categoriesState.response == .idle else { return .none }
-        return .send(.categories(.categoriesRequest(.request(.get))))
+        return .send(.categories(.onAppear))
 
       case .categories(.delegate(.favoritesChanged(let tags))):
         return .send(.home(.scheduleList(.favoritesChanged(tags))))

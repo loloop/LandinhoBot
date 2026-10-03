@@ -1,10 +1,16 @@
 @_spi(Internal) import APIClient
+import CalendarStore
 import ComposableArchitecture
 import Foundation
 
 /// An isolated, in-memory backend. Each instance starts with a fresh sample schedule.
 @_spi(Internal) public actor MockAPIClientService: APIClientServiceProtocol {
   public static let liveValue = MockAPIClientService()
+
+  public static func configure(_ dependencies: inout DependencyValues) {
+    dependencies.apiRequester = liveValue
+    dependencies.calendarStore = CalendarStore(databaseURL: nil, source: "mock")
+  }
 
   private var categories: [[String: Any]]
   private var races: [[String: Any]]

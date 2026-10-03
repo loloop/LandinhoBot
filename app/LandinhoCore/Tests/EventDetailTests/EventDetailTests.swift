@@ -3,10 +3,12 @@ import ComposableArchitecture
 @_spi(Internal) import APIClient
 import LandinhoFoundation
 import SessionReminders
+import CalendarStore
 @testable import EventDetail
 
 @MainActor
 final class EventDetailTests: XCTestCase {
+  private let date = Date(timeIntervalSince1970: 1_800_000_000)
   func testFetchByIDUsesPublicEndpointAndRepeatedAppearanceDoesNotRestart() async {
     let race = makeRace()
     let recorder = RequestRecorder()
@@ -14,6 +16,7 @@ final class EventDetailTests: XCTestCase {
     let snapshot = SessionReminderSnapshot(authorization: .allowed, scheduledDates: [:])
     let clock = TestClock()
     let store = TestStore(initialState: EventDetail.State(raceID: race.id)) { EventDetail() }
+    store.dependencies.date = .constant(date)
     store.dependencies.apiRequester = RoundRequester { endpoint in
       await recorder.record(endpoint)
       try await clock.sleep(for: .seconds(1))
@@ -29,6 +32,7 @@ final class EventDetailTests: XCTestCase {
     await store.receive(.response(.success(race))) {
       $0.isLoading = false
       $0.race = race
+      $0.lastUpdatedDate = self.date
     }
     await store.receive(.refreshReminders) { $0.isLoadingReminders = true }
     await store.receive(.reminderResponse(.success(snapshot))) {
@@ -52,6 +56,7 @@ final class EventDetailTests: XCTestCase {
     let snapshot = SessionReminderSnapshot(authorization: .notDetermined, scheduledDates: [:])
     let failure = NSError(domain: "LandinhoAPI", code: 404)
     let store = TestStore(initialState: EventDetail.State(raceID: race.id)) { EventDetail() }
+    store.dependencies.date = .constant(date)
     store.dependencies.apiRequester = RoundRequester { endpoint in
       let attempt = await recorder.record(endpoint)
       if attempt == 1 { throw failure }
@@ -76,6 +81,7 @@ final class EventDetailTests: XCTestCase {
     await store.receive(.response(.success(race))) {
       $0.isLoading = false
       $0.race = race
+      $0.lastUpdatedDate = self.date
     }
     await store.receive(.refreshReminders) { $0.isLoadingReminders = true }
     await store.receive(.reminderResponse(.success(snapshot))) { $0.isLoadingReminders = false }
@@ -206,6 +212,90 @@ final class EventDetailTests: XCTestCase {
     }
     XCTAssertTrue(store.state.reminders.scheduledDates.isEmpty)
     await store.finish()
+  }
+
+  func testSavedDeepLinkRoundIsVisibleOfflineAndRetryRefreshesIt() async throws {
+    let local = CalendarStore(databaseURL: nil)
+    let race = makeRace()
+    try await local.saveRound(race, date)
+    let saved = SavedCalendar(value: race, updatedAt: date)
+    let error = URLError(.notConnectedToInternet)
+    let clock = TestClock()
+    let store = TestStore(initialState: EventDetail.State(raceID: race.id)) { EventDetail() }
+    store.dependencies.date = .constant(date.addingTimeInterval(60))
+    store.dependencies.calendarStore = local
+    store.dependencies.apiRequester = RoundRequester { _ in
+      try await clock.sleep(for: .seconds(1))
+      throw error
+    }
+    store.dependencies.sessionReminders.refresh = { _ in
+      XCTFail("Saved schedules must not reconcile reminders before the API succeeds")
+      return .init(authorization: .allowed, scheduledDates: [:])
+    }
+    store.exhaustivity = .off
+    await store.send(.onAppear)
+    await store.receive(.savedRound(saved))
+    XCTAssertEqual(store.state.race, race)
+    XCTAssertTrue(store.state.isShowingSavedData)
+    XCTAssertEqual(store.state.lastUpdatedDate, date)
+    await clock.advance(by: .seconds(1))
+    await store.receive(.response(.failure(error)))
+    XCTAssertEqual(store.state.race, race)
+    XCTAssertEqual(store.state.loadFailure, .unavailable)
+    await store.finish()
+    await store.send(.refreshReminders)
+    await store.finish()
+
+    let fresh = Race(id: race.id, title: "Updated round", shortTitle: "Updated", events: [], category: race.category)
+    store.dependencies.apiRequester = RoundRequester { _ in fresh }
+    store.dependencies.sessionReminders.refresh = { _ in .init(authorization: .allowed, scheduledDates: [:]) }
+    await store.send(.retry)
+    await store.receive(.response(.success(fresh)))
+    await store.finish()
+    XCTAssertEqual(store.state.race, fresh)
+    XCTAssertFalse(store.state.isShowingSavedData)
+    XCTAssertNil(store.state.loadFailure)
+    let persisted = try await local.loadRound(race.id)
+    XCTAssertEqual(persisted?.value, fresh)
+  }
+
+  func testOpeningASavedScheduleRoundFetchesFreshDetailsBeforeReconcilingReminders() async {
+    let cached = makeRace()
+    let fresh = Race(id: cached.id, title: "Updated", shortTitle: "Updated", events: [], category: cached.category)
+    let recorder = DetailReminderRecorder()
+    let store = TestStore(initialState: EventDetail.State(race: cached, savedAt: date)) { EventDetail() }
+    store.dependencies.date = .constant(date.addingTimeInterval(60))
+    store.dependencies.apiRequester = RoundRequester { _ in fresh }
+    store.dependencies.sessionReminders.refresh = { rounds in
+      await recorder.record(rounds)
+      return .init(authorization: .allowed, scheduledDates: [:])
+    }
+    store.exhaustivity = .off
+    await store.send(.onAppear)
+    await store.receive(.response(.success(fresh)))
+    await store.finish()
+    XCTAssertEqual(store.state.race, fresh)
+    let reconciled = await recorder.rounds
+    XCTAssertEqual(reconciled, [[fresh]])
+  }
+
+  func testConfirmedNotFoundRemovesSavedRoundInsteadOfShowingStaleDetails() async throws {
+    let local = CalendarStore(databaseURL: nil)
+    let race = makeRace()
+    try await local.saveRound(race, date)
+    let failure = NSError(domain: "LandinhoAPI", code: 404)
+    let store = TestStore(initialState: EventDetail.State(raceID: race.id)) { EventDetail() }
+    store.dependencies.calendarStore = local
+    store.dependencies.apiRequester = RoundRequester { _ in throw failure }
+    store.exhaustivity = .off
+    await store.send(.onAppear)
+    await store.receive(.response(.failure(failure)))
+    await store.finish()
+    XCTAssertNil(store.state.race)
+    XCTAssertEqual(store.state.loadFailure, .notFound)
+    XCTAssertFalse(store.state.isShowingSavedData)
+    let persisted = try await local.loadRound(race.id)
+    XCTAssertNil(persisted)
   }
 
   private func makeRace() -> Race {

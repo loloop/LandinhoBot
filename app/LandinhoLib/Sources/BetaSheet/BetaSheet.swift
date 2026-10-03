@@ -76,11 +76,15 @@ public struct BetaSheet: View {
   let issues: LocalizedStringKey = """
   • A API hospedada está inacessível: api.vroomvroom.racing retorna NXDOMAIN na consulta de DNS
   • Design obviamente não está nem um pouco próximo de estar pronto
-  • App não tem cache em nada. Tudo vai ser recarregado quando o app inicia
   • Erros atualmente mostram o payload completo do erro (Intencional, por enquanto)
   """
 
   let latestRelease: LocalizedStringKey = """
+  03/10/2026
+  • Salva categorias, corridas e sessões no dispositivo para consultar a última programação carregada mesmo sem conexão
+  • Restaura dados salvos ao abrir o app e atualiza a programação sem esconder o conteúdo durante o carregamento; detalhes removidos pelo servidor deixam de aparecer
+  • Manutenção: adota SQLiteData com migrações locais, atualiza as dependências, ajusta o módulo de compartilhamento e mantém a programação da versão Mock em memória
+
   02/10/2026
   • Manutenção: adiciona o manifesto do Xcode Cloud e reorganiza os arquivos do projeto
   • Manutenção: mantém a declaração de uso de criptografia nas configurações de compilação do app e da versão Mock

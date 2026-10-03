@@ -33,9 +33,13 @@ The scheduler checks local due dates an hour apart, beginning ten seconds after 
 
 Open `app/VroomVroom.xcodeproj` in Xcode and select the `VroomVroom` scheme. In the scheme's Run environment, set `LANDINHO_API_URL=http://127.0.0.1:8080` for the simulator. Without that override, the app uses the hosted API. The workspace uses sibling Swift packages within `app`.
 
+The app package graph requires Swift 6.4 (tested with Xcode 27.1). `LandinhoPersistence` uses SQLiteData to save public categories, schedule pages, and complete race details, including sessions, pending times, cancellations, source links, and colors. The database lives at `Application Support/Landinho/calendar.sqlite` in the app's sandbox and opens lazily with versioned migrations. Saved content appears before the API refresh completes and remains visible if the refresh fails. A first launch without saved data still needs a connection; saved schedules show their last update time and can be refreshed manually.
+
+Schedule pages preserve the API's order and pagination separately for each category, favorites selection, and page size. Refreshing page 1 invalidates older pages of that ordering. Details are stored by race ID, so fresh detail data also updates subsequently restored pages; a confirmed 404 removes the saved race. API URL overrides use separate database namespaces. Storage failures leave network loading usable. Administrative responses and credentials are not stored, and cached schedule restoration does not reconcile notification times until a fresh API response arrives. Favorites remain in UserDefaults. The App Clip and widget extension retain their existing networking and storage behavior.
+
 Select the shared `VroomVroomMock` scheme to run with in-memory networking. This builds a separate app, displayed as **VroomVroom Mock**, with bundle ID `me.mauriciocardozo.racing.vroomvroom.mock`. It includes sample F1 and Stock Car schedules with confirmed, pending, and cancelled sessions. Category, race, event, and import-settings edits stay in memory and reset on launch. Manual import refresh creates a simulated successful audit entry without downloading schedules. The hidden admin prompt accepts any nonempty password in this mock app, with verification handled in memory. No backend or `LANDINHO_API_URL` is needed; unsupported routes fail locally. The mock app does not embed the live widget extension.
 
-The mock implementation lives in the `MockAPIClient` Swift package target. Only the mock app target defines `MOCK_NETWORKING` and injects that service into its root store.
+The mock implementation lives in the `MockAPIClient` Swift package target. Only the mock app target defines `MOCK_NETWORKING`; `MockAPIClientService.configure` injects both the networking service and an isolated in-memory SQLite store into its root store. Mock calendar data resets on launch.
 
 In the app, hold the version row in Settings for 1.5 seconds (or use its VoiceOver “Abrir administração” action), then enter the server's admin password. Open Formula 1 → Importações. This screen controls automatic imports and the interval, starts a manual refresh, and shows import history, before/after changes, warnings, and ambiguous matches. Selecting an existing record for an ambiguous match triggers a new import using that identity.
 
@@ -87,6 +91,14 @@ cd app/LandinhoCore
 xcodebuild -skipMacroValidation -scheme LandinhoCore-Package \
   -destination 'platform=iOS Simulator,id=SIMULATOR_ID' CODE_SIGNING_ALLOWED=NO test
 ```
+
+Local storage tests run on macOS:
+
+```sh
+swift test --package-path app/LandinhoPersistence --jobs 2
+```
+
+They cover database reopening, exact query isolation and order, empty refreshes, pagination invalidation, updated and removed details, and isolation between API sources. The `ScheduleListTests`, `EventDetailTests`, and `CategoriesTests` suites exercise saved content before a network response, offline refreshes and retries, and storage failures. Run `CategoriesTests` with the `LandinhoLib-Package` scheme on an iOS simulator.
 
 Parser tests run without a database:
 

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0D6F6D4A743D49EFB03B32DA /* BetaSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 8DB4B58E6B694270B4504605 /* BetaSheet */; };
-		2329AA9A535E42C1B3D27FC7 /* Sharing in Frameworks */ = {isa = PBXBuildFile; productRef = 8D7E9D6C7FF142659726310F /* Sharing */; };
+		2329AA9A535E42C1B3D27FC7 /* RaceSharing in Frameworks */ = {isa = PBXBuildFile; productRef = 8D7E9D6C7FF142659726310F /* RaceSharing */; };
 		4901E046772B489A8E39AC5D /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48A501E2AFECEEB00A01B7E /* Root.swift */; };
 		4D766BB75C91415CAE7B912C /* ScheduleList in Frameworks */ = {isa = PBXBuildFile; productRef = 10A2509F54654AB7B7B53B86 /* ScheduleList */; };
 		4FF7CD08DD9D4062B0E2F464 /* Categories in Frameworks */ = {isa = PBXBuildFile; productRef = 6E0F56DAA0CF41B892D83048 /* Categories */; };
@@ -39,7 +39,7 @@
 		B4877C2A2B0694350009760C /* NextRaceEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C292B0694350009760C /* NextRaceEntry.swift */; };
 		B4877C342B06B4C60009760C /* NextRaceWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4877C332B06B4C60009760C /* NextRaceWidget.swift */; };
 		B48A501F2AFECEEB00A01B7E /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48A501E2AFECEEB00A01B7E /* Root.swift */; };
-		B48E4FEC2B0BBCB0001457B2 /* Sharing in Frameworks */ = {isa = PBXBuildFile; productRef = B48E4FEB2B0BBCB0001457B2 /* Sharing */; };
+		B48E4FEC2B0BBCB0001457B2 /* RaceSharing in Frameworks */ = {isa = PBXBuildFile; productRef = B48E4FEB2B0BBCB0001457B2 /* RaceSharing */; };
 		B4AC4CF42BFB83A300CEF1AA /* ScheduleList in Frameworks */ = {isa = PBXBuildFile; productRef = B4AC4CF32BFB83A300CEF1AA /* ScheduleList */; };
 		B4B8ECFD2BFB0767001D5A6B /* VroomVroomTVApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B8ECFC2BFB0767001D5A6B /* VroomVroomTVApp.swift */; };
 		B4B8ECFF2BFB0767001D5A6B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B8ECFE2BFB0767001D5A6B /* ContentView.swift */; };
@@ -160,7 +160,7 @@
 				C64CD0A290604FC299E8D6A4 /* Router in Frameworks */,
 				6A29D683D82B455AAC2556C9 /* EventDetail in Frameworks */,
 				B74B906581C04DB7813578BE /* Admin in Frameworks */,
-				2329AA9A535E42C1B3D27FC7 /* Sharing in Frameworks */,
+				2329AA9A535E42C1B3D27FC7 /* RaceSharing in Frameworks */,
 				0D6F6D4A743D49EFB03B32DA /* BetaSheet in Frameworks */,
 				56E77B947D9546B2ADCD206F /* Home in Frameworks */,
 			);
@@ -186,7 +186,7 @@
 				B40A75222B0D793200CFB10E /* Router in Frameworks */,
 				B4D87C4E2B01B12B000EBEF9 /* EventDetail in Frameworks */,
 				B4CBD1652B0409FF00BF6776 /* Admin in Frameworks */,
-				B48E4FEC2B0BBCB0001457B2 /* Sharing in Frameworks */,
+				B48E4FEC2B0BBCB0001457B2 /* RaceSharing in Frameworks */,
 				B47CAE6B2B0D29CE000164A0 /* BetaSheet in Frameworks */,
 				B4CBD1632B0401C100BF6776 /* Home in Frameworks */,
 			);
@@ -377,7 +377,7 @@
 				B4CBD1622B0401C100BF6776 /* Home */,
 				B4CBD1642B0409FF00BF6776 /* Admin */,
 				B4CBD1662B040A0300BF6776 /* CategoriesAdmin */,
-				B48E4FEB2B0BBCB0001457B2 /* Sharing */,
+				B48E4FEB2B0BBCB0001457B2 /* RaceSharing */,
 				B47CAE6A2B0D29CE000164A0 /* BetaSheet */,
 				B40A75212B0D793200CFB10E /* Router */,
 			);
@@ -450,7 +450,7 @@
 				BA4B016C7AC149CDBD6C76EC /* Home */,
 				F5CA760ED3F0452488170A9A /* Admin */,
 				2707BEEDEE2046EFA94AC8B1 /* CategoriesAdmin */,
-				8D7E9D6C7FF142659726310F /* Sharing */,
+				8D7E9D6C7FF142659726310F /* RaceSharing */,
 				8DB4B58E6B694270B4504605 /* BetaSheet */,
 				7C4576E7734947B894D87988 /* Router */,
 			);
@@ -1159,9 +1159,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Settings;
 		};
-		8D7E9D6C7FF142659726310F /* Sharing */ = {
+		8D7E9D6C7FF142659726310F /* RaceSharing */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = Sharing;
+			productName = RaceSharing;
 		};
 		8DB4B58E6B694270B4504605 /* BetaSheet */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1195,9 +1195,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = BetaSheet;
 		};
-		B48E4FEB2B0BBCB0001457B2 /* Sharing */ = {
+		B48E4FEB2B0BBCB0001457B2 /* RaceSharing */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = Sharing;
+			productName = RaceSharing;
 		};
 		B4AC4CF32BFB83A300CEF1AA /* ScheduleList */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -12,6 +12,7 @@ import ComposableArchitecture
 @_spi(Internal) import APIClient
 import SwiftUI
 import SessionReminders
+import CalendarStore
 
 public struct EventDetail: Reducer {
   public init() {}
@@ -22,15 +23,19 @@ public struct EventDetail: Reducer {
       self.race = nil
     }
 
-    public init(race: Race) {
-      self.raceID = nil
+    public init(race: Race, savedAt: Date? = nil) {
+      self.raceID = savedAt == nil ? nil : race.id
       self.race = race
+      self.isShowingSavedData = savedAt != nil
+      self.lastUpdatedDate = savedAt
     }
 
     public let raceID: UUID?
     public var race: Race?
     public var isLoading = false
     public var loadFailure: LoadFailure?
+    public var isShowingSavedData = false
+    public var lastUpdatedDate: Date?
     var reminders = SessionReminderSnapshot(authorization: .notDetermined, scheduledDates: [:])
     var isLoadingReminders = false
     var changingReminderID: UUID?
@@ -43,6 +48,7 @@ public struct EventDetail: Reducer {
     case retry
     case onDisappear
     case response(TaskResult<Race>)
+    case savedRound(SavedCalendar<Race>)
     case refreshReminders
     case toggleReminder(UUID)
     case reminderResponse(TaskResult<SessionReminderSnapshot>)
@@ -63,17 +69,27 @@ public struct EventDetail: Reducer {
   }
 
   @Dependency(\.sessionReminders) var sessionReminders
+  @Dependency(\.calendarStore) var calendarStore
+  @Dependency(\.date.now) var now
 
   public var body: some ReducerOf<Self> {
     Reduce { state, action in
       switch action {
       case .onAppear, .retry:
-        if state.race != nil { return .send(.refreshReminders) }
-        guard let id = state.raceID, state.race == nil, !state.isLoading else { return .none }
+        guard !state.isLoading else { return .none }
+        if state.race != nil, !state.isShowingSavedData { return .send(.refreshReminders) }
+        guard let id = state.raceID else { return .none }
         if action == .onAppear, state.loadFailure != nil { return .none }
+        let shouldRestore = state.race == nil
         state.isLoading = true
         state.loadFailure = nil
         return .run { send in
+          if shouldRestore, let saved = try? await calendarStore.loadRound(id) {
+            try Task.checkCancellation()
+            await send(.savedRound(saved))
+          } else if !shouldRestore {
+            await send(.reminderState(await sessionReminders.current()))
+          }
           do {
             let race = try await apiRequester.request(Race.self,
               endpoint: "rounds/\(id.uuidString.lowercased())", method: "GET", data: nil,
@@ -91,6 +107,14 @@ public struct EventDetail: Reducer {
         state.isLoading = false
         return .cancel(id: CancelID.roundRequest)
 
+      case .savedRound(let saved):
+        guard state.isLoading, saved.value.id == state.raceID else { return .none }
+        state.race = saved.value
+        state.lastUpdatedDate = saved.updatedAt
+        state.isShowingSavedData = true
+        // Only fresh API data reconciles scheduled notifications.
+        return .run { send in await send(.reminderState(await sessionReminders.current())) }
+
       case .response(.success(let race)):
         guard state.isLoading else { return .none }
         state.isLoading = false
@@ -99,18 +123,32 @@ public struct EventDetail: Reducer {
           return .none
         }
         state.race = race
-        return .send(.refreshReminders)
+        state.isShowingSavedData = false
+        state.lastUpdatedDate = now
+        let updatedAt = now
+        return .merge(
+          .send(.refreshReminders),
+          .run { _ in try? await calendarStore.saveRound(race, updatedAt) })
 
       case .response(.failure(let error)):
         guard state.isLoading else { return .none }
         state.isLoading = false
         let error = error as NSError
         state.loadFailure = error.domain == "LandinhoAPI" && error.code == 404 ? .notFound : .unavailable
+        if state.loadFailure == .notFound, let id = state.raceID {
+          state.race = nil
+          state.isShowingSavedData = false
+          state.lastUpdatedDate = nil
+          return .run { _ in try? await calendarStore.removeRound(id) }
+        }
         return .none
 
       case .refreshReminders:
         guard let race = state.race, !state.isLoadingReminders, state.changingReminderID == nil else { return .none }
         state.isLoadingReminders = true
+        if state.isShowingSavedData {
+          return .run { send in await send(.reminderState(await sessionReminders.current())) }
+        }
         return .run { send in
           await send(.reminderResponse(TaskResult { try await sessionReminders.refresh([race]) }))
         }
@@ -172,7 +210,24 @@ public struct EventDetailView: View {
     Group {
       WithViewStore(store, observe: { $0 }) { viewStore in
         if let race = viewStore.race {
-          InnerEventDetailView(store: store, race: race)
+          VStack(spacing: 0) {
+            if viewStore.isShowingSavedData {
+              VStack(spacing: 6) {
+                if let date = viewStore.lastUpdatedDate {
+                  Text("Programação salva em \(date.formatted(date: .abbreviated, time: .shortened))")
+                }
+                if viewStore.isLoading {
+                  ProgressView("Atualizando…")
+                } else if viewStore.loadFailure != nil {
+                  Text("Não foi possível atualizar os horários.")
+                  Button("Tentar novamente") { viewStore.send(.retry) }
+                }
+              }
+              .font(.caption)
+              .padding()
+            }
+            InnerEventDetailView(store: store, race: race)
+          }
         } else if let failure = viewStore.loadFailure {
           ContentUnavailableView {
             Label(failure == .notFound ? "Rodada não encontrada" : "Não foi possível carregar a rodada",

@@ -22,6 +22,7 @@ public extension APIRequestState {
   }
 
   var value: T? {
+    if case .reloading(let value) = self { return value }
     if case .finished(.success(let value)) = self {
       return value
     }
