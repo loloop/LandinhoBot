@@ -80,10 +80,16 @@ public struct BetaSheet: View {
   """
 
   let latestRelease: LocalizedStringKey = """
-  01/10/2026
+  03/10/2026
   • Salva categorias, corridas e sessões no dispositivo para consultar a última programação carregada mesmo sem conexão
   • Restaura dados salvos ao abrir o app e atualiza a programação sem esconder o conteúdo durante o carregamento; detalhes removidos pelo servidor deixam de aparecer
   • Manutenção: adota SQLiteData com migrações locais, atualiza as dependências, ajusta o módulo de compartilhamento e mantém a programação da versão Mock em memória
+
+  02/10/2026
+  • Manutenção: adiciona o manifesto do Xcode Cloud e reorganiza os arquivos do projeto
+  • Manutenção: mantém a declaração de uso de criptografia nas configurações de compilação do app e da versão Mock
+
+  01/10/2026
   • Adiciona lembretes locais para o início de sessões com horário confirmado, com opção de ativar ou cancelar nos detalhes; a permissão de notificações é solicitada somente ao ativar um lembrete
   • Atualiza os lembretes quando a programação recebida é recarregada e mostra acesso aos Ajustes quando as notificações estão desativadas
   • Manutenção: registra a pendência de verificar o domínio e o DNS da API hospedada

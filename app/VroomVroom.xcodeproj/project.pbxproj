@@ -7,6 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D6F6D4A743D49EFB03B32DA /* BetaSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 8DB4B58E6B694270B4504605 /* BetaSheet */; };
+		2329AA9A535E42C1B3D27FC7 /* RaceSharing in Frameworks */ = {isa = PBXBuildFile; productRef = 8D7E9D6C7FF142659726310F /* RaceSharing */; };
+		4901E046772B489A8E39AC5D /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48A501E2AFECEEB00A01B7E /* Root.swift */; };
+		4D766BB75C91415CAE7B912C /* ScheduleList in Frameworks */ = {isa = PBXBuildFile; productRef = 10A2509F54654AB7B7B53B86 /* ScheduleList */; };
+		4FF7CD08DD9D4062B0E2F464 /* Categories in Frameworks */ = {isa = PBXBuildFile; productRef = 6E0F56DAA0CF41B892D83048 /* Categories */; };
+		56E77B947D9546B2ADCD206F /* Home in Frameworks */ = {isa = PBXBuildFile; productRef = BA4B016C7AC149CDBD6C76EC /* Home */; };
+		5C85CF2A272140838514CDFE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B42CA9F32AFE8B67009B3FFB /* Preview Assets.xcassets */; };
+		658032B7355D4A59A2A5066C /* APIClient in Frameworks */ = {isa = PBXBuildFile; productRef = D02B06C6410D47AFA50EE1EE /* APIClient */; };
+		673C8AF2D0CB490DAAE20A23 /* VroomSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47CAE6E2B0D2D3C000164A0 /* VroomSceneDelegate.swift */; };
+		6A29D683D82B455AAC2556C9 /* EventDetail in Frameworks */ = {isa = PBXBuildFile; productRef = ABDD2CC83EC84437AA1EDA3A /* EventDetail */; };
+		7D4391C095244CA188AE8620 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 8B7D55A3B9094F4994A8D12A /* Settings */; };
+		941F6EE4CCF8426092C97FB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B42CA9F02AFE8B67009B3FFB /* Assets.xcassets */; };
+		982E65CEDCE94A26B535640A /* MockAPIClient in Frameworks */ = {isa = PBXBuildFile; productRef = 2B284143619940298F0F81E3 /* MockAPIClient */; };
+		A0628F4B3002429AA8C833E6 /* VroomVroomApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42CA9EC2AFE8B66009B3FFB /* VroomVroomApp.swift */; };
+		AC1000000000000000000001 /* VroomVroomClipApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1000000000000000000002 /* VroomVroomClipApp.swift */; };
+		AC1000000000000000000003 /* AppClipFeature in Frameworks */ = {isa = PBXBuildFile; productRef = AC1000000000000000000004 /* AppClipFeature */; };
+		AC1000000000000000000005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B42CA9F02AFE8B67009B3FFB /* Assets.xcassets */; };
+		AC1000000000000000000006 /* VroomVroomClip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = AC1000000000000000000007 /* VroomVroomClip.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B40A75222B0D793200CFB10E /* Router in Frameworks */ = {isa = PBXBuildFile; productRef = B40A75212B0D793200CFB10E /* Router */; };
 		B41E56A42BFB800500020994 /* WidgetUI in Frameworks */ = {isa = PBXBuildFile; productRef = B41E56A32BFB800500020994 /* WidgetUI */; };
 		B42CA9ED2AFE8B66009B3FFB /* VroomVroomApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42CA9EC2AFE8B66009B3FFB /* VroomVroomApp.swift */; };
@@ -42,40 +60,13 @@
 		B4D87C4C2B01AF0B000EBEF9 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = B4D87C4B2B01AF0B000EBEF9 /* Settings */; };
 		B4D87C4E2B01B12B000EBEF9 /* EventDetail in Frameworks */ = {isa = PBXBuildFile; productRef = B4D87C4D2B01B12B000EBEF9 /* EventDetail */; };
 		B4E510372BFB14990050C6CD /* NotificationsQueue in Frameworks */ = {isa = PBXBuildFile; productRef = B4E510362BFB14990050C6CD /* NotificationsQueue */; };
-
-		AC1000000000000000000001 /* VroomVroomClipApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1000000000000000000002 /* VroomVroomClipApp.swift */; };
-		AC1000000000000000000003 /* AppClipFeature in Frameworks */ = {isa = PBXBuildFile; productRef = AC1000000000000000000004 /* AppClipFeature */; };
-		AC1000000000000000000005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B42CA9F02AFE8B67009B3FFB /* Assets.xcassets */; };
-		AC1000000000000000000006 /* VroomVroomClip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = AC1000000000000000000007 /* VroomVroomClip.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		DB8567AFFC714BF78D02171E /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42CA9EE2AFE8B66009B3FFB /* RootView.swift */; };
-		A0628F4B3002429AA8C833E6 /* VroomVroomApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42CA9EC2AFE8B66009B3FFB /* VroomVroomApp.swift */; };
-		4901E046772B489A8E39AC5D /* Root.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48A501E2AFECEEB00A01B7E /* Root.swift */; };
-		673C8AF2D0CB490DAAE20A23 /* VroomSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47CAE6E2B0D2D3C000164A0 /* VroomSceneDelegate.swift */; };
-		DA27115E82124F7896688FDA /* CategoriesAdmin in Frameworks */ = {isa = PBXBuildFile; productRef = 2707BEEDEE2046EFA94AC8B1 /* CategoriesAdmin */; };
-		4FF7CD08DD9D4062B0E2F464 /* Categories in Frameworks */ = {isa = PBXBuildFile; productRef = 6E0F56DAA0CF41B892D83048 /* Categories */; };
-		7D4391C095244CA188AE8620 /* Settings in Frameworks */ = {isa = PBXBuildFile; productRef = 8B7D55A3B9094F4994A8D12A /* Settings */; };
-		4D766BB75C91415CAE7B912C /* ScheduleList in Frameworks */ = {isa = PBXBuildFile; productRef = 10A2509F54654AB7B7B53B86 /* ScheduleList */; };
-		658032B7355D4A59A2A5066C /* APIClient in Frameworks */ = {isa = PBXBuildFile; productRef = D02B06C6410D47AFA50EE1EE /* APIClient */; };
-		C64CD0A290604FC299E8D6A4 /* Router in Frameworks */ = {isa = PBXBuildFile; productRef = 7C4576E7734947B894D87988 /* Router */; };
-		6A29D683D82B455AAC2556C9 /* EventDetail in Frameworks */ = {isa = PBXBuildFile; productRef = ABDD2CC83EC84437AA1EDA3A /* EventDetail */; };
 		B74B906581C04DB7813578BE /* Admin in Frameworks */ = {isa = PBXBuildFile; productRef = F5CA760ED3F0452488170A9A /* Admin */; };
-		2329AA9A535E42C1B3D27FC7 /* RaceSharing in Frameworks */ = {isa = PBXBuildFile; productRef = 8D7E9D6C7FF142659726310F /* RaceSharing */; };
-		0D6F6D4A743D49EFB03B32DA /* BetaSheet in Frameworks */ = {isa = PBXBuildFile; productRef = 8DB4B58E6B694270B4504605 /* BetaSheet */; };
-		56E77B947D9546B2ADCD206F /* Home in Frameworks */ = {isa = PBXBuildFile; productRef = BA4B016C7AC149CDBD6C76EC /* Home */; };
-		5C85CF2A272140838514CDFE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B42CA9F32AFE8B67009B3FFB /* Preview Assets.xcassets */; };
-		941F6EE4CCF8426092C97FB0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B42CA9F02AFE8B67009B3FFB /* Assets.xcassets */; };
-		982E65CEDCE94A26B535640A /* MockAPIClient in Frameworks */ = {isa = PBXBuildFile; productRef = 2B284143619940298F0F81E3 /* MockAPIClient */; };
+		C64CD0A290604FC299E8D6A4 /* Router in Frameworks */ = {isa = PBXBuildFile; productRef = 7C4576E7734947B894D87988 /* Router */; };
+		DA27115E82124F7896688FDA /* CategoriesAdmin in Frameworks */ = {isa = PBXBuildFile; productRef = 2707BEEDEE2046EFA94AC8B1 /* CategoriesAdmin */; };
+		DB8567AFFC714BF78D02171E /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42CA9EE2AFE8B66009B3FFB /* RootView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		B4CBD17D2B05571100BF6776 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B42CA9E12AFE8B66009B3FFB /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B4CBD16B2B05570F00BF6776;
-			remoteInfo = WidgetsExtension;
-		};
-
 		AC1000000000000000000008 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B42CA9E12AFE8B66009B3FFB /* Project object */;
@@ -83,9 +74,27 @@
 			remoteGlobalIDString = AC1000000000000000000009;
 			remoteInfo = VroomVroomClip;
 		};
+		B4CBD17D2B05571100BF6776 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B42CA9E12AFE8B66009B3FFB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B4CBD16B2B05570F00BF6776;
+			remoteInfo = WidgetsExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		AC100000000000000000000A /* Embed App Clips */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/AppClips";
+			dstSubfolderSpec = 16;
+			files = (
+				AC1000000000000000000006 /* VroomVroomClip.app in Embed App Clips */,
+			);
+			name = "Embed App Clips";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B4CBD1832B05571100BF6776 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -97,19 +106,15 @@
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-
-		AC100000000000000000000A /* Embed App Clips */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "$(CONTENTS_FOLDER_PATH)/AppClips";
-			dstSubfolderSpec = 16;
-			files = (AC1000000000000000000006 /* VroomVroomClip.app in Embed App Clips */, );
-			name = "Embed App Clips";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8204076147B2460399798308 /* VroomVroomMock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VroomVroomMock.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC1000000000000000000002 /* VroomVroomClipApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VroomVroomClipApp.swift; sourceTree = "<group>"; };
+		AC1000000000000000000007 /* VroomVroomClip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VroomVroomClip.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC100000000000000000000B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AC100000000000000000000C /* VroomVroomClip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VroomVroomClip.entitlements; sourceTree = "<group>"; };
+		AC100000000000000000000D /* LandinhoClip */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LandinhoClip; sourceTree = "<group>"; };
 		B42CA9E92AFE8B66009B3FFB /* VroomVroom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VroomVroom.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B42CA9EC2AFE8B66009B3FFB /* VroomVroomApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VroomVroomApp.swift; sourceTree = "<group>"; };
 		B42CA9EE2AFE8B66009B3FFB /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
@@ -139,16 +144,36 @@
 		B4CBD1A92B05574100BF6776 /* VroomVroom copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "VroomVroom copy-Info.plist"; path = "/Users/mauriciocardozo/Developer/LandinhoBot/app/VroomVroom copy-Info.plist"; sourceTree = "<absolute>"; };
 		B4D9A1C02AFE8B9A008E3EB6 /* LandinhoLib */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LandinhoLib; sourceTree = "<group>"; };
 		B4E5103A2BFB76A40050C6CD /* LandinhoFoundation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LandinhoFoundation; sourceTree = "<group>"; };
-
-		AC1000000000000000000002 /* VroomVroomClipApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VroomVroomClipApp.swift; sourceTree = "<group>"; };
-		AC1000000000000000000007 /* VroomVroomClip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VroomVroomClip.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AC100000000000000000000B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AC100000000000000000000C /* VroomVroomClip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VroomVroomClip.entitlements; sourceTree = "<group>"; };
-		AC100000000000000000000D /* LandinhoClip */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LandinhoClip; sourceTree = "<group>"; };
-		8204076147B2460399798308 /* VroomVroomMock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VroomVroomMock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		9C6250096E084D92B95D0020 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				982E65CEDCE94A26B535640A /* MockAPIClient in Frameworks */,
+				DA27115E82124F7896688FDA /* CategoriesAdmin in Frameworks */,
+				4FF7CD08DD9D4062B0E2F464 /* Categories in Frameworks */,
+				7D4391C095244CA188AE8620 /* Settings in Frameworks */,
+				4D766BB75C91415CAE7B912C /* ScheduleList in Frameworks */,
+				658032B7355D4A59A2A5066C /* APIClient in Frameworks */,
+				C64CD0A290604FC299E8D6A4 /* Router in Frameworks */,
+				6A29D683D82B455AAC2556C9 /* EventDetail in Frameworks */,
+				B74B906581C04DB7813578BE /* Admin in Frameworks */,
+				2329AA9A535E42C1B3D27FC7 /* RaceSharing in Frameworks */,
+				0D6F6D4A743D49EFB03B32DA /* BetaSheet in Frameworks */,
+				56E77B947D9546B2ADCD206F /* Home in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AC100000000000000000000E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC1000000000000000000003 /* AppClipFeature in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B42CA9E62AFE8B66009B3FFB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -187,35 +212,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-
-		AC100000000000000000000E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (AC1000000000000000000003 /* AppClipFeature in Frameworks */, );
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9C6250096E084D92B95D0020 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				982E65CEDCE94A26B535640A /* MockAPIClient in Frameworks */,
-				DA27115E82124F7896688FDA /* CategoriesAdmin in Frameworks */,
-				4FF7CD08DD9D4062B0E2F464 /* Categories in Frameworks */,
-				7D4391C095244CA188AE8620 /* Settings in Frameworks */,
-				4D766BB75C91415CAE7B912C /* ScheduleList in Frameworks */,
-				658032B7355D4A59A2A5066C /* APIClient in Frameworks */,
-				C64CD0A290604FC299E8D6A4 /* Router in Frameworks */,
-				6A29D683D82B455AAC2556C9 /* EventDetail in Frameworks */,
-				B74B906581C04DB7813578BE /* Admin in Frameworks */,
-				2329AA9A535E42C1B3D27FC7 /* RaceSharing in Frameworks */,
-				0D6F6D4A743D49EFB03B32DA /* BetaSheet in Frameworks */,
-				56E77B947D9546B2ADCD206F /* Home in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AC100000000000000000000F /* VroomVroomClip */ = {
+			isa = PBXGroup;
+			children = (
+				AC1000000000000000000002 /* VroomVroomClipApp.swift */,
+				AC100000000000000000000B /* Info.plist */,
+				AC100000000000000000000C /* VroomVroomClip.entitlements */,
+			);
+			path = VroomVroomClip;
+			sourceTree = "<group>";
+		};
 		B42CA9E02AFE8B66009B3FFB = {
 			isa = PBXGroup;
 			children = (
@@ -319,20 +328,29 @@
 			path = Widgets;
 			sourceTree = "<group>";
 		};
-
-		AC100000000000000000000F /* VroomVroomClip */ = {
-			isa = PBXGroup;
-			children = (
-				AC1000000000000000000002 /* VroomVroomClipApp.swift */,
-				AC100000000000000000000B /* Info.plist */,
-				AC100000000000000000000C /* VroomVroomClip.entitlements */,
-			);
-			path = VroomVroomClip;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		AC1000000000000000000009 /* VroomVroomClip */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AC1000000000000000000010 /* Build configuration list for PBXNativeTarget "VroomVroomClip" */;
+			buildPhases = (
+				AC1000000000000000000011 /* Sources */,
+				AC100000000000000000000E /* Frameworks */,
+				AC1000000000000000000012 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VroomVroomClip;
+			packageProductDependencies = (
+				AC1000000000000000000004 /* AppClipFeature */,
+			);
+			productName = VroomVroomClip;
+			productReference = AC1000000000000000000007 /* VroomVroomClip.app */;
+			productType = "com.apple.product-type.application.on-demand-install-capable";
+		};
 		B42CA9E82AFE8B66009B3FFB /* VroomVroom */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B42CA9F72AFE8B67009B3FFB /* Build configuration list for PBXNativeTarget "VroomVroom" */;
@@ -409,23 +427,6 @@
 			productReference = B4CBD16C2B05570F00BF6776 /* WidgetsExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-
-		AC1000000000000000000009 /* VroomVroomClip */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = AC1000000000000000000010 /* Build configuration list for PBXNativeTarget "VroomVroomClip" */;
-			buildPhases = (
-				AC1000000000000000000011 /* Sources */,
-				AC100000000000000000000E /* Frameworks */,
-				AC1000000000000000000012 /* Resources */,
-			);
-			buildRules = ();
-			dependencies = ();
-			name = VroomVroomClip;
-			packageProductDependencies = (AC1000000000000000000004 /* AppClipFeature */, );
-			productName = VroomVroomClip;
-			productReference = AC1000000000000000000007 /* VroomVroomClip.app */;
-			productType = "com.apple.product-type.application.on-demand-install-capable";
-		};
 		C6C8CF0D64E54191AF5B12E2 /* VroomVroomMock */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 17364D43734B4A1389F362FA /* Build configuration list for PBXNativeTarget "VroomVroomMock" */;
@@ -469,7 +470,11 @@
 				TargetAttributes = {
 					AC1000000000000000000009 = {
 						CreatedOnToolsVersion = 27.1;
-						SystemCapabilities = {com.apple.OnDemandInstallCapable = {enabled = 1; }; };
+						SystemCapabilities = {
+							com.apple.OnDemandInstallCapable = {
+								enabled = 1;
+							};
+						};
 					};
 					B42CA9E82AFE8B66009B3FFB = {
 						CreatedOnToolsVersion = 15.0;
@@ -505,6 +510,23 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		A1696A9D92F047189E20AD2C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5C85CF2A272140838514CDFE /* Preview Assets.xcassets in Resources */,
+				941F6EE4CCF8426092C97FB0 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AC1000000000000000000012 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC1000000000000000000005 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B42CA9E72AFE8B66009B3FFB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -531,25 +553,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-
-		AC1000000000000000000012 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (AC1000000000000000000005 /* Assets.xcassets in Resources */, );
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		A1696A9D92F047189E20AD2C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5C85CF2A272140838514CDFE /* Preview Assets.xcassets in Resources */,
-				941F6EE4CCF8426092C97FB0 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		17539399FBD24516B75F8A6A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB8567AFFC714BF78D02171E /* RootView.swift in Sources */,
+				A0628F4B3002429AA8C833E6 /* VroomVroomApp.swift in Sources */,
+				4901E046772B489A8E39AC5D /* Root.swift in Sources */,
+				673C8AF2D0CB490DAAE20A23 /* VroomSceneDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AC1000000000000000000011 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC1000000000000000000001 /* VroomVroomClipApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B42CA9E52AFE8B66009B3FFB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -583,41 +608,168 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-
-		AC1000000000000000000011 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (AC1000000000000000000001 /* VroomVroomClipApp.swift in Sources */, );
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		17539399FBD24516B75F8A6A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				DB8567AFFC714BF78D02171E /* RootView.swift in Sources */,
-				A0628F4B3002429AA8C833E6 /* VroomVroomApp.swift in Sources */,
-				4901E046772B489A8E39AC5D /* Root.swift in Sources */,
-				673C8AF2D0CB490DAAE20A23 /* VroomSceneDelegate.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		B4CBD17E2B05571100BF6776 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B4CBD16B2B05570F00BF6776 /* WidgetsExtension */;
-			targetProxy = B4CBD17D2B05571100BF6776 /* PBXContainerItemProxy */;
-		};
-
 		AC1000000000000000000013 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = AC1000000000000000000009 /* VroomVroomClip */;
 			targetProxy = AC1000000000000000000008 /* PBXContainerItemProxy */;
 		};
+		B4CBD17E2B05571100BF6776 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B4CBD16B2B05570F00BF6776 /* WidgetsExtension */;
+			targetProxy = B4CBD17D2B05571100BF6776 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		401DCC57FD1E4320A68CAFDB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_ASSET_PATHS = "\"VroomVroom/Preview Content\"";
+				DEVELOPMENT_TEAM = UQCQ667RNK;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = VroomVroom/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "VroomVroom Mock";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = me.mauriciocardozo.racing.vroomvroom.mock;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) MOCK_NETWORKING";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4339CDF9BF924CB1A8856DBB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_ASSET_PATHS = "\"VroomVroom/Preview Content\"";
+				DEVELOPMENT_TEAM = UQCQ667RNK;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = VroomVroom/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "VroomVroom Mock";
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = me.mauriciocardozo.racing.vroomvroom.mock;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) MOCK_NETWORKING";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		AC1000000000000000000014 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = VroomVroomClip/VroomVroomClip.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_TEAM = UQCQ667RNK;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = VroomVroomClip/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = VroomVroom;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = me.mauriciocardozo.racing.vroomvroom.Clip;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AC1000000000000000000015 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = VroomVroomClip/VroomVroomClip.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 6;
+				DEVELOPMENT_TEAM = UQCQ667RNK;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = VroomVroomClip/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = VroomVroom;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = me.mauriciocardozo.racing.vroomvroom.Clip;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		B42CA9F52AFE8B67009B3FFB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -750,6 +902,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VroomVroom/Info.plist;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -784,6 +937,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VroomVroom/Info.plist;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -921,149 +1075,27 @@
 			};
 			name = Release;
 		};
-		AC1000000000000000000014 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = VroomVroomClip/VroomVroomClip.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
-				DEVELOPMENT_TEAM = UQCQ667RNK;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = VroomVroomClip/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = VroomVroom;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", );
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = me.mauriciocardozo.racing.vroomvroom.Clip;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-
-			};
-			name = Debug;
-		};
-		AC1000000000000000000015 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = VroomVroomClip/VroomVroomClip.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
-				DEVELOPMENT_TEAM = UQCQ667RNK;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = VroomVroomClip/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = VroomVroom;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", );
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = me.mauriciocardozo.racing.vroomvroom.Clip;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-
-			};
-			name = Release;
-		};
-		401DCC57FD1E4320A68CAFDB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
-				DEVELOPMENT_ASSET_PATHS = "\"VroomVroom/Preview Content\"";
-				DEVELOPMENT_TEAM = UQCQ667RNK;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = VroomVroom/Info.plist;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = me.mauriciocardozo.racing.vroomvroom.mock;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) MOCK_NETWORKING";
-				INFOPLIST_KEY_CFBundleDisplayName = "VroomVroom Mock";
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		4339CDF9BF924CB1A8856DBB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
-				DEVELOPMENT_ASSET_PATHS = "\"VroomVroom/Preview Content\"";
-				DEVELOPMENT_TEAM = UQCQ667RNK;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = VroomVroom/Info.plist;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.sports";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = me.mauriciocardozo.racing.vroomvroom.mock;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) MOCK_NETWORKING";
-				INFOPLIST_KEY_CFBundleDisplayName = "VroomVroom Mock";
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		17364D43734B4A1389F362FA /* Build configuration list for PBXNativeTarget "VroomVroomMock" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				401DCC57FD1E4320A68CAFDB /* Debug */,
+				4339CDF9BF924CB1A8856DBB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AC1000000000000000000010 /* Build configuration list for PBXNativeTarget "VroomVroomClip" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AC1000000000000000000014 /* Debug */,
+				AC1000000000000000000015 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B42CA9E42AFE8B66009B3FFB /* Build configuration list for PBXProject "VroomVroom" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1100,25 +1132,49 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-
-		AC1000000000000000000010 /* Build configuration list for PBXNativeTarget "VroomVroomClip" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (AC1000000000000000000014 /* Debug */, AC1000000000000000000015 /* Release */, );
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		17364D43734B4A1389F362FA /* Build configuration list for PBXNativeTarget "VroomVroomMock" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				401DCC57FD1E4320A68CAFDB /* Debug */,
-				4339CDF9BF924CB1A8856DBB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		10A2509F54654AB7B7B53B86 /* ScheduleList */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ScheduleList;
+		};
+		2707BEEDEE2046EFA94AC8B1 /* CategoriesAdmin */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = CategoriesAdmin;
+		};
+		2B284143619940298F0F81E3 /* MockAPIClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MockAPIClient;
+		};
+		6E0F56DAA0CF41B892D83048 /* Categories */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Categories;
+		};
+		7C4576E7734947B894D87988 /* Router */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Router;
+		};
+		8B7D55A3B9094F4994A8D12A /* Settings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Settings;
+		};
+		8D7E9D6C7FF142659726310F /* RaceSharing */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RaceSharing;
+		};
+		8DB4B58E6B694270B4504605 /* BetaSheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BetaSheet;
+		};
+		ABDD2CC83EC84437AA1EDA3A /* EventDetail */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = EventDetail;
+		};
+		AC1000000000000000000004 /* AppClipFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppClipFeature;
+		};
 		B40A75212B0D793200CFB10E /* Router */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Router;
@@ -1179,55 +1235,17 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = NotificationsQueue;
 		};
-
-		AC1000000000000000000004 /* AppClipFeature */ = {isa = XCSwiftPackageProductDependency; productName = AppClipFeature; };
-		D02B06C6410D47AFA50EE1EE /* APIClient */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = APIClient;
-		};
-		6E0F56DAA0CF41B892D83048 /* Categories */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Categories;
-		};
-		10A2509F54654AB7B7B53B86 /* ScheduleList */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ScheduleList;
-		};
-		8B7D55A3B9094F4994A8D12A /* Settings */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Settings;
-		};
-		ABDD2CC83EC84437AA1EDA3A /* EventDetail */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = EventDetail;
-		};
 		BA4B016C7AC149CDBD6C76EC /* Home */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Home;
 		};
+		D02B06C6410D47AFA50EE1EE /* APIClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = APIClient;
+		};
 		F5CA760ED3F0452488170A9A /* Admin */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Admin;
-		};
-		2707BEEDEE2046EFA94AC8B1 /* CategoriesAdmin */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = CategoriesAdmin;
-		};
-		8D7E9D6C7FF142659726310F /* RaceSharing */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = RaceSharing;
-		};
-		8DB4B58E6B694270B4504605 /* BetaSheet */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = BetaSheet;
-		};
-		7C4576E7734947B894D87988 /* Router */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Router;
-		};
-		2B284143619940298F0F81E3 /* MockAPIClient */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MockAPIClient;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
